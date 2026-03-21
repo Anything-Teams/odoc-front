@@ -37,7 +37,7 @@ header {
 
 .login-container {
   width: 100%;
-  height: 92vh;
+  height: 92dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +80,7 @@ header {
   font-weight: bold;
   border-radius: 0.5em;
   font-size: 20px;
-  min-height: 6vh;
+  min-height: 6dvh;
 }
 
 .primary {
@@ -101,13 +101,13 @@ header {
 .btn-8 {
   font-size: 25px;
   font-weight: bold;
-  min-height: 8vh;
+  min-height: 8dvh;
 }
 
 .project-container {
   display: flex;
   flex-direction: column;
-  min-height: 92vh;
+  min-height: 92dvh;
 }
 
 .list-container {
@@ -172,7 +172,7 @@ header {
 
 .image-box {
   width: 100%;
-  height: 50vh;
+  height: 50dvh;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
@@ -276,7 +276,7 @@ header {
 
 .month-image-box {
   width: 100%;
-  height: 40vh;
+  height: 40dvh;
   margin-bottom: 12px;
 }
 
