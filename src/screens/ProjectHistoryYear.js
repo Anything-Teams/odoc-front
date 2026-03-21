@@ -10,7 +10,7 @@ export default function ProjectHistoryYear() {
 
     const months = [
         { month: "2월", progress: 100 },
-        { month: "3월", progress: 80 },
+        { month: "3월", progress: 51 },
     ];
 
   return (
