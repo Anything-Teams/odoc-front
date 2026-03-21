@@ -12,8 +12,8 @@ export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<Navigate to="/login" replace />} />
-
+                <Route path="/" element={<Navigate to="/login" replace />} />
+    
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
@@ -24,8 +24,6 @@ export default function AppRouter() {
                     <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
                     <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
                 </Route>
-
-                <Route path="*" element={<Navigate to="/login" replace />} />
 
             </Routes>
         </BrowserRouter>
