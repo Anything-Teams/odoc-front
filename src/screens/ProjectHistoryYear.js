@@ -24,7 +24,7 @@ export default function ProjectHistoryYear() {
                 <div
                     key={idx}
                     className="year-card"
-                    onClick={() => navigate(`/projects/history-month`)}
+                    onClick={() => navigate(`/projects/1/history-month`)}
                 >
                     <div className="year-image-box">
                     <div className="year-image-placeholder">DOT</div>

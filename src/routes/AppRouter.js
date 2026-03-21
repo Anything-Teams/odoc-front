@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import ProjectList from "../screens/ProjectList";
@@ -12,6 +12,8 @@ export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Navigate to="/login" />} />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
@@ -20,7 +22,7 @@ export default function AppRouter() {
                     <Route path="new" element={<ProjectCreate />} />
                     <Route path=":projectId" element={<ProjectMain />} />
                     <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
-                    <Route path="history-month" element={<ProjectHistoryMonth />} />
+                    <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
                 </Route>
 
             </Routes>
