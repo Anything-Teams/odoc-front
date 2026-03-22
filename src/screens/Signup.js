@@ -6,6 +6,7 @@ export default function Signup() {
 
   return (
     <div className="login-container">
+      <div></div>
       <div className="login-box">
         <h1 className="logo">ODOC 가입</h1>
 
@@ -22,6 +23,7 @@ export default function Signup() {
           취소
         </button>
       </div>
+      <div></div>
     </div>
   );
 }
