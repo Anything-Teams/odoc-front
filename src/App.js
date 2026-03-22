@@ -1,20 +1,35 @@
+
 // import { useEffect, useState } from 'react';
-// import { apiFetch } from "./api/api";
+// import { get, post } from "./api/api";
 
 // function App() {
 //   const [data, setData] = useState("");
   
+//   // GET방식
 //   useEffect(() => {
-//     apiFetch("/test")
-//       .then(res => res.text())
-//       .then(setData)
+//     get("/test", {
+//       testId: "testtest1",
+//       testNm: "testName",
+//     })
+//       .then((data) => setData(data.testNm))
 //       .catch(console.error);
 //   }, []);
+
+//   // POST 방식
+//   // useEffect(() => {
+//   //   post("/test", {
+//   //     testId: "testtest1",
+//   //     testNm: "testName",
+//   //   })
+//   //   .then((data) => setData(data.testNm))
+//   //   .catch(console.error);
+//   // }, []);
 
 //   return <div>{data}</div>;
 // }
 
 // export default App;
+
 
 
 import AppRouter from "./routes/AppRouter";

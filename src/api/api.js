@@ -12,6 +12,24 @@ export async function apiFetch(url, options = {}) {
   if (!response.ok) {
     throw new Error("API Error");
   }
-
   return response;
+}
+
+export async function get(url, params) {
+    let query = "";
+    if (params) {
+      query = "?" + new URLSearchParams(params).toString();
+    }
+    const res = await apiFetch(url + query, {
+      method: "GET",
+    });
+    return res.json();
+  }
+  
+export async function post(url, data) {
+    const res = await apiFetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+    return res.json();
 }
