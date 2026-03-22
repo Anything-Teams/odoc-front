@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import "../css/common.css";
 
 function fn_btn_event(param) {
-    if(param=="Y") alert("재진행 하시겠습니까?");
+    if(param === "Y") alert("재진행 하시겠습니까?");
     else alert("종료 하시겠습니까?");
     
 }
