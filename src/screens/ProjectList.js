@@ -38,6 +38,10 @@ export default function ProjectList() {
     const odocs = [
         { id: 1, title: "어플개발하기", date: "2026.02.13", delYn: "N" },
         { id: 2, title: "블로그 만들기", date: "2026.02.14", delYn: "Y" },
+        { id: 3, title: "독서하기", date: "2025.12.25", delYn: "Y" },
+        { id: 4, title: "운동하기", date: "2023.04.10", delYn: "N" },
+        { id: 5, title: "학위취득", date: "2024.06.18", delYn: "Y" },
+        { id: 6, title: "유튜브도전", date: "2025.03.10", delYn: "Y" },
     ];
 
     return (
@@ -58,7 +62,7 @@ export default function ProjectList() {
                         onTouchEnd={() => handleTouchEnd(item.id)}
                     >
                         <div
-                            className="card-inner"
+                            className={`card-inner ${item.delYn === 'Y' ? 'card-end' : ''}`}
                             style={{
                             transform: activeId === item.id ? "translateX(-100px)" : "translateX(0)",
                             transition: "transform 0.3s ease"
