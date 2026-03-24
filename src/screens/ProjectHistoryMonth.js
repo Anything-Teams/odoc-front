@@ -1,30 +1,65 @@
+import { useSearchParams, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { post } from "../api/api";
 import "../css/common.css";
 
 export default function ProjectHistoryMonth() {
-  const data = {
-    title: "어플개발하기",
-    year: 2026,
-    month: 3,
-    odocRate: 51,
-    createdDay: 5, // 프로젝트 생성일 (예시)
-  };
+  const { projectId } = useParams();
+  const [searchParams] = useSearchParams();
+  const [title, setTitle] = useState("");
+  const [data, setData] = useState(null);
 
-  // 예시: 1~31일
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  const year = searchParams.get("year");
+  const month = searchParams.get("month");
 
-  // 예시: 체크된 날짜
-  const checkedDays = [5, 6, 7, 12, 13, 15];
+  useEffect(() => {
+    post("/getHistMonth", {
+      userId: "test001",
+      odocSn: projectId,
+      year,
+      month
+    }).then((data) => {
+      setData(data)
+    });
+  }, [projectId, year, month]);
+
+  useEffect(() => {
+    post("/getProjectName", { 
+        userId: "test001",
+        odocSn: projectId
+    })
+    .then((data) => {
+        setTitle(data.odocNm);
+    })
+    .catch(console.error);
+}, [projectId]);
+
+  if (!data) {
+    return (
+      <div className="empty-container">
+        <div className="empty">데이터 없음</div>
+      </div>
+    );
+  }
+
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const checkedDays = data.checkedDays || [];
 
   return (
     <div className="project-history-month">
       <h2 className="detail-title">{data.title}</h2>
 
       <div className="month-title">
-        {data.year}년 {String(data.month).padStart(2, "0")}월
+        {year}년 {Number(month)}월
       </div>
 
       <div className="month-image-box">
-        <div className="month-image-placeholder">DOT IMAGE</div>
+        <img
+          src={`/images/${Math.floor(Number(data.progress/10) || 0)}.png`}
+          alt="progress"
+          className="image-placeholder"
+        />
       </div>
 
       <div className="month-rate">
@@ -33,7 +68,7 @@ export default function ProjectHistoryMonth() {
 
       <div className="day-grid">
         {days.map((day) => {
-          const isChecked = checkedDays.includes(day);
+          const isChecked = checkedDays.includes(String(day).padStart(2, "0"));
           const isCreated = day === data.createdDay;
 
           return (

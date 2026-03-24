@@ -22,7 +22,12 @@ export default function ProjectLayout() {
 
 
                 <div className="header-logo">
-                ODOC
+                    <div className="header-logo-top">
+                        ODOC
+                    </div>
+                    <div className="header-logo-bottom">
+                        One Day One Commit
+                    </div>
                 </div>
 
                 <div
