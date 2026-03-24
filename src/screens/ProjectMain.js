@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { post } from "../api/api";
 import "../css/common.css";
 
@@ -9,7 +9,7 @@ export default function ProjectMain() {
   const [data, setData] = useState({}); 
   const [odocBtn, setOdocBtn] = useState(""); 
 
-  const getProjectMain = () => {
+  const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
       userId: "test001",
       odocSn: projectId
@@ -19,11 +19,11 @@ export default function ProjectMain() {
       setOdocBtn((data.delYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
     })
     .catch(console.error);
-  };
+  }, [projectId]);
 
   useEffect(() => {
     getProjectMain();
-  }, []);
+  }, [getProjectMain]);
 
   const one_day_one_commit = async (odocSn) => {
     try {
