@@ -12,7 +12,7 @@ export default function ProjectMain() {
   const [tempName, setTempName] = useState("");
   const [odocBtn, setOdocBtn] = useState(""); 
   const [loading, setLoading] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isReadOnly, setisReadOnly] = useState(true);
   const inputRef = useRef(null);
 
   const getProjectMain = useCallback(() => {
@@ -59,18 +59,18 @@ export default function ProjectMain() {
     })
     .then((data) => {
       alert("변경완료!");
-      setIsDisabled(true);
+      setisReadOnly(true);
     })
     .catch(console.error);
   }
 
   const handleEditStart = () => {
-    setIsDisabled(false);
+    setisReadOnly(false);
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
   const handleEditEnd = () => {
-    setIsDisabled(true);
+    setisReadOnly(true);
     setTempName(data.odocNm);
   };
 
@@ -92,9 +92,9 @@ export default function ProjectMain() {
           <div className="detail-title">
           <div className="input-wrapper">
               <span className="input-ghost">{tempName}</span>
-              <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} disabled={isDisabled} onChange={(e) => setTempName(e.target.value)} maxLength={10}
+              <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
               />
-              {isDisabled ? (
+              {isReadOnly ? (
                 <span className="edit-icon" onClick={handleEditStart}>
                   <BiEditAlt />
                 </span>

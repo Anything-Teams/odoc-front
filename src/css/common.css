@@ -270,7 +270,7 @@ button:disabled {
   z-index: 3;
 }
 
-.odocNm-class:disabled {
+.odocNm-class:read-only {
   color: #000;
 }
 
@@ -278,6 +278,7 @@ button:disabled {
   font-size: 1.6em;
   z-index: 5;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .detail-title {
