@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import { Loading } from "../components/Loading";
 import { post } from "../api/api";
 
 import "../css/common.css";
@@ -10,6 +11,7 @@ export default function ProjectList() {
     const [activeId, setActiveId] = useState(null);
     const startX = useRef(0);
     const currentX = useRef(0);
+    const [loading, setLoading] = useState(true);
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -33,7 +35,10 @@ export default function ProjectList() {
         post("/getProjectMainList", { 
             userId: "test001" 
         })
-        .then((data) => setOdocs(data))
+        .then((data) => {
+            setOdocs(data);
+            setLoading(false);
+        })
         .catch(console.error);
     };
 
@@ -57,6 +62,10 @@ export default function ProjectList() {
             console.error(err);
         }
     };
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="project-container">

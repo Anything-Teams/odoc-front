@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { Loading } from "../components/Loading";
 import { post } from "../api/api";
 import "../css/common.css";
 
@@ -8,6 +9,7 @@ export default function ProjectMain() {
   const navigate = useNavigate();
   const [data, setData] = useState({}); 
   const [odocBtn, setOdocBtn] = useState(""); 
+  const [loading, setLoading] = useState(true);
 
   const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
@@ -17,6 +19,7 @@ export default function ProjectMain() {
     .then((data) => {
       setData(data);
       setOdocBtn((data.delYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
+      setLoading(false);
     })
     .catch(console.error);
   }, [projectId]);
@@ -37,6 +40,10 @@ export default function ProjectMain() {
       console.error(err);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!data) {
     return (

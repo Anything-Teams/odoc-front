@@ -1,5 +1,6 @@
 import { useSearchParams, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Loading } from "../components/Loading";
 import { post } from "../api/api";
 import "../css/common.css";
 
@@ -8,20 +9,10 @@ export default function ProjectHistoryMonth() {
   const [searchParams] = useSearchParams();
   const [title, setTitle] = useState("");
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const year = searchParams.get("year");
   const month = searchParams.get("month");
-
-  useEffect(() => {
-    post("/getHistMonth", {
-      userId: "test001",
-      odocSn: projectId,
-      year,
-      month
-    }).then((data) => {
-      setData(data)
-    });
-  }, [projectId, year, month]);
 
   useEffect(() => {
     post("/getProjectName", { 
@@ -32,7 +23,24 @@ export default function ProjectHistoryMonth() {
         setTitle(data.odocNm);
     })
     .catch(console.error);
-}, [projectId]);
+  }, [projectId]);
+
+  useEffect(() => {
+    post("/getHistMonth", {
+      userId: "test001",
+      odocSn: projectId,
+      year,
+      month
+    }).then((data) => {
+      setData(data);
+      setLoading(false);
+      
+    });
+  }, [projectId, year, month]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!data) {
     return (
@@ -56,7 +64,7 @@ export default function ProjectHistoryMonth() {
 
       <div className="month-image-box">
         <img
-          src={`/images/${Math.floor(Number(data.progress/10) || 0)}.png`}
+          src={`/images/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
           alt="progress"
           className="image-placeholder"
         />

@@ -1,7 +1,7 @@
 header {
   width: 100%;
   border-bottom: 1px solid #ddd;
-  background: #fff;
+  background: #ffffff;
 }
 
 .header {
@@ -108,18 +108,18 @@ button:disabled {
 }
 
 .primary {
-  background-color: #0099ff;
-  color: white;
+  background-color: #44a9eb;
+  color: #ffffff;
 }
 
 .secondary {
-  background-color: #ee220c;
-  color: white;
+  background-color: #ff6150;
+  color: #ffffff;
 }
 
 .tertiary {
   background-color: #404040;
-  color: white;
+  color: #ffffff;
 }
 
 .btn-8 {
@@ -178,7 +178,7 @@ button:disabled {
 
 
 .card-inner {
-  background-color: #7de65a;
+  background-color: #8aef68;
   min-height:7em;
   padding: 16px;
   border-radius: 8px;
@@ -211,7 +211,7 @@ button:disabled {
 }
 
 .card-end {
-  background-color: #fd9898;
+  background-color: #ff6150;
 }
 
 .card-btn {
@@ -396,6 +396,27 @@ button:disabled {
 
 .year-container { 
   padding-top: 20px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 88dvh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #e0e0e0;
+  border-top-color: #888;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 * {

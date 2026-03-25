@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Loading } from "../components/Loading";
 import { post } from "../api/api";
 import "../css/common.css";
 
@@ -8,17 +9,7 @@ export default function ProjectHistoryYear() {
     const navigate = useNavigate();
     const [years, setYears] = useState([]);
     const [title, setTitle] = useState("");
-
-    useEffect(() => {
-        post("/getHistYearList", { 
-            userId: "test001",
-            odocSn: projectId
-        })
-        .then((data) => {
-            setYears(data);
-        })
-        .catch(console.error);
-    }, [projectId]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         post("/getProjectName", { 
@@ -31,6 +22,21 @@ export default function ProjectHistoryYear() {
         .catch(console.error);
     }, [projectId]);
 
+    useEffect(() => {
+        post("/getHistYearList", { 
+            userId: "test001",
+            odocSn: projectId
+        })
+        .then((data) => {
+            setYears(data);
+            setLoading(false);
+        })
+        .catch(console.error);
+    }, [projectId]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     if (years.length === 0) {
         return (
