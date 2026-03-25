@@ -47,20 +47,21 @@ export default function ProjectMain() {
   };
 
   const fn_odocNm_change = () => {
-      try {
-        post("/updateProject", {
-            userId: "test001",
-            odocNm: tempName,
-            odocSn: data.odocSn
-        })
-        .then((data) => {
-          alert("변경완료!");
-          setIsDisabled(true);
-        })
-        .catch(console.error);
-    } catch (err) {
-        console.error(err);
+    if(tempName==="") {
+      alert("ODOC명을 입력해주세요");
+      return;
     }
+
+    post("/updateProject", {
+        userId: "test001",
+        odocNm: tempName,
+        odocSn: data.odocSn
+    })
+    .then((data) => {
+      alert("변경완료!");
+      setIsDisabled(true);
+    })
+    .catch(console.error);
   }
 
   const handleEditStart = () => {
@@ -91,7 +92,7 @@ export default function ProjectMain() {
           <div className="detail-title">
           <div className="input-wrapper">
               <span className="input-ghost">{tempName}</span>
-              <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} disabled={isDisabled} onChange={(e) => setTempName(e.target.value)} maxLength={13}
+              <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} disabled={isDisabled} onChange={(e) => setTempName(e.target.value)} maxLength={10}
               />
               {isDisabled ? (
                 <span className="edit-icon" onClick={handleEditStart}>
@@ -99,8 +100,8 @@ export default function ProjectMain() {
                 </span>
               ) : (
                 <span className="odoc-btn-container">
-                  <button className="btn tertiary" onClick={fn_odocNm_change}>저장</button>
-                  <button className="btn secondary" onClick={handleEditEnd}>취소</button>
+                  <button className="btn tertiary margin0" onClick={fn_odocNm_change}>저장</button>
+                  <button className="btn secondary margin0" onClick={handleEditEnd}>취소</button>
                 </span>
               )}
             </div>

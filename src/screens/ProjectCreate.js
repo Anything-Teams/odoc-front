@@ -28,7 +28,7 @@ export default function ProjectCreate() {
       <div className="login-box">
         <h1 className="logo">ODOC 명</h1>
 
-        <input type="text" placeholder="목표습관명(13자제한)" className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={13}/>
+        <input type="text" placeholder="목표습관명(10자제한)" className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={10}/>
 
         <button className="btn primary"
           onClick={() => insertProject()}

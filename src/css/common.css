@@ -270,6 +270,10 @@ button:disabled {
   z-index: 3;
 }
 
+.odocNm-class:disabled {
+  color: #000;
+}
+
 .edit-icon {
   font-size: 1.6em;
   z-index: 5;
@@ -475,6 +479,10 @@ button:disabled {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+.margin0 {
+  margin-top: 0;
 }
 
 * {
