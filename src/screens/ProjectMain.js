@@ -12,7 +12,8 @@ export default function ProjectMain() {
   const [tempName, setTempName] = useState("");
   const [odocBtn, setOdocBtn] = useState(""); 
   const [loading, setLoading] = useState(true);
-  const [isReadOnly, setisReadOnly] = useState(true);
+  const [isReadOnly, setIsReadOnly] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
   const inputRef = useRef(null);
 
   const getProjectMain = useCallback(() => {
@@ -25,6 +26,8 @@ export default function ProjectMain() {
       setOdocBtn((data.delYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
       setLoading(false);
       setTempName(data.odocNm);
+
+      if(data.delYn==="Y") setIsEnd(true);
     })
     .catch(console.error);
   }, [projectId]);
@@ -59,18 +62,18 @@ export default function ProjectMain() {
     })
     .then((data) => {
       alert("변경완료!");
-      setisReadOnly(true);
+      setIsReadOnly(true);
     })
     .catch(console.error);
   }
 
   const handleEditStart = () => {
-    setisReadOnly(false);
+    setIsReadOnly(false);
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
   const handleEditEnd = () => {
-    setisReadOnly(true);
+    setIsReadOnly(true);
     setTempName(data.odocNm);
   };
 
@@ -94,7 +97,7 @@ export default function ProjectMain() {
               <span className="input-ghost">{tempName}</span>
               <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
               />
-              {isReadOnly ? (
+              {isEnd?"":(isReadOnly ? (
                 <span className="edit-icon" onClick={handleEditStart}>
                   <BiEditAlt />
                 </span>
@@ -103,7 +106,7 @@ export default function ProjectMain() {
                   <button className="btn tertiary margin0" onClick={fn_odocNm_change}>저장</button>
                   <button className="btn secondary margin0" onClick={handleEditEnd}>취소</button>
                 </span>
-              )}
+              ))}
             </div>
           </div>
 
