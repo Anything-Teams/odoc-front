@@ -52,7 +52,7 @@ export default function ProjectHistoryMonth() {
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  const checkedDays = data.checkedDays || [];
+  const checkedDays = data.dateTime.checkedDays || [];
 
   return (
     <div className="project-history-month">
@@ -80,8 +80,14 @@ export default function ProjectHistoryMonth() {
             const isChecked = checkedDays.includes(String(day).padStart(2, "0"));
             const isCreated = day === data.createdDay;
 
+            const dayIndex = checkedDays.indexOf(String(day).padStart(2, "0"));
+            const checkedTime = dayIndex !== -1 ? data.dateTime.checkedTimestamps[dayIndex] : null;
+
             return (
-              <div key={day} className="day-item">
+              <div key={day} className="day-item" onClick={()=>{
+                  if (isChecked && checkedTime) {
+                  alert("오독시간: " + checkedTime);
+              }}}>
                 <div className="day-number">{day}일</div>
 
                 <div className="day-box">
