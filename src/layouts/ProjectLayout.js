@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { TbArrowBackUp } from "react-icons/tb";
-
+import { TbArrowBackUp, TbSettings } from "react-icons/tb";
 export default function ProjectLayout() {
     
     const navigate = useNavigate();
@@ -24,7 +23,7 @@ export default function ProjectLayout() {
                 </div>
 
 
-                <div className="header-center" onClick={() => {setUserOption(!userOption)}}>
+                <div className="header-center">
                     <div className="header-logo-top">
                         ODOC
                     </div>
@@ -33,8 +32,8 @@ export default function ProjectLayout() {
                     </div>
                 </div>
 
-                <div className="header-right" onClick={() => navigate("/login")}>
-                    로그아웃
+                <div className="header-right" onClick={() => {setUserOption(!userOption)}}>
+                    <TbSettings />
                 </div>
             </div>
             </header>
