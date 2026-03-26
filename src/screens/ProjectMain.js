@@ -23,11 +23,11 @@ export default function ProjectMain() {
     })  
     .then((data) => {
       setData(data);
-      setOdocBtn((data.delYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
+      setOdocBtn((data.endYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
       setLoading(false);
       setTempName(data.odocNm);
 
-      if(data.delYn==="Y") setIsEnd(true);
+      if(data.endYn==="Y") setIsEnd(true);
     })
     .catch(console.error);
   }, [projectId]);
@@ -124,7 +124,7 @@ export default function ProjectMain() {
           <div className="button-group">
               <button
                 className="btn secondary btn-8"
-                disabled={data.odocYn === 1 || data.delYn === "Y"}
+                disabled={data.odocYn === 1 || data.endYn === "Y"}
                 onClick={() => one_day_one_commit(data.odocSn)}
               >
               {odocBtn}
