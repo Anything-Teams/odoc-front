@@ -9,7 +9,6 @@ export default function ProjectList() {
     const navigate = useNavigate();
     const [odocs, setOdocs] = useState([]);
     const [activeId, setActiveId] = useState(null);
-    const [activeLeftId, setActiveLeftId] = useState(null);
     const startX = useRef(0);
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
@@ -27,13 +26,10 @@ export default function ProjectList() {
 
         if (diff > 50) {
             setActiveId(id);
-            setActiveLeftId(null);
         } else if (diff < -50) {
-            setActiveLeftId(id);
             setActiveId(null);
         } else {
             setActiveId(null);
-            setActiveLeftId(null);
         }
     };
 
@@ -110,25 +106,12 @@ export default function ProjectList() {
                         onTouchMove={handleTouchMove}
                         onTouchEnd={() => handleTouchEnd(item.odocSn)}
                     >
-                        <div className="card-action-left">
-                            <button
-                                className="card-btn delete"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    fn_delete_event(item.odocSn);
-                                }}
-                            >
-                                삭제
-                            </button>
-                        </div>
 
                         <div
                             className={`card-inner ${item.endYn === 'Y' ? 'card-end' : ''}`}
                             style={{
                                 transform: activeId === item.odocSn
-                                    ? "translateX(-100px)"
-                                    : activeLeftId === item.odocSn
-                                    ? "translateX(100px)"
+                                    ? "translateX(-200px)"
                                     : "translateX(0)",
                                 transition: "transform 0.3s ease"
                             }}
@@ -151,7 +134,18 @@ export default function ProjectList() {
                             >
                                 {item.endYn === "Y" ? "재개" : "종료"}
                             </button>
+
+                            <button
+                                className="card-btn delete"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    fn_delete_event(item.odocSn);
+                                }}
+                            >
+                                삭제
+                            </button>
                         </div>
+
                     </div>
                 ))}
                 </div>

@@ -190,11 +190,12 @@ button:disabled {
   position: absolute;
   top: 0;
   right: 0;
-  width: 100px;
+  width: 200px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .card-title {
@@ -485,17 +486,6 @@ button:disabled {
 
 .margin0 {
   margin-top: 0;
-}
-
-.card-action-left {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .card-btn.delete {
