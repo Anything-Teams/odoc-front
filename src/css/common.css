@@ -487,6 +487,22 @@ button:disabled {
   margin-top: 0;
 }
 
+.card-action-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-btn.delete {
+    background-color: #e53935;
+    color: white;
+}
+
 * {
   box-sizing: border-box;
 }

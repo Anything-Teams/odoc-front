@@ -9,6 +9,7 @@ export default function ProjectList() {
     const navigate = useNavigate();
     const [odocs, setOdocs] = useState([]);
     const [activeId, setActiveId] = useState(null);
+    const [activeLeftId, setActiveLeftId] = useState(null);
     const startX = useRef(0);
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
@@ -26,8 +27,13 @@ export default function ProjectList() {
 
         if (diff > 50) {
             setActiveId(id);
+            setActiveLeftId(null);
+        } else if (diff < -50) {
+            setActiveLeftId(id);
+            setActiveId(null);
         } else {
             setActiveId(null);
+            setActiveLeftId(null);
         }
     };
 
@@ -46,18 +52,36 @@ export default function ProjectList() {
         fetchList();
     }, []);
 
-    const fn_btn_event = async (odocSn, delYn) => {
+    const fn_btn_event = async (odocSn, endYn) => {
         try {
             await post("/updateProject", {
                 userId: "test001",
                 odocSn: odocSn,
-                delYn: delYn === "Y" ? "N" : "Y"
+                endYn: endYn === "Y" ? "N" : "Y"
             })
             .then((data) => {
                 setActiveId(null);
                 fetchList();
             })
             .catch(console.error);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const fn_delete_event = async (odocSn) => {
+        if (!window.confirm("삭제 시 목록에서 제외됩니다")) return;
+        try {
+            await post("/updateProject", {
+               userId: "test001",
+               odocSn: odocSn,
+               delYn: "Y"
+           })
+           .then((data) => {
+               setActiveId(null);
+               fetchList();
+           })
+           .catch(console.error);
         } catch (err) {
             console.error(err);
         }
@@ -86,16 +110,32 @@ export default function ProjectList() {
                         onTouchMove={handleTouchMove}
                         onTouchEnd={() => handleTouchEnd(item.odocSn)}
                     >
+                        <div className="card-action-left">
+                            <button
+                                className="card-btn delete"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    fn_delete_event(item.odocSn);
+                                }}
+                            >
+                                삭제
+                            </button>
+                        </div>
+
                         <div
-                            className={`card-inner ${item.delYn === 'Y' ? 'card-end' : ''}`}
+                            className={`card-inner ${item.endYn === 'Y' ? 'card-end' : ''}`}
                             style={{
-                            transform: activeId === item.odocSn ? "translateX(-100px)" : "translateX(0)",
-                            transition: "transform 0.3s ease"
+                                transform: activeId === item.odocSn
+                                    ? "translateX(-100px)"
+                                    : activeLeftId === item.odocSn
+                                    ? "translateX(100px)"
+                                    : "translateX(0)",
+                                transition: "transform 0.3s ease"
                             }}
                             onClick={() => navigate(`/projects/${item.odocSn}`)}
                         >
                             <div className="card-title">
-                                {item.delYn === "Y" ? "[종료] " : ""}
+                                {item.endYn === "Y" ? "[종료] " : ""}
                                 {item.odocNm}
                             </div>
                             <div className="card-date">{item.frstRegDt}</div>
@@ -106,10 +146,10 @@ export default function ProjectList() {
                                 className="card-btn"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    fn_btn_event(item.odocSn, item.delYn);
+                                    fn_btn_event(item.odocSn, item.endYn);
                                 }}
                             >
-                                {item.delYn === "Y" ? "재진행" : "종료"}
+                                {item.endYn === "Y" ? "재개" : "종료"}
                             </button>
                         </div>
                     </div>
