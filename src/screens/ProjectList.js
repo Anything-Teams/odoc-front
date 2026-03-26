@@ -15,6 +15,7 @@ export default function ProjectList() {
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
     const isFirstAlert = useRef(true);
+    const showAlert = location.state?.showAlert;
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -53,9 +54,7 @@ export default function ProjectList() {
 
 
     useEffect(() => {
-       if (
-           location.state?.showAlert && !loading && isFirstAlert.current
-       ) {
+       if (showAlert && !loading && isFirstAlert.current) {
            isFirstAlert.current = false;
 
            requestAnimationFrame(() => {
@@ -67,7 +66,7 @@ export default function ProjectList() {
                });
            });
        }
-   }, [loading]);
+   }, [loading, showAlert]);
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
