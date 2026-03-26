@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Loading } from "../components/Loading";
 import { BiEditAlt } from "react-icons/bi";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function ProjectMain() {
@@ -15,10 +16,11 @@ export default function ProjectMain() {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const inputRef = useRef(null);
+  const { user } = useAuth();
 
   const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
-      userId: "test001",
+      userId: user?.userId,
       odocSn: projectId
     })  
     .then((data) => {
@@ -39,7 +41,7 @@ export default function ProjectMain() {
   const one_day_one_commit = async (odocSn) => {
     try {
       await post("/commitProject", {
-        userId: "test001",
+        userId: user?.userId,
         odocSn: odocSn
       });
       alert("오늘도 해냈다!");
@@ -56,7 +58,7 @@ export default function ProjectMain() {
     }
 
     post("/updateProject", {
-        userId: "test001",
+        userId: user?.userId,
         odocNm: tempName,
         odocSn: data.odocSn
     })

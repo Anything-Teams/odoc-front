@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function ProjectCreate() {
   const navigate = useNavigate();
   const [odocNm, setOdocNm] = useState(""); 
+  const { user } = useAuth();
 
   const insertProject = () => {
     if(odocNm==="") {
@@ -13,7 +15,7 @@ export default function ProjectCreate() {
       return;
     }
     post("/insertProject", { 
-        userId: "test001",
+        userId: user?.userId,
         odocNm: odocNm
     })
     .then((data) => {

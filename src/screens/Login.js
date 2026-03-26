@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function Login() {
   const navigate = useNavigate();
 
-    const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-
-  const login = () => {
+  const { login } = useAuth();
+  
+  const doLogin = () => {
     if (!userId) {
       alert("아이디를 입력해주세요");
       return;
@@ -25,7 +27,7 @@ export default function Login() {
       userPw: userPw,
     })
       .then((data) => {
-        alert("로그인 되었습니다.");
+        login({ userId: userId, ...data });
         navigate("/projects", { state: { showAlert: true } });
       })
       .catch((error) => {
@@ -44,7 +46,7 @@ export default function Login() {
         <input type="text" placeholder="ID" className="input" value={userId} onChange={(e) => setUserId(e.target.value)} />
         <input type="password" placeholder="PW" className="input" value={userPw} onChange={(e) => setUserPw(e.target.value)} />
 
-        <button className="btn primary" onClick={login}>
+        <button className="btn primary" onClick={doLogin}>
             로그인
         </button>
         <button className="btn tertiary" onClick={() => navigate("/signup")} >

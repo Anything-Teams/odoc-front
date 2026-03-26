@@ -2,6 +2,7 @@ import { useSearchParams, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "../components/Loading";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function ProjectHistoryMonth() {
@@ -10,13 +11,14 @@ export default function ProjectHistoryMonth() {
   const [title, setTitle] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   const year = searchParams.get("year");
   const month = searchParams.get("month");
 
   useEffect(() => {
     post("/getProjectName", { 
-        userId: "test001",
+        userId: user?.userId,
         odocSn: projectId
     })
     .then((data) => {
@@ -27,7 +29,7 @@ export default function ProjectHistoryMonth() {
 
   useEffect(() => {
     post("/getHistMonth", {
-      userId: "test001",
+      userId: user?.userId,
       odocSn: projectId,
       year,
       month

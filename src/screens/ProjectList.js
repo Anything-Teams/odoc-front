@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { Loading } from "../components/Loading";
 import { quotes } from "../components/quotes";
 import { post } from "../api/api";
-
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function ProjectList() {
@@ -17,6 +17,7 @@ export default function ProjectList() {
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
     const [isMotivationAlert, setIsMotivationAlert] = useState("N");
+    const { user } = useAuth();
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -40,27 +41,19 @@ export default function ProjectList() {
 
     const fetchList = () => {
         post("/getProjectMainList", { 
-            userId: "test001" 
+            userId: user?.userId
         })
         .then((data) => {
             setOdocs(data);
             setLoading(false);
+
+            setIsMotivationAlert(user?.isMotivationAlert);
         })
         .catch(console.error);
     };
 
     useEffect(() => {
         fetchList();
-    }, []);
-
-    useEffect(() => {
-        post("/getTempUser", { 
-            userId: "test001"
-        })
-        .then((data) => {
-            setIsMotivationAlert(data.isMotivationAlert)
-        })
-        .catch(console.error);
     }, []);
 
     useEffect(() => {
@@ -78,12 +71,12 @@ export default function ProjectList() {
                 });
             }
         }
-   }, [loading, showAlert, isMotivationAlert]);
+   }, [loading, showAlert, ]);
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
             await post("/updateProject", {
-                userId: "test001",
+                userId: user?.userId,
                 odocSn: odocSn,
                 endYn: endYn === "Y" ? "N" : "Y"
             })
@@ -101,7 +94,7 @@ export default function ProjectList() {
         if (!window.confirm("삭제 시 목록에서 제외됩니다")) return;
         try {
             await post("/updateProject", {
-               userId: "test001",
+               userId: user?.userId,
                odocSn: odocSn,
                delYn: "Y"
            })

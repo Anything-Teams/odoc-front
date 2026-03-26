@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "../components/Loading";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 
 export default function ProjectHistoryYear() {
@@ -10,10 +11,11 @@ export default function ProjectHistoryYear() {
     const [years, setYears] = useState([]);
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
 
     useEffect(() => {
         post("/getProjectName", { 
-            userId: "test001",
+            userId: user?.userId,
             odocSn: projectId
         })
         .then((data) => {
@@ -24,7 +26,7 @@ export default function ProjectHistoryYear() {
 
     useEffect(() => {
         post("/getHistYearList", { 
-            userId: "test001",
+            userId: user?.userId,
             odocSn: projectId
         })
         .then((data) => {

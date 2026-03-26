@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TbArrowBackUp, TbSettings } from "react-icons/tb";
 import { post } from "../api/api";
+import { useAuth } from "../common/AuthContext";
 
 export default function ProjectLayout() {
     
@@ -11,23 +12,19 @@ export default function ProjectLayout() {
     const [userOption, setUserOption] = useState(false);
     const isProjectList = location.pathname === "/projects";
     const [isMotivationAlert, setIsMotivationAlert] = useState("Y");
+    const { user, logout } = useAuth();
 
-    post("/getTempUser", { 
-        userId: "test001"
-    })
-    .then((data) => {
-        setIsMotivationAlert(data.isMotivationAlert);
-    })
-    .catch(console.error);
+    useEffect(() => {
+        setIsMotivationAlert(user?.isMotivationAlert);
+    }, []);
 
     const updateOption = (data) => {
-        console.log(data);
-        post("/updateTempUser", { 
-            userId: "test001",
+        post("/updateAlert", { 
+            userId: user?.userId,
             isMotivationAlert: data
         })
         .then(() => {
-            setIsMotivationAlert(!isMotivationAlert);
+            setIsMotivationAlert((isMotivationAlert==="Y")?"N":"Y");
         })
         .catch(console.error);
     }
@@ -93,7 +90,7 @@ export default function ProjectLayout() {
                         <div className="setting-bottom">
                             <div className="setting-bottom-inner-top">
                                 <button className="btn secondary"
-                                        onClick={() => navigate("/login")}
+                                        onClick={logout}
                                 >
                                     로그아웃
                                 </button>
