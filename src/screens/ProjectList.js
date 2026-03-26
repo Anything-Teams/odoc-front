@@ -111,7 +111,7 @@ export default function ProjectList() {
                             className={`card-inner ${item.endYn === 'Y' ? 'card-end' : ''}`}
                             style={{
                                 transform: activeId === item.odocSn
-                                    ? "translateX(-200px)"
+                                    ? "translateX(-180px)"
                                     : "translateX(0)",
                                 transition: "transform 0.3s ease"
                             }}
