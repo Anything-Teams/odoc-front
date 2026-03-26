@@ -55,38 +55,40 @@ export default function ProjectHistoryYear() {
       
     return (
         <div className="project-history-year">
-            <h2 className="detail-title">{title}</h2>
+            <div className="project-detail">
+                <h2 className="detail-title">{title}</h2>
 
-            {years.map((yearItem) => (
-                <div className="year-container" key={yearItem.year}>
-                    
-                    <div className="year-title">{yearItem.year}년</div>
+                {years.map((yearItem) => (
+                    <div className="year-container" key={yearItem.year}>
+                        
+                        <div className="year-title">{yearItem.year}년</div>
 
-                    <div className="year-grid">
-                    {yearItem.months.map((item) => (
-                        <div
-                        key={item.month}
-                        className="year-card"
-                        onClick={() =>
-                            navigate(`/projects/${projectId}/history-month?year=${yearItem.year}&month=${item.month}`)
-                        }
-                        >
-                        <div className="year-image-box">
-                            <img
-                                src={`/images/${Math.floor(Number(item.progress/10) || 0)}.png`}
-                                alt="progress"
-                                className="image-placeholder"
-                            />
+                        <div className="year-grid">
+                        {yearItem.months.map((item) => (
+                            <div
+                            key={item.month}
+                            className="year-card"
+                            onClick={() =>
+                                navigate(`/projects/${projectId}/history-month?year=${yearItem.year}&month=${item.month}`)
+                            }
+                            >
+                            <div className="year-image-box">
+                                <img
+                                    src={`/images/${Math.floor(Number(item.progress/10) || 0)}.png`}
+                                    alt="progress"
+                                    className="image-placeholder"
+                                />
+                            </div>
+
+                            <div className="year-progress">{item.progress}%</div>
+                            <div className="year-month">{Number(item.month)}월</div>
+                            </div>
+                        ))}
                         </div>
 
-                        <div className="year-progress">{item.progress}%</div>
-                        <div className="year-month">{Number(item.month)}월</div>
-                        </div>
-                    ))}
                     </div>
-
-                </div>
-                ))}
+                    ))}
+            </div>
         </div>
     )
 }

@@ -24,7 +24,7 @@ header {
 .header-center {
   flex: 1;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .header-logo-top {
@@ -61,7 +61,7 @@ header {
   
 .logo {
   font-size: 36px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
@@ -95,7 +95,7 @@ header {
   border: none;
   cursor: pointer;
   margin-top: 8px;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 0.5em;
   font-size: 20px;
   min-height: 6vh;
@@ -108,12 +108,12 @@ button:disabled {
 }
 
 .primary {
-  background-color: #44a9eb;
+  background-color: #52aeff;
   color: #ffffff;
 }
 
 .secondary {
-  background-color: #ff6150;
+  background-color: #FF5B5B;
   color: #ffffff;
 }
 
@@ -124,7 +124,7 @@ button:disabled {
 
 .btn-8 {
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 600;
   min-height: 8vh;
 }
 
@@ -132,13 +132,6 @@ button:disabled {
   display: flex;
   flex-direction: column;
   height: 88dvh;
-}
-
-.list-container {
-  flex: 1;
-  padding: 19px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .bottom-area {
@@ -160,7 +153,7 @@ button:disabled {
 .empty {
   text-align: center;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   color: #888;
   margin-top: 40px;
 }
@@ -199,7 +192,7 @@ button:disabled {
 }
 
 .card-title {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 30px;
 }
 
@@ -212,13 +205,13 @@ button:disabled {
 }
 
 .card-end {
-  background-color: #ff6150;
+  background-color: #FF5B5B;
 }
 
 .card-btn {
   padding: 20px;
   border: none;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 0.5em;
   font-size: 20px;
   min-height: 98%;
@@ -248,7 +241,7 @@ button:disabled {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-size: 1.5em;
-  font-weight: bold;
+  font-weight: 600;
   padding: 0;
   pointer-events: none;
 }
@@ -266,7 +259,7 @@ button:disabled {
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  font-weight: bold;
+  font-weight: 600;
   border: 0;
   background: transparent;
   color: #000;
@@ -333,14 +326,16 @@ button:disabled {
 }
 
 .project-history-year {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 88dvh;
 }
 
 .year-title {
   text-align: left;
   padding-left: 12px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 16px;
 }
 
@@ -379,7 +374,7 @@ button:disabled {
 
 .year-progress {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 4px;
 }
 
@@ -389,7 +384,9 @@ button:disabled {
 }
 
 .project-history-month {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 88dvh;
 }
 
 .month-title {
@@ -419,7 +416,7 @@ button:disabled {
 .month-rate {
   text-align: center;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 25px;
   margin-top: 25px;
 }
@@ -458,9 +455,9 @@ button:disabled {
 
 .odoc-created {
   font-size: 10px;
-  color: red;
+  color: #ff0000;
   margin-top: 2px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .year-container { 
@@ -501,24 +498,24 @@ button:disabled {
   z-index: 99;
 }
 
-.project-container.layout-option {
+.layout-option {
   position: absolute;
 
 }
 
-.project-container.layout-option {
+.layout-option {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   background-color: #FFFFFF;
-  height: 100vh;
+  height: 97dvh;
   transform: translateY(100%);
   transition: transform 0.30s ease;
   pointer-events: none;
 }
 
-.project-container.layout-option.open {
+.layout-option.open {
   transform: translateY(0);
   transition: transform 0.30s ease;
   pointer-events: auto;
@@ -526,26 +523,25 @@ button:disabled {
 
 .layout-option-inner {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  height: 100%;
 }
 
 .setting-bottom {
   margin-bottom: 56px;
-  gap: 20px;
 }
 
 .setting-bottom-inner-top{
-  padding-top: 20px;
-  width: 200px;
+  padding: 16px;
 }
 
 .setting-bottom-inner-bottom {
-  padding-top: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   justify-items: center;
   font-size: 15px;
-  color: #666666;
+  color: #555;
 }
 
 .setting-content {
@@ -556,13 +552,13 @@ button:disabled {
 }
 
 .radio-item {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    color: #afafaf;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 0.5em;
+    border: 1px solid #dcdada;
+    cursor: pointer;
 }
 
 .radio-item input {
@@ -571,12 +567,13 @@ button:disabled {
 
 .radio-item span {
   flex: 1;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .radio-item.active {
-  border: 1px solid #333;
-  background-color: #f5f5f5;
+  background-color: #9CCFFF;
+  color: #484848;
+  font-weight: 600;
 }
 
 * {

@@ -56,43 +56,45 @@ export default function ProjectHistoryMonth() {
 
   return (
     <div className="project-history-month">
-      <h2 className="detail-title">{title}</h2>
+      <div className="project-detail">
+        <h2 className="detail-title">{title}</h2>
 
-      <div className="month-title">
-        {year}년 {Number(month)}월
-      </div>
+        <div className="month-title">
+          {year}년 {Number(month)}월
+        </div>
 
-      <div className="month-image-box">
-        <img
-          src={`/images/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
-          alt="progress"
-          className="image-placeholder"
-        />
-      </div>
+        <div className="month-image-box">
+          <img
+            src={`/images/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
+            alt="progress"
+            className="image-placeholder"
+          />
+        </div>
 
-      <div className="month-rate">
-        {data.month}월 오독률 {data.odocRate}%
-      </div>
+        <div className="month-rate">
+          {data.month}월 오독률 {data.odocRate}%
+        </div>
 
-      <div className="day-grid">
-        {days.map((day) => {
-          const isChecked = checkedDays.includes(String(day).padStart(2, "0"));
-          const isCreated = day === data.createdDay;
+        <div className="day-grid">
+          {days.map((day) => {
+            const isChecked = checkedDays.includes(String(day).padStart(2, "0"));
+            const isCreated = day === data.createdDay;
 
-          return (
-            <div key={day} className="day-item">
-              <div className="day-number">{day}일</div>
+            return (
+              <div key={day} className="day-item">
+                <div className="day-number">{day}일</div>
 
-              <div className="day-box">
-                {isChecked && <div className="check-mark">✔</div>}
+                <div className="day-box">
+                  {isChecked && <div className="check-mark">✔</div>}
+                </div>
+
+                {isCreated && (
+                  <div className="odoc-created">ODOC!</div>
+                )}
               </div>
-
-              {isCreated && (
-                <div className="odoc-created">ODOC!</div>
-              )}
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

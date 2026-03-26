@@ -16,6 +16,7 @@ export default function ProjectList() {
     const [loading, setLoading] = useState(true);
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
+    const [isMotivationAlert, setIsMotivationAlert] = useState("N");
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -52,21 +53,32 @@ export default function ProjectList() {
         fetchList();
     }, []);
 
+    useEffect(() => {
+        post("/getTempUser", { 
+            userId: "test001"
+        })
+        .then((data) => {
+            setIsMotivationAlert(data.isMotivationAlert)
+        })
+        .catch(console.error);
+    }, []);
 
     useEffect(() => {
-       if (showAlert && !loading && isFirstAlert.current) {
-           isFirstAlert.current = false;
-
-           requestAnimationFrame(() => {
-               requestAnimationFrame(() => {
-                   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-                   alert(randomQuote);
-
-                   window.history.replaceState({}, document.title);
-               });
-           });
-       }
-   }, [loading, showAlert]);
+        if (showAlert && !loading && isFirstAlert.current) {
+            isFirstAlert.current = false;
+            
+            if(isMotivationAlert === "Y") {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                        alert(randomQuote);
+        
+                        window.history.replaceState({}, document.title);
+                    });
+                });
+            }
+        }
+   }, [loading, showAlert, isMotivationAlert]);
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
@@ -109,7 +121,7 @@ export default function ProjectList() {
 
     return (
         <div className="project-container">
-            <div className="list-container">
+            <div className="project-detail">
             <h2 className="title">나의 ODOC</h2>
 
             {odocs.length === 0 ? (

@@ -2,13 +2,35 @@ import { Outlet } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { TbArrowBackUp, TbSettings } from "react-icons/tb";
+import { post } from "../api/api";
+
 export default function ProjectLayout() {
     
     const navigate = useNavigate();
     const location = useLocation();
     const [userOption, setUserOption] = useState(false);
     const isProjectList = location.pathname === "/projects";
-    const [value, setValue] = useState("Y");
+    const [isMotivationAlert, setIsMotivationAlert] = useState("Y");
+
+    post("/getTempUser", { 
+        userId: "test001"
+    })
+    .then((data) => {
+        setIsMotivationAlert(data.isMotivationAlert);
+    })
+    .catch(console.error);
+
+    const updateOption = (data) => {
+        console.log(data);
+        post("/updateTempUser", { 
+            userId: "test001",
+            isMotivationAlert: data
+        })
+        .then(() => {
+            setIsMotivationAlert(!isMotivationAlert);
+        })
+        .catch(console.error);
+    }
 
     return (
         <div>
@@ -38,7 +60,7 @@ export default function ProjectLayout() {
             </div>
             </header>
             <main>
-                <div className={`project-container layout-option z-index-99 ${userOption ? "open" : ""}`}>
+                <div className={`layout-option z-index-99 ${userOption ? "open" : ""}`}>
                     <div className="project-detail layout-option-inner">
                         <div className="detail-title">
                             <div className="input-wrapper">
@@ -46,24 +68,24 @@ export default function ProjectLayout() {
                             </div>
                         </div>
                         <div className="setting-content">
-                            <label className={`radio-item ${value === "Y" ? "active" : ""}`}>
+                            <label className={`radio-item ${isMotivationAlert === "Y" ? "active" : ""}`}>
                               <input
                                 type="radio"
                                 name="setting"
                                 value="Y"
-                                checked={value === "Y"}
-                                onChange={(e) => setValue(e.target.value)}
+                                checked={isMotivationAlert === "Y"}
+                                onChange={(e) => updateOption(e.target.value)}
                               />
                               <span>명언 알림 ON</span>
                             </label>
 
-                            <label className={`radio-item ${value === "N" ? "active" : ""}`}>
+                            <label className={`radio-item ${isMotivationAlert === "N" ? "active" : ""}`}>
                               <input
                                 type="radio"
                                 name="setting"
                                 value="N"
-                                checked={value === "N"}
-                                onChange={(e) => setValue(e.target.value)}
+                                checked={isMotivationAlert === "N"}
+                                onChange={(e) => updateOption(e.target.value)}
                               />
                               <span>명언 알림 OFF</span>
                             </label>

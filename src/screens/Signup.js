@@ -16,7 +16,7 @@ export default function Signup() {
 
         <button className="btn tertiary"
           onClick={() => alert("가입완료.\n승인 후 로그인이 가능합니다.")}
-        >ODOC 가입</button>
+        >신청</button>
         <button className="btn secondary"
           onClick={() => navigate("/login")}
         >
