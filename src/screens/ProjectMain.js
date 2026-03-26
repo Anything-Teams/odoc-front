@@ -91,53 +91,53 @@ export default function ProjectMain() {
 
   return (
     <div className="project-container">
-        <div className="project-detail">
-          <div className="detail-title">
+      <div className="project-detail">
+        <div className="detail-title">
           <div className="input-wrapper">
-              <span className="input-ghost">{tempName}</span>
-              <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
-              />
-              {isEnd?"":(isReadOnly ? (
-                <span className="edit-icon" onClick={handleEditStart}>
-                  <BiEditAlt />
-                </span>
-              ) : (
-                <span className="odoc-btn-container">
-                  <button className="btn tertiary margin0" onClick={fn_odocNm_change}>저장</button>
-                  <button className="btn secondary margin0" onClick={handleEditEnd}>취소</button>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="image-box">
-              <img
-                    src={`/images/${Math.floor(Number(data.progress/10) || 0)}.png`}
-                    alt="progress"
-                    className="image-placeholder"
-              />
-          </div>
-          <div className="progress">
-              {Number(data.odocMonth)}월 {data.progress}%
-          </div>
-
-          <div className="button-group">
-              <button
-                className="btn secondary btn-8"
-                disabled={data.odocYn === 1 || data.endYn === "Y"}
-                onClick={() => one_day_one_commit(data.odocSn)}
-              >
-              {odocBtn}
-              </button>
-
-              <button
-                className="btn tertiary"
-                onClick={() => navigate(`/projects/${projectId}/history-year`)}
-              >
-              내역
-              </button>
+            <span className="input-ghost">{tempName}</span>
+            <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
+            />
+            {isEnd?"":(isReadOnly ? (
+              <span className="edit-icon" onClick={handleEditStart}>
+                <BiEditAlt />
+              </span>
+            ) : (
+              <span className="odoc-btn-container">
+                <button className="btn tertiary margin0" onClick={fn_odocNm_change}>저장</button>
+                <button className="btn secondary margin0" onClick={handleEditEnd}>취소</button>
+              </span>
+            ))}
           </div>
         </div>
+
+        <div className="image-box">
+            <img
+                  src={`/images/${Math.floor(Number(data.progress/10) || 0)}.png`}
+                  alt="progress"
+                  className="image-placeholder"
+            />
+        </div>
+        <div className="progress">
+            {Number(data.odocMonth)}월 {data.progress}%
+        </div>
+
+        <div className="button-group">
+            <button
+              className="btn secondary btn-8"
+              disabled={data.odocYn === 1 || data.endYn === "Y"}
+              onClick={() => one_day_one_commit(data.odocSn)}
+            >
+            {odocBtn}
+            </button>
+
+            <button
+              className="btn tertiary"
+              onClick={() => navigate(`/projects/${projectId}/history-year`)}
+            >
+            내역
+            </button>
+        </div>
+      </div>
     </div>
   );
 }
