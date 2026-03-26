@@ -2,6 +2,8 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 
 export async function apiFetch(url, options = {}) {
   const response = await fetch(`${BASE_URL}${url}`, {
+    // get, post 적용될 수 있도록 apiFetch에 적용
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
