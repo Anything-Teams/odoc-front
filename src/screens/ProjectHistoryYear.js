@@ -40,10 +40,14 @@ export default function ProjectHistoryYear() {
 
     if (years.length === 0) {
         return (
-            <div className="project-history-year">
-                <h2 className="detail-title">{title}</h2>
+            <div className="project-container">
+                <div className="list-container">
+                    <h2 className="title">{title}</h2>
 
-                <div className="empty">데이터 없음</div>
+                    <div className="empty-container">
+                        <div className="empty">ODOC 내역이 없습니다</div>
+                    </div>
+                </div>
             </div>
         );
     }

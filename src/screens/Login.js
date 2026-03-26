@@ -16,7 +16,7 @@ export default function Login() {
 
         <button 
             className="btn primary"
-            onClick={() => navigate("/projects")}
+            onClick={() => navigate("/projects", { state: { showAlert: true } })}
         >
             로그인
         </button>

@@ -1,17 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { Loading } from "../components/Loading";
+import { quotes } from "../components/quotes";
 import { post } from "../api/api";
 
 import "../css/common.css";
 
 export default function ProjectList() {
+    const location = useLocation();
     const navigate = useNavigate();
     const [odocs, setOdocs] = useState([]);
     const [activeId, setActiveId] = useState(null);
     const startX = useRef(0);
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
+    const isFirstAlert = useRef(true);
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -47,6 +50,24 @@ export default function ProjectList() {
     useEffect(() => {
         fetchList();
     }, []);
+
+
+    useEffect(() => {
+       if (
+           location.state?.showAlert && !loading && isFirstAlert.current
+       ) {
+           isFirstAlert.current = false;
+
+           requestAnimationFrame(() => {
+               requestAnimationFrame(() => {
+                   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                   alert(randomQuote);
+
+                   window.history.replaceState({}, document.title);
+               });
+           });
+       }
+   }, [loading]);
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
