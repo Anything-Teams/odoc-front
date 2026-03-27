@@ -53,8 +53,10 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
-        fetchList();
-    }, []);
+        if (user?.userId) {
+            fetchList();
+        }
+    }, [user]);
 
     useEffect(() => {
         if (showAlert && !loading && isFirstAlert.current) {

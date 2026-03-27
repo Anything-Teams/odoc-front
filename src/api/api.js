@@ -11,12 +11,13 @@ export async function apiFetch(url, options = {}) {
   });
 
   if (!response.ok) {
-    console.log('response.status ', response.status);
     if (response.status === 401 || response.status === 403) {
       window.dispatchEvent(new Event("unauthorized"));
     }
-    throw new Error("API Error");
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || "API Error");
   }
+  
   return response;
 }
 
