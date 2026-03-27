@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
+import { Loading } from "../components/Loading";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Login() {
     if (user) navigate("/projects", { replace: true });
   }, [user]);
 
-  if (loading) return null;
+  if (loading) return <Loading />;;
 
   const doLogin = () => {
     if (!userId) {

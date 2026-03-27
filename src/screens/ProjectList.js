@@ -71,7 +71,7 @@ export default function ProjectList() {
                 });
             }
         }
-   }, [loading, showAlert, ]);
+   }, [loading, showAlert, isMotivationAlert]);
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
