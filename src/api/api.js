@@ -13,7 +13,7 @@ export async function apiFetch(url, options = {}) {
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
       localStorage.removeItem("user");
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
     throw new Error("API Error");
   }

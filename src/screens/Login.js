@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
@@ -9,8 +9,14 @@ export default function Login() {
 
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-  const { login } = useAuth();
-  
+  const { login, user, loading  } = useAuth();
+
+  useEffect(() => {
+    if (user) navigate("/projects", { replace: true });
+  }, [user]);
+
+  if (loading) return null;
+
   const doLogin = () => {
     if (!userId) {
       alert("아이디를 입력해주세요");
