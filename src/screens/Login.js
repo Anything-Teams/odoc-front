@@ -14,7 +14,6 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      console.log('111111111111');
       navigate("/projects", { replace: true });
     }
   }, []);

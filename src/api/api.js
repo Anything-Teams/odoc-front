@@ -11,8 +11,9 @@ export async function apiFetch(url, options = {}) {
   });
 
   if (!response.ok) {
+    console.log('response.status ', response.status);
     if (response.status === 401 || response.status === 403) {
-      localStorage.removeItem("user");
+      window.dispatchEvent(new Event("unauthorized"));
     }
     throw new Error("API Error");
   }

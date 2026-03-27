@@ -79,7 +79,7 @@ export default function ProjectLayout() {
                                 checked={isMotivationAlert === "Y"}
                                 onChange={(e) => updateOption(e.target.value)}
                               />
-                              <span>명언 알림 ON</span>
+                              <span>데일리 메세지 알림 ON</span>
                             </label>
 
                             <label className={`radio-item ${isMotivationAlert === "N" ? "active" : ""}`}>
@@ -90,7 +90,7 @@ export default function ProjectLayout() {
                                 checked={isMotivationAlert === "N"}
                                 onChange={(e) => updateOption(e.target.value)}
                               />
-                              <span>명언 알림 OFF</span>
+                              <span>데일리 메세지 OFF</span>
                             </label>
                         </div>
                         <div className="setting-bottom">
