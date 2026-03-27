@@ -1,7 +1,11 @@
-const BASE_URL = process.env.REACT_APP_API_URL;
+// const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = "/api";
 
 export async function apiFetch(url, options = {}) {
-  const response = await fetch(`${BASE_URL}${url}`, {
+  const fullUrl = url.startsWith('/') ? `${BASE_URL}${url}` : `${BASE_URL}/${url}`;
+
+  // const response = await fetch(`${BASE_URL}${url}`, {
+  const response = await fetch(fullUrl, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
