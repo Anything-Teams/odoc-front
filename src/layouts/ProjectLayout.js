@@ -18,6 +18,12 @@ export default function ProjectLayout() {
         setIsMotivationAlert(user?.isMotivationAlert);
     }, []);
 
+    useEffect(() => {
+      if (!user) {
+        navigate("/login", { replace: true });
+      }
+    }, [user]);
+
     const updateOption = (data) => {
         post("/updateAlert", { 
             userId: user?.userId,

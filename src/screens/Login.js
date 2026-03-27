@@ -13,10 +13,13 @@ export default function Login() {
   const { login, user, loading  } = useAuth();
 
   useEffect(() => {
-    if (user) navigate("/projects", { replace: true });
-  }, [user]);
+    if (user) {
+      console.log('111111111111');
+      navigate("/projects", { replace: true });
+    }
+  }, []);
 
-  if (loading) return <Loading />;;
+  if (loading) return <Loading />;
 
   const doLogin = () => {
     if (!userId) {
