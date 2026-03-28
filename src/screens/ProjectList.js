@@ -131,41 +131,41 @@ export default function ProjectList() {
         <div className="project-container">
             <div className="project-detail">
             <div className="title">나의 ODOC</div>
+            <div className="odoc-list-sort">
+                <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
+                    <input
+                    type="radio" name="odocType" value=""
+                    checked={odocType === "0"}
+                    onChange={(e) => updateOdocType(e.target.value)}
+                    />
+                    <span className="odoc-item-span">전체</span>
+                </label>
+
+                <label className={`radio-item odoc-sort-item ${odocType === "1" ? "odoc-active" : ""}`}>
+                    <input
+                    type="radio" name="odocType" value="1"
+                    checked={odocType === "1"}
+                    onChange={(e) => updateOdocType(e.target.value)}
+                    />
+                    <span className="odoc-item-span">ODOC</span>
+                </label>
+
+                <label className={`radio-item odoc-sort-item ${odocType === "2" ? "odoc-active" : ""}`}>
+                    <input
+                    type="radio" name="odocType" value="2"
+                    checked={odocType === "2"}
+                    onChange={(e) => updateOdocType(e.target.value)}
+                    />
+                    <span className="odoc-item-span">기록</span>
+                </label>
+            </div>
 
             {odocs.length === 0 ? (
                 <div className="empty-container">
-                    <div className="empty">목표를 설정하세요!</div>
+                    <div className="empty">{odocType === "2"?"첫 번째 기록을 남겨보세요!":"목표를 설정하세요!"}</div>
                 </div>
             ) : (
                 <>
-                    <div className="odoc-list-sort">
-                        <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
-                            <input
-                            type="radio" name="odocType" value=""
-                            checked={odocType === "0"}
-                            onChange={(e) => updateOdocType(e.target.value)}
-                            />
-                            <span className="odoc-item-span">전체</span>
-                        </label>
-
-                        <label className={`radio-item odoc-sort-item ${odocType === "1" ? "odoc-active" : ""}`}>
-                            <input
-                            type="radio" name="odocType" value="1"
-                            checked={odocType === "1"}
-                            onChange={(e) => updateOdocType(e.target.value)}
-                            />
-                            <span className="odoc-item-span">ODOC</span>
-                        </label>
-
-                        <label className={`radio-item odoc-sort-item ${odocType === "2" ? "odoc-active" : ""}`}>
-                            <input
-                            type="radio" name="odocType" value="2"
-                            checked={odocType === "2"}
-                            onChange={(e) => updateOdocType(e.target.value)}
-                            />
-                            <span className="odoc-item-span">기록</span>
-                        </label>
-                        </div>
                     <div className="card-list">
                     {odocs.map((item) => (
                         <div
@@ -188,7 +188,10 @@ export default function ProjectList() {
                                 <div className="card-title">
                                     <span>
                                     {item.odocType === '2' ? 
-                                        <span className="card-label card-record">기록</span>
+                                        <>
+                                            <span className="card-label card-record">기록</span>
+                                            <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : ''}`}>{item.endYn === "Y" ? "종료" : ""}</span>
+                                        </>
                                     : 
                                     (
                                         <>
