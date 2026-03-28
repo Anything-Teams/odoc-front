@@ -1,5 +1,5 @@
-// const BASE_URL = process.env.REACT_APP_API_URL;
-const BASE_URL = "/api";
+// const BASE_URL = process.env.REACT_APP_API_URL; //로컬
+const BASE_URL = "/api"; //운영
 
 export async function apiFetch(url, options = {}) {
   const fullUrl = url.startsWith('/') ? `${BASE_URL}${url}` : `${BASE_URL}/${url}`;

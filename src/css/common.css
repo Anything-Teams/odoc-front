@@ -17,7 +17,6 @@ header {
 .header-left,
 .header-right {
   width: 80px;
-  cursor: pointer;
   font-size: 20px;
 }
 
@@ -123,7 +122,7 @@ button:disabled {
 }
 
 .btn-8 {
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 600;
   min-height: 8vh;
 }
@@ -139,8 +138,10 @@ button:disabled {
 }
   
 .title {
+  font-size: 20px;
   text-align: center;
   margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .empty-container {
@@ -167,12 +168,14 @@ button:disabled {
 .card {
   position: relative;
   overflow: hidden;
+  border: 1px solid #b9b9b9;
+  border-radius: 8px;
 }
 
 
 .card-inner {
-  background-color: #8aef68;
-  min-height:7em;
+  background-color: #FFFFFF;
+  min-height:6em;
   padding: 16px;
   border-radius: 8px;
   position: relative;
@@ -193,7 +196,9 @@ button:disabled {
 
 .card-title {
   font-weight: 600;
-  font-size: 30px;
+  font-size: 21px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-date {
@@ -203,8 +208,13 @@ button:disabled {
   font-size: 14px;
   color: #3f3f3f;
 }
+.card-ing {
+  background-color: #8aef68;
+  color: #3f3f3f;
+}
 
 .card-end {
+  color: #FFFFFF;
   background-color: #FF5B5B;
 }
 
@@ -575,6 +585,17 @@ button:disabled {
   background-color: #9CCFFF;
   color: #484848;
   font-weight: 600;
+}
+
+.card-label {
+  padding: 5px;
+  border-radius: 0.5em;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.odoc-completed-color {
+  color: #7c7c7c;
 }
 
 * {

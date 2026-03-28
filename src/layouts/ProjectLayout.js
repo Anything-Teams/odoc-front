@@ -41,10 +41,13 @@ export default function ProjectLayout() {
             <div className="header">
                 <div
                     className="header-left"
-                    onClick={() => navigate(-1)}
-                    style={{ visibility: isProjectList ? "hidden" : "visible" }}
                 >
-                    <TbArrowBackUp />
+                    <span
+                        onClick={() => navigate(-1)}
+                        style={{ visibility: isProjectList ? "hidden" : "visible" }}
+                    >
+                        <TbArrowBackUp />
+                    </span>
                 </div>
 
 
@@ -57,8 +60,12 @@ export default function ProjectLayout() {
                     </div>
                 </div>
 
-                <div className="header-right" onClick={() => {setUserOption(!userOption)}}>
-                    <TbSettings />
+                <div className="header-right">
+                    <span
+                        onClick={() => {setUserOption(!userOption)}}    
+                    >
+                        <TbSettings />
+                    </span>
                 </div>
             </div>
             </header>

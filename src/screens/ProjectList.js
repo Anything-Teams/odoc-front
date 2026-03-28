@@ -117,7 +117,7 @@ export default function ProjectList() {
     return (
         <div className="project-container">
             <div className="project-detail">
-            <h2 className="title">나의 ODOC</h2>
+            <div className="title">나의 ODOC</div>
 
             {odocs.length === 0 ? (
                 <div className="empty-container">
@@ -133,9 +133,8 @@ export default function ProjectList() {
                         onTouchMove={handleTouchMove}
                         onTouchEnd={() => handleTouchEnd(item.odocSn)}
                     >
-
                         <div
-                            className={`card-inner ${item.endYn === 'Y' ? 'card-end' : ''}`}
+                            className={`card-inner ${item.endYn === 'Y' ? 'odoc-completed-color' : ''}`}
                             style={{
                                 transform: activeId === item.odocSn
                                     ? "translateX(-180px)"
@@ -145,8 +144,8 @@ export default function ProjectList() {
                             onClick={() => navigate(`/projects/${item.odocSn}`)}
                         >
                             <div className="card-title">
-                                {item.endYn === "Y" ? "[종료] " : ""}
-                                {item.odocNm}
+                                <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : 'card-ing'}`}> {item.endYn === "Y" ? "종료" : "도전 중"} </span>
+                                <span>{item.odocNm}</span>
                             </div>
                             <div className="card-date">{item.frstRegDt}</div>
                         </div>
