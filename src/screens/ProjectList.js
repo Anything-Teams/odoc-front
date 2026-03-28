@@ -202,7 +202,12 @@ export default function ProjectList() {
                                     </span>
                                     <span>{item.odocNm}</span>
                                 </div>
-                                <div className="card-date">{item.frstRegDt}</div>
+                                <div className="card-bottom-odoc">
+                                    {item.odocYn === 1?"ODOC!":""}
+                                </div>
+                                <div className="card-bottom-date">
+                                    {item.frstRegDt}
+                                </div>
                             </div>
 
                             <div className="card-action">

@@ -200,13 +200,24 @@ button:disabled {
   justify-content: space-between;
 }
 
-.card-date {
+.card-bottom-odoc {
+  left: 16px;
+  font-style: italic;
+  color: #FF5B5B;
+  font-weight: bold;
   position: absolute;
-  right: 12px;
+  bottom: 8px;
+  font-size: 12px;
+}
+
+.card-bottom-date {
+  position: absolute;
+  right: 16px;
   bottom: 8px;
   font-size: 14px;
   color: #3f3f3f;
 }
+
 .card-ing {
   background-color: #8aef68;
   color: #3f3f3f;
