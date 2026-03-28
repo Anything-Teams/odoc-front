@@ -168,12 +168,11 @@ button:disabled {
 .card {
   position: relative;
   overflow: hidden;
-  border: 1px solid #b9b9b9;
-  border-radius: 8px;
 }
 
 
 .card-inner {
+  border: 1px solid #b9b9b9;
   background-color: #FFFFFF;
   min-height:6em;
   padding: 16px;
@@ -214,8 +213,18 @@ button:disabled {
 }
 
 .card-end {
-  color: #FFFFFF;
   background-color: #FF5B5B;
+  color: #FFFFFF;
+}
+
+.card-odoc {
+  background-color: #4ce587;
+  color: #FFFFFF;
+}
+
+.card-record {
+  background-color: #9f9f9f;
+  color: #FFFFFF;
 }
 
 .card-btn {
@@ -596,6 +605,58 @@ button:disabled {
 
 .odoc-completed-color {
   color: #7c7c7c;
+}
+
+.odoc-type-setting {
+  display: flex; 
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.odoc-item {
+  background-color: #d7d7d7;
+  padding: 10px;
+  width: 47%;
+  color: #9d9595;
+}
+
+.odoc-item.odoc-active {
+  background-color: #4e4e4e;
+  color: #ffffff;
+}
+
+.odoc-item span {
+  font-size: 12px;
+  text-align: center;
+}
+
+.odoc-list-sort {
+  display: flex; 
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.odoc-sort-item {
+  background-color: #d7d7d7;
+  padding: 10px;
+  width: 47%;
+  color: #9d9595;
+}
+
+.odoc-sort-item.odoc-active {
+  background-color: #4e4e4e;
+  color: #ffffff;
+}
+
+.odoc-sort-item span {
+  font-size: 12px;
+  text-align: center;
 }
 
 * {

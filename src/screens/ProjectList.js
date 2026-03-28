@@ -14,6 +14,7 @@ export default function ProjectList() {
     const startX = useRef(0);
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
+    const [odocType, setOdocType] = useState("0");
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
     const [isMotivationAlert, setIsMotivationAlert] = useState("N");
@@ -41,7 +42,8 @@ export default function ProjectList() {
 
     const fetchList = () => {
         post("/getProjectMainList", { 
-            userId: user?.userId
+            userId: user?.userId,
+            odocType: odocType==="0"?"":odocType
         })
         .then((data) => {
             setOdocs(data);
@@ -73,7 +75,14 @@ export default function ProjectList() {
                 });
             }
         }
-   }, [loading, showAlert, isMotivationAlert]);
+    }, [loading, showAlert, isMotivationAlert]);
+
+    useEffect(() => {
+        if (user?.userId) {
+            fetchList();
+        }
+    }, [odocType]);
+
 
     const fn_btn_event = async (odocSn, endYn) => {
         try {
@@ -110,6 +119,10 @@ export default function ProjectList() {
         }
     };
 
+    const updateOdocType = (data) => {
+        setOdocType(data);
+    }
+
     if (loading) {
         return <Loading />;
     }
@@ -124,57 +137,97 @@ export default function ProjectList() {
                     <div className="empty">목표를 설정하세요!</div>
                 </div>
             ) : (
-                <div className="card-list">
-                {odocs.map((item) => (
-                    <div
-                        key={item.odocSn}
-                        className="card"
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={() => handleTouchEnd(item.odocSn)}
-                    >
+                <>
+                    <div className="odoc-list-sort">
+                        <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
+                            <input
+                            type="radio" name="odocType" value=""
+                            checked={odocType === "0"}
+                            onChange={(e) => updateOdocType(e.target.value)}
+                            />
+                            <span className="odoc-item-span">전체</span>
+                        </label>
+
+                        <label className={`radio-item odoc-sort-item ${odocType === "1" ? "odoc-active" : ""}`}>
+                            <input
+                            type="radio" name="odocType" value="1"
+                            checked={odocType === "1"}
+                            onChange={(e) => updateOdocType(e.target.value)}
+                            />
+                            <span className="odoc-item-span">ODOC</span>
+                        </label>
+
+                        <label className={`radio-item odoc-sort-item ${odocType === "2" ? "odoc-active" : ""}`}>
+                            <input
+                            type="radio" name="odocType" value="2"
+                            checked={odocType === "2"}
+                            onChange={(e) => updateOdocType(e.target.value)}
+                            />
+                            <span className="odoc-item-span">기록</span>
+                        </label>
+                        </div>
+                    <div className="card-list">
+                    {odocs.map((item) => (
                         <div
-                            className={`card-inner ${item.endYn === 'Y' ? 'odoc-completed-color' : ''}`}
-                            style={{
-                                transform: activeId === item.odocSn
-                                    ? "translateX(-180px)"
-                                    : "translateX(0)",
-                                transition: "transform 0.3s ease"
-                            }}
-                            onClick={() => navigate(`/projects/${item.odocSn}`)}
+                            key={item.odocSn}
+                            className="card"
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={() => handleTouchEnd(item.odocSn)}
                         >
-                            <div className="card-title">
-                                <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : 'card-ing'}`}> {item.endYn === "Y" ? "종료" : "도전 중"} </span>
-                                <span>{item.odocNm}</span>
+                            <div
+                                className={`card-inner ${item.endYn === 'Y' ? 'odoc-completed-color' : ''}`}
+                                style={{
+                                    transform: activeId === item.odocSn
+                                        ? "translateX(-180px)"
+                                        : "translateX(0)",
+                                    transition: "transform 0.3s ease"
+                                }}
+                                onClick={() => navigate(`/projects/${item.odocSn}`)}
+                            >
+                                <div className="card-title">
+                                    <span>
+                                    {item.odocType === '2' ? 
+                                        <span className="card-label card-record">기록</span>
+                                    : 
+                                    (
+                                        <>
+                                            <span className="card-label card-odoc">ODOC</span>
+                                            <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : 'card-ing'}`}>{item.endYn === "Y" ? "종료" : "도전 중"}</span>
+                                        </>
+                                    )}
+                                    </span>
+                                    <span>{item.odocNm}</span>
+                                </div>
+                                <div className="card-date">{item.frstRegDt}</div>
                             </div>
-                            <div className="card-date">{item.frstRegDt}</div>
+
+                            <div className="card-action">
+                                <button
+                                    className="card-btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        fn_btn_event(item.odocSn, item.endYn);
+                                    }}
+                                >
+                                    {item.endYn === "Y" ? "재개" : "종료"}
+                                </button>
+
+                                <button
+                                    className="card-btn delete"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        fn_delete_event(item.odocSn);
+                                    }}
+                                >
+                                    삭제
+                                </button>
+                            </div>
+
                         </div>
-
-                        <div className="card-action">
-                            <button
-                                className="card-btn"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    fn_btn_event(item.odocSn, item.endYn);
-                                }}
-                            >
-                                {item.endYn === "Y" ? "재개" : "종료"}
-                            </button>
-
-                            <button
-                                className="card-btn delete"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    fn_delete_event(item.odocSn);
-                                }}
-                            >
-                                삭제
-                            </button>
-                        </div>
-
+                    ))}
                     </div>
-                ))}
-                </div>
+                </>
             )}
             </div>
             <div className="bottom-area">
