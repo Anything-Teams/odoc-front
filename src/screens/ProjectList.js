@@ -123,18 +123,23 @@ export default function ProjectList() {
         setOdocType(data);
     }
 
+    const parseDate = (str) => {
+        if (!str) return new Date(0);
+        return new Date(str.replace(/\.\s*/g, "-").replace(/-$/, ""));
+    };
+    
     const sortOdoc = (sortType) => {
         const sorted = [...odocs];
         if (sortType === "latest") {
-            sorted.sort((a, b) => new Date(b.frstRegDt) - new Date(a.frstRegDt));
+            sorted.sort((a, b) => parseDate(b.frstRegDt) - parseDate(a.frstRegDt));
         } else if (sortType === "oldest") {
-            sorted.sort((a, b) => new Date(a.frstRegDt) - new Date(b.frstRegDt));
+            sorted.sort((a, b) => parseDate(a.frstRegDt) - parseDate(b.frstRegDt));
         } else if (sortType === "lastOdoc") {
-            sorted.sort((a, b) => new Date(b.lastOdocDt) - new Date(a.lastOdocDt));
+            sorted.sort((a, b) => parseDate(b.lastOdocDt) - parseDate(a.lastOdocDt));
         } else if (sortType === "name") {
             sorted.sort((a, b) => a.odocNm.localeCompare(b.odocNm, "ko"));
         }
-        
+    
         sorted.sort((a, b) => {
             if (a.endYn === "Y" && b.endYn !== "Y") return 1;
             if (a.endYn !== "Y" && b.endYn === "Y") return -1;
