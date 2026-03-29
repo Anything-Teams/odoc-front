@@ -465,6 +465,7 @@ button:disabled {
   align-items: center;
   border: 1px solid #6b6969;
   padding: 7px;
+  border-radius: 10px;
 }
 
 .day-number {
@@ -474,7 +475,7 @@ button:disabled {
 
 .day-box {
   width: 50%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 0.7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -482,7 +483,7 @@ button:disabled {
 }
 
 .check-mark {
-  font-size: 16px;
+  font-size: 19px;
 }
 
 .odoc-created {
