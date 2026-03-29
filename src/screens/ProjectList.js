@@ -123,6 +123,27 @@ export default function ProjectList() {
         setOdocType(data);
     }
 
+    const sortOdoc = (sortType) => {
+        const sorted = [...odocs];
+        if (sortType === "latest") {
+            sorted.sort((a, b) => new Date(b.frstRegDt) - new Date(a.frstRegDt));
+        } else if (sortType === "oldest") {
+            sorted.sort((a, b) => new Date(a.frstRegDt) - new Date(b.frstRegDt));
+        } else if (sortType === "lastOdoc") {
+            sorted.sort((a, b) => new Date(b.lastOdocDt) - new Date(a.lastOdocDt));
+        } else if (sortType === "name") {
+            sorted.sort((a, b) => a.odocNm.localeCompare(b.odocNm, "ko"));
+        }
+        
+        sorted.sort((a, b) => {
+            if (a.endYn === "Y" && b.endYn !== "Y") return 1;
+            if (a.endYn !== "Y" && b.endYn === "Y") return -1;
+            return 0;
+        });
+    
+        setOdocs(sorted);
+    };
+
     if (loading) {
         return <Loading />;
     }
@@ -132,32 +153,42 @@ export default function ProjectList() {
             <div className="project-detail">
             <div className="title">나의 ODOC</div>
             <div className="odoc-list-sort">
-                <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
-                    <input
-                    type="radio" name="odocType" value=""
-                    checked={odocType === "0"}
-                    onChange={(e) => updateOdocType(e.target.value)}
-                    />
-                    <span className="odoc-item-span">전체</span>
-                </label>
+                <span className="odoc-type-sort">
+                    <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
+                        <input
+                        type="radio" name="odocType" value=""
+                        checked={odocType === "0"}
+                        onChange={(e) => updateOdocType(e.target.value)}
+                        />
+                        <span className="odoc-item-span">전체</span>
+                    </label>
 
-                <label className={`radio-item odoc-sort-item ${odocType === "1" ? "odoc-active" : ""}`}>
-                    <input
-                    type="radio" name="odocType" value="1"
-                    checked={odocType === "1"}
-                    onChange={(e) => updateOdocType(e.target.value)}
-                    />
-                    <span className="odoc-item-span">ODOC</span>
-                </label>
+                    <label className={`radio-item odoc-sort-item ${odocType === "1" ? "odoc-active" : ""}`}>
+                        <input
+                        type="radio" name="odocType" value="1"
+                        checked={odocType === "1"}
+                        onChange={(e) => updateOdocType(e.target.value)}
+                        />
+                        <span className="odoc-item-span">ODOC</span>
+                    </label>
 
-                <label className={`radio-item odoc-sort-item ${odocType === "2" ? "odoc-active" : ""}`}>
-                    <input
-                    type="radio" name="odocType" value="2"
-                    checked={odocType === "2"}
-                    onChange={(e) => updateOdocType(e.target.value)}
-                    />
-                    <span className="odoc-item-span">기록</span>
-                </label>
+                    <label className={`radio-item odoc-sort-item ${odocType === "2" ? "odoc-active" : ""}`}>
+                        <input
+                        type="radio" name="odocType" value="2"
+                        checked={odocType === "2"}
+                        onChange={(e) => updateOdocType(e.target.value)}
+                        />
+                        <span className="odoc-item-span">기록</span>
+                    </label>
+                </span>
+                <span>
+                    <select className="sort-odoc" id="sortOdoc" onChange={(e) => sortOdoc(e.target.value)}>
+                        <option value="latest">최신순</option>
+                        <option value="oldest">시작일순</option>
+                        <option value="lastOdoc">마지막 ODOC순</option>
+                        <option value="name">이름순</option>
+                    </select>
+                </span>
             </div>
 
             {odocs.length === 0 ? (
@@ -185,7 +216,7 @@ export default function ProjectList() {
                                 }}
                                 onClick={() => navigate(`/projects/${item.odocSn}`)}
                             >
-                                <div className="card-title">
+                                <div>
                                     <span>
                                     {item.odocType === '2' ? 
                                         <>
@@ -200,13 +231,17 @@ export default function ProjectList() {
                                         </>
                                     )}
                                     </span>
+                                </div>
+                                <div className="card-title">
                                     <span>{item.odocNm}</span>
                                 </div>
-                                <div className="card-bottom-odoc">
-                                    {item.odocYn === 1?"ODOC!":""}
-                                </div>
-                                <div className="card-bottom-date">
-                                    {item.frstRegDt}
+                                <div className="card-bottom">
+                                    <span className="card-bottom-date">
+                                        {item.odocType === "1"?`${item.frstRegDt} 시작`: item.lastOdocDt?`마지막 ${item.lastOdocDt}`: "아직 기록이 없어요"} 
+                                    </span>
+                                    <span className="card-bottom-odoc">
+                                        {item.odocYn === 1?"ODOC!":""}
+                                    </span>
                                 </div>
                             </div>
 

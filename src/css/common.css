@@ -140,7 +140,7 @@ button:disabled {
 .title {
   font-size: 20px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-weight: 600;
 }
 
@@ -172,13 +172,16 @@ button:disabled {
 
 
 .card-inner {
-  border: 1px solid #b9b9b9;
+  border: 1px solid #e3e3e3;
   background-color: #FFFFFF;
-  min-height:6em;
+  min-height:7em;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 18px;
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-action {
@@ -194,48 +197,47 @@ button:disabled {
 }
 
 .card-title {
-  font-weight: 600;
-  font-size: 21px;
+  font-weight: 700;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
 }
 
+.card-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card-bottom-odoc {
-  left: 16px;
-  font-style: italic;
   color: #FF5B5B;
   font-weight: bold;
-  position: absolute;
-  bottom: 8px;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .card-bottom-date {
-  position: absolute;
-  right: 16px;
-  bottom: 8px;
-  font-size: 14px;
+  font-size: 11px;
   color: #3f3f3f;
 }
 
 .card-ing {
-  background-color: #8aef68;
-  color: #3f3f3f;
+  background-color: #e8f8ef;
+  color: #2a8a54;
 }
 
 .card-end {
-  background-color: #FF5B5B;
-  color: #FFFFFF;
+  background-color: #feeef2;
+  color: #c2556a;
 }
 
 .card-odoc {
-  background-color: #4ce587;
-  color: #FFFFFF;
+  background-color: #e8f0fe;
+  color: #3a5fc8;
 }
 
 .card-record {
-  background-color: #9f9f9f;
-  color: #FFFFFF;
+  background-color: #fff3e0;
+  color: #d17224;
 }
 
 .card-btn {
@@ -608,9 +610,9 @@ button:disabled {
 }
 
 .card-label {
-  padding: 5px;
+  padding: 2px 8px;
   border-radius: 0.5em;
-  font-size: 12px;
+  font-size: 10px;
   margin-right: 5px;
 }
 
@@ -645,19 +647,25 @@ button:disabled {
 }
 
 .odoc-list-sort {
-  display: flex; 
+  display: flex;
   flex-direction: row;
-  gap: 12px;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 15px;
+  justify-content: space-between;
 }
 
 .odoc-sort-item {
   background-color: #d7d7d7;
-  padding: 10px;
-  width: 47%;
+  padding: 4px 15px;
   color: #9d9595;
+  border-radius: 8px;
+  margin-right: 5px;
+}
+
+.odoc-type-sort {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .odoc-sort-item.odoc-active {
@@ -668,6 +676,16 @@ button:disabled {
 .odoc-sort-item span {
   font-size: 12px;
   text-align: center;
+}
+
+.sort-odoc {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4e4e4e;
+  background: #fff;
+  border: 1px solid #c8c8c8;
+  border-radius: 8px;
+  padding: 4px 20px 4px 4px;
 }
 
 * {
