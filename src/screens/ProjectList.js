@@ -216,11 +216,45 @@ export default function ProjectList() {
                 </span>
             </div>
 
-            {odocs.length === 0 ? (
-                <div className="empty-container">
-                    <div className="empty">{odocType === "2"?"첫 번째 기록을 남겨보세요!":"목표를 설정하세요!"}</div>
-                </div>
-            ) : (
+            {odocs.length === 0 ? 
+                <>
+                    {odocType === "1"?
+                    <>
+                        <div className="odoc-list-sort sort-detail-container">
+                            <label className={`radio-item odoc-sort-item odoc-detail-sort all ${(odocEndYn === "") ? "odoc-active" : ""}`}>
+                                <input
+                                type="radio" name="odocEndYn" value=""
+                                checked={odocEndYn === ""}
+                                onChange={(e) => sortOdocDetail(e.target.value)}
+                                />
+                                <span className="odoc-item-span">전체</span>
+                            </label>
+
+                            <label className={`radio-item odoc-sort-item odoc-detail-sort ing ${odocEndYn === "N" ? "odoc-active" : ""}`}>
+                                <input
+                                type="radio" name="odocEndYn" value="N"
+                                checked={odocEndYn === "N"}
+                                onChange={(e) => sortOdocDetail(e.target.value)}
+                                />
+                                <span className="odoc-item-span">도전 중</span>
+                            </label>
+
+                            <label className={`radio-item odoc-sort-item odoc-detail-sort end ${odocEndYn === "Y" ? "odoc-active" : ""}`}>
+                                <input
+                                type="radio" name="odocEndYn" value="Y"
+                                checked={odocEndYn === "Y"}
+                                onChange={(e) => sortOdocDetail(e.target.value)}
+                                />
+                                <span className="odoc-item-span">종료</span>
+                            </label>
+                        </div>
+                    </>
+                    :<></>}
+                    <div className="empty-container">
+                        <div className="empty">{odocType === "2"?"첫 번째 기록을 남겨보세요!":"목표를 설정하세요!"}</div>
+                    </div>
+                </>
+            : 
                 <>
                     {odocType === "1"?
                         <>
@@ -328,7 +362,7 @@ export default function ProjectList() {
                     ))}
                     </div>
                 </>
-            )}
+            }
             </div>
             <div className="bottom-area">
                 <button
