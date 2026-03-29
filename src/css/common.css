@@ -188,7 +188,7 @@ button:disabled {
   position: absolute;
   top: 0;
   right: 0;
-  width: 170px;
+  width: 120px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -241,14 +241,13 @@ button:disabled {
 }
 
 .card-btn {
-  padding: 20px;
+  width: 52px;
+  height: 72%;
   border: none;
-  font-weight: 600;
-  border-radius: 0.5em;
-  font-size: 20px;
-  min-height: 98%;
-  background-color: #858585;
-  color: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .project-detail {
@@ -651,7 +650,6 @@ button:disabled {
   flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
-  justify-content: space-between;
 }
 
 .odoc-sort-item {
@@ -686,6 +684,35 @@ button:disabled {
   border: 1px solid #c8c8c8;
   border-radius: 8px;
   padding: 4px 20px 4px 10px;
+}
+
+.sort-detail-container {
+  width: 100%;
+  justify-content: center;
+}
+
+.odoc-detail-sort {
+  width: 33%;
+  border: 0px;
+}
+
+.odoc-detail-sort.odoc-active {
+  border: 1px solid #e7d7da;
+}
+
+.odoc-detail-sort.all {
+  background-color: #f8e8f6;
+  color: #a2556b;
+}
+
+.odoc-detail-sort.ing {
+  background-color: #e8f8ef;
+    color: #519f72;
+}
+
+.odoc-detail-sort.end {
+  background-color: #feeef2;
+  color: #d88b9a;
 }
 
 * {

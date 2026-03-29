@@ -5,6 +5,7 @@ import { quotes } from "../components/quotes";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
+import { MdOutlinePause, MdPlayArrow, MdDelete } from "react-icons/md";
 
 export default function ProjectList() {
     const location = useLocation();
@@ -15,10 +16,12 @@ export default function ProjectList() {
     const currentX = useRef(0);
     const [loading, setLoading] = useState(true);
     const [odocType, setOdocType] = useState("0");
+    const [odocEndYn, setOdocEndYn] = useState("");
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
     const [isMotivationAlert, setIsMotivationAlert] = useState("N");
     const { user } = useAuth();
+    const [sortType, setSortType] = useState("latest");
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -43,7 +46,8 @@ export default function ProjectList() {
     const fetchList = () => {
         post("/getProjectMainList", { 
             userId: user?.userId,
-            odocType: odocType==="0"?"":odocType
+            odocType: odocType==="0"?"":odocType,
+            endYn: odocEndYn
         })
         .then((data) => {
             setOdocs(data);
@@ -81,7 +85,7 @@ export default function ProjectList() {
         if (user?.userId) {
             fetchList();
         }
-    }, [odocType]);
+    }, [odocType, odocEndYn]);
 
 
     const fn_btn_event = async (odocSn, endYn) => {
@@ -121,6 +125,10 @@ export default function ProjectList() {
 
     const updateOdocType = (data) => {
         setOdocType(data);
+        setOdocEndYn("");
+
+        setSortType("latest");
+        sortOdoc("latest");
     }
 
     const parseDate = (str) => {
@@ -148,6 +156,14 @@ export default function ProjectList() {
     
         setOdocs(sorted);
     };
+
+    const sortOdocDetail = (sortType) => {
+        setOdocEndYn(sortType);
+
+        setSortType("latest");
+        sortOdoc("latest");
+    };
+
 
     if (loading) {
         return <Loading />;
@@ -187,7 +203,11 @@ export default function ProjectList() {
                     </label>
                 </span>
                 <span>
-                    <select className="sort-odoc" id="sortOdoc" onChange={(e) => sortOdoc(e.target.value)}>
+                    <select className="sort-odoc" value={sortType} id="sortOdoc" 
+                        onChange={(e) => {
+                            setSortType(e.target.value);
+                            sortOdoc(e.target.value);
+                    }}>
                         <option value="latest">최신순</option>
                         <option value="oldest">시작일순</option>
                         <option value="lastOdoc">마지막 ODOC순</option>
@@ -202,6 +222,38 @@ export default function ProjectList() {
                 </div>
             ) : (
                 <>
+                    {odocType === "1"?
+                        <>
+                            <div className="odoc-list-sort sort-detail-container">
+                                <label className={`radio-item odoc-sort-item odoc-detail-sort all ${(odocEndYn === "") ? "odoc-active" : ""}`}>
+                                    <input
+                                    type="radio" name="odocEndYn" value=""
+                                    checked={odocEndYn === ""}
+                                    onChange={(e) => sortOdocDetail(e.target.value)}
+                                    />
+                                    <span className="odoc-item-span">전체</span>
+                                </label>
+
+                                <label className={`radio-item odoc-sort-item odoc-detail-sort ing ${odocEndYn === "N" ? "odoc-active" : ""}`}>
+                                    <input
+                                    type="radio" name="odocEndYn" value="N"
+                                    checked={odocEndYn === "N"}
+                                    onChange={(e) => sortOdocDetail(e.target.value)}
+                                    />
+                                    <span className="odoc-item-span">도전 중</span>
+                                </label>
+
+                                <label className={`radio-item odoc-sort-item odoc-detail-sort end ${odocEndYn === "Y" ? "odoc-active" : ""}`}>
+                                    <input
+                                    type="radio" name="odocEndYn" value="Y"
+                                    checked={odocEndYn === "Y"}
+                                    onChange={(e) => sortOdocDetail(e.target.value)}
+                                    />
+                                    <span className="odoc-item-span">종료</span>
+                                </label>
+                            </div>
+                        </>
+                        :<></>}
                     <div className="card-list">
                     {odocs.map((item) => (
                         <div
@@ -215,7 +267,7 @@ export default function ProjectList() {
                                 className={`card-inner ${item.endYn === 'Y' ? 'odoc-completed-color' : ''}`}
                                 style={{
                                     transform: activeId === item.odocSn
-                                        ? "translateX(-180px)"
+                                        ? "translateX(-130px)"
                                         : "translateX(0)",
                                     transition: "transform 0.3s ease"
                                 }}
@@ -258,7 +310,7 @@ export default function ProjectList() {
                                         fn_btn_event(item.odocSn, item.endYn);
                                     }}
                                 >
-                                    {item.endYn === "Y" ? "재개" : "종료"}
+                                    {item.endYn === "Y" ? <MdPlayArrow/> : <MdOutlinePause/>}
                                 </button>
 
                                 <button
@@ -268,7 +320,7 @@ export default function ProjectList() {
                                         fn_delete_event(item.odocSn);
                                     }}
                                 >
-                                    삭제
+                                    <MdDelete />
                                 </button>
                             </div>
 
