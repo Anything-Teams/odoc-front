@@ -7,6 +7,7 @@ import ProjectMain from "../screens/ProjectMain";
 import ProjectLayout from "../layouts/ProjectLayout";
 import ProjectHistoryYear from "../screens/ProjectHistoryYear";
 import ProjectHistoryMonth from "../screens/ProjectHistoryMonth";
+import AdminPage from "../screens/AdminPage";
 
 export default function AppRouter() {
     return (
@@ -23,8 +24,8 @@ export default function AppRouter() {
                     <Route path=":projectId" element={<ProjectMain />} />
                     <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
                     <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
+                    <Route path="admin" element={<AdminPage />} />
                 </Route>
-
             </Routes>
         </BrowserRouter>
     );

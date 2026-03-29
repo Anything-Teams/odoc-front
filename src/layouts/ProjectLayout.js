@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { TbArrowBackUp, TbSettings } from "react-icons/tb";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
+import { TbLock } from "react-icons/tb";
 
 export default function ProjectLayout() {
     
@@ -61,6 +62,13 @@ export default function ProjectLayout() {
                 </div>
 
                 <div className="header-right">
+                    {user?.adminYn === "Y" && (
+                        <span className="admin-btn"
+                            onClick={() => navigate("/projects/admin")}
+                        >
+                            <TbLock />
+                        </span>
+                    )}
                     <span
                         onClick={() => {setUserOption(!userOption)}}    
                     >

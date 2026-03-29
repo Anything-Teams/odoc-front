@@ -39,6 +39,8 @@ header {
 
 .header-right {
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .login-container {
@@ -719,6 +721,10 @@ button:disabled {
 .odoc-detail-sort.end {
   background-color: #feeef2;
   color: #d88b9a;
+}
+
+.admin-btn {
+  margin-right: 30px;
 }
 
 * {
