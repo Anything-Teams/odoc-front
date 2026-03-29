@@ -248,6 +248,7 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #4e4e4e;
 }
 
 .project-detail {
@@ -650,6 +651,7 @@ button:disabled {
   flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
+  justify-content: space-between;
 }
 
 .odoc-sort-item {
@@ -657,13 +659,13 @@ button:disabled {
   padding: 4px 15px;
   color: #9d9595;
   border-radius: 8px;
-  margin-right: 5px;
 }
 
 .odoc-type-sort {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 5px;
 }
 
 .odoc-sort-item.odoc-active {
@@ -689,6 +691,9 @@ button:disabled {
 .sort-detail-container {
   width: 100%;
   justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .odoc-detail-sort {
