@@ -685,7 +685,7 @@ button:disabled {
   background: #fff;
   border: 1px solid #c8c8c8;
   border-radius: 8px;
-  padding: 4px 20px 4px 4px;
+  padding: 4px 20px 4px 10px;
 }
 
 * {
