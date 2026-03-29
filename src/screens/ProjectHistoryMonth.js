@@ -96,9 +96,7 @@ export default function ProjectHistoryMonth() {
                   {isChecked && <div className="check-mark">✔</div>}
                 </div>
 
-                {isCreated && (
-                  <div className="odoc-created">ODOC!</div>
-                )}
+                <div className="odoc-created">{isCreated?"ODOC!":"\u00A0"}</div>
               </div>
             );
           })}
