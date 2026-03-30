@@ -13,10 +13,31 @@ export default function ProjectLayout() {
     const [userOption, setUserOption] = useState(false);
     const isProjectList = location.pathname === "/projects";
     const [isMotivationAlert, setIsMotivationAlert] = useState("Y");
+    const [noticeContent, setNoticeContent] = useState(null);
     const { user, logout } = useAuth();
 
     useEffect(() => {
         setIsMotivationAlert(user?.isMotivationAlert);
+    }, []);
+
+    useEffect(() => {
+        const fetchNotice = () => {
+            post("/selectNotice", {
+                userId: user?.userId,
+                noticeYn: 'Y',
+                noticeSn: '1'
+            })
+            .then((data) => {
+                if (data?.noticeContent) setNoticeContent(data.noticeContent);
+                else setNoticeContent(null);
+            })
+            .catch(console.error);
+        };
+
+        fetchNotice();
+
+        window.addEventListener("noticeUpdated", fetchNotice); // ✅ 이벤트 수신
+        return () => window.removeEventListener("noticeUpdated", fetchNotice);
     }, []);
 
     useEffect(() => {
@@ -124,6 +145,12 @@ export default function ProjectLayout() {
                         </div>
                     </div>
                 </div>
+                {noticeContent != null ?
+                    <div className="notice-bar">
+                        <span className="notice-text">{noticeContent}</span>
+                    </div>
+                    :<></>
+                }
                 <Outlet />
             </main>
         </div>

@@ -59,7 +59,7 @@ export default function ProjectHistoryMonth() {
   return (
     <div className="project-history-month">
       <div className="project-detail">
-        <h2 className="detail-title">{title}</h2>
+        <div className="title">{title}</div>
 
         <div className="month-title">
           {year}년 {Number(month)}월

@@ -44,7 +44,7 @@ export default function ProjectHistoryYear() {
         return (
             <div className="project-container">
                 <div className="list-container">
-                    <h2 className="title">{title}</h2>
+                    <div className="title">{title}</div>
 
                     <div className="empty-container">
                         <div className="empty">ODOC 내역이 없습니다</div>
@@ -58,7 +58,7 @@ export default function ProjectHistoryYear() {
     return (
         <div className="project-history-year">
             <div className="project-detail">
-                <h2 className="detail-title">{title}</h2>
+                <h2 className="title">{title}</h2>
 
                 {years.map((yearItem) => (
                     <div className="year-container" key={yearItem.year}>

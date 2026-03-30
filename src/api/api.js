@@ -4,8 +4,8 @@ const BASE_URL = "/api"; //운영
 export async function apiFetch(url, options = {}) {
   const fullUrl = url.startsWith('/') ? `${BASE_URL}${url}` : `${BASE_URL}/${url}`;
 
-  // const response = await fetch(`${BASE_URL}${url}`, {
-  const response = await fetch(fullUrl, {
+  const response = await fetch(`${BASE_URL}${url}`, {
+  // const response = await fetch(fullUrl, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
