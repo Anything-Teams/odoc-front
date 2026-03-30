@@ -67,7 +67,7 @@ export default function ProjectHistoryMonth() {
 
         <div className="month-image-box">
           <img
-            src={`/images/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
+            src={`/images/${data.odocThemaType}/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
             alt="progress"
             className="image-placeholder"
           />

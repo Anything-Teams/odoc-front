@@ -58,7 +58,7 @@ export default function ProjectLayout() {
     }
 
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}>
             <header>
             <div className="header">
                 <div
@@ -151,7 +151,9 @@ export default function ProjectLayout() {
                     </div>
                     :<></>
                 }
-                <Outlet />
+                <div className="outlet-wrapper">
+                    <Outlet />
+                </div>   
             </main>
         </div>
     );

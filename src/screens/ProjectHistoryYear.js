@@ -76,7 +76,7 @@ export default function ProjectHistoryYear() {
                             >
                             <div className="year-image-box">
                                 <img
-                                    src={`/images/${Math.floor(Number(item.progress/10) || 0)}.png`}
+                                    src={`/images/${item.odocThemaType}/${Math.floor(Number(item.progress/10) || 0)}.png`}
                                     alt="progress"
                                     className="image-placeholder"
                                 />

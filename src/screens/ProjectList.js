@@ -6,6 +6,8 @@ import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 import { MdOutlinePause, MdPlayArrow, MdDelete } from "react-icons/md";
+import { TbTargetOff, TbTarget } from "react-icons/tb";
+
 
 export default function ProjectList() {
     const location = useLocation();
@@ -94,6 +96,23 @@ export default function ProjectList() {
                 userId: user?.userId,
                 odocSn: odocSn,
                 endYn: endYn === "Y" ? "N" : "Y"
+            })
+            .then((data) => {
+                setActiveId(null);
+                fetchList();
+            })
+            .catch(console.error);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const fn_btn_odoc_fav = async (odocSn, odocFavYn) => {
+        try {
+            await post("/updateProject", {
+                userId: user?.userId,
+                odocSn: odocSn,
+                odocFavYn: odocFavYn === "Y" ? "N" : "Y"
             })
             .then((data) => {
                 setActiveId(null);
@@ -301,7 +320,7 @@ export default function ProjectList() {
                                 className={`card-inner ${item.endYn === 'Y' ? 'odoc-completed-color' : ''}`}
                                 style={{
                                     transform: activeId === item.odocSn
-                                        ? "translateX(-130px)"
+                                        ? "translateX(-160px)"
                                         : "translateX(0)",
                                     transition: "transform 0.3s ease"
                                 }}
@@ -338,6 +357,16 @@ export default function ProjectList() {
 
                             <div className="card-action">
                                 <button
+                                    className={`card-btn ${item.odocFavYn === 'Y' ? 'fav-Y' : 'fav'}`}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        fn_btn_odoc_fav(item.odocSn, item.odocFavYn);
+                                    }}
+                                >
+                                    {item.odocFavYn === "Y" ? <TbTarget/> : <TbTargetOff/>}
+                                </button>
+
+                                <button
                                     className="card-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -364,7 +393,7 @@ export default function ProjectList() {
                 </>
             }
             </div>
-            <div className="bottom-area">
+            <div className="bottom-area btn-top-border">
                 <button
                     className="btn primary btn-8"
                     onClick={() => navigate("/projects/new")}

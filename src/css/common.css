@@ -126,19 +126,19 @@ button:disabled {
 .btn-8 {
   font-size: 23px;
   font-weight: 600;
-  min-height: 8vh;
+  margin-top: 0;
 }
 
 .project-container {
   display: flex;
   flex-direction: column;
-  height: 88vh;
+  height: 100%;
 }
 
 .bottom-area {
   padding: 16px;
 }
-  
+
 .title {
   font-size: 20px;
   text-align: center;
@@ -189,8 +189,8 @@ button:disabled {
 .card-action {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 120px;
+  right: 2px;
+  width: 150px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -347,6 +347,16 @@ button:disabled {
   align-items: center;
 }
 
+.image-placeholder.create {
+  width: 50%;
+}
+
+.image-box.create {
+  height: auto;
+  border: 1px solid #efefef;
+  border-radius: 0.5em;
+}
+
 .progress {
   display: flex;
   justify-content: center;
@@ -362,7 +372,8 @@ button:disabled {
 .project-history-year {
   display: flex;
   flex-direction: column;
-  height: 88vh;
+  height: 100%;
+  padding-bottom: 19px;
 }
 
 .year-title {
@@ -420,7 +431,8 @@ button:disabled {
 .project-history-month {
   display: flex;
   flex-direction: column;
-  height: 88vh;
+  height: 100%;
+  padding-bottom: 19px;
 }
 
 .month-title {
@@ -504,7 +516,7 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 88vh;
+  height: 100%;
 }
 
 .spinner {
@@ -527,6 +539,14 @@ button:disabled {
 .card-btn.delete {
     background-color: #e53935;
     color: #FFFFFF;
+}
+
+.card-btn.fav {
+  background-color: #e8f0fe;
+}
+.card-btn.fav-Y {
+  background-color: #52aeff;
+  color: #FFFFFF;
 }
 
 .z-index-99 {
@@ -733,6 +753,7 @@ button:disabled {
     background-color: #52aeff;
     padding: 8px 0;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .notice-text {
@@ -767,6 +788,25 @@ button:disabled {
 .admin-input{
   margin-bottom: 0;
 }
+
+.outlet-wrapper{ 
+  flex: 1; 
+  overflow-y: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.btn-top-border{
+  border-top: 1px solid #e2e2e2;
+} 
 
 * {
   box-sizing: border-box;

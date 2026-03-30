@@ -34,7 +34,7 @@ export default function AdminPage() {
             beforeNoticeYn: noticeYn
         })
         .then((data) => {
-            alert("저장완료!");
+            alert("공지사항이 저장되었습니다!");
             window.dispatchEvent(new Event("noticeUpdated"));
         })
         .catch(console.error);

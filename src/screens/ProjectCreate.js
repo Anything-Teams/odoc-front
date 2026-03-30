@@ -8,6 +8,7 @@ export default function ProjectCreate() {
   const navigate = useNavigate();
   const [odocNm, setOdocNm] = useState(""); 
   const [odocType, setOdocType] = useState("1");  
+  const [odocThemaType, setOdocThemaType] = useState("1");  
   const { user } = useAuth();
 
   const insertProject = () => {
@@ -18,7 +19,8 @@ export default function ProjectCreate() {
     post("/insertProject", { 
         userId: user?.userId,
         odocNm: odocNm,
-        odocType: odocType
+        odocType: odocType,
+        odocThemaType: odocThemaType
     })
     .then((data) => {
       navigate("/projects")
@@ -56,6 +58,43 @@ export default function ProjectCreate() {
             />
             <span className="odoc-item-span">기록</span>
           </label>
+        </div>
+
+        <div>
+          <div className="image-box create">
+              <img
+                    src={`/images/${odocThemaType}/0.png`}
+                    alt="progress"
+                    className="image-placeholder create"
+              />
+          </div>
+          <div className="odoc-type-setting">
+            <label className={`radio-item odoc-item ${odocThemaType === "1" ? "odoc-active" : ""}`}>
+              <input
+                type="radio" name="odocThemaType" value="1"
+                checked={odocThemaType === "1"}
+                onChange={(e) => setOdocThemaType(e.target.value)}
+              />
+              <span className="odoc-item-span">사쿠라</span>
+            </label>
+
+            <label className={`radio-item odoc-item ${odocThemaType === "2" ? "odoc-active" : ""}`}>
+              <input
+                type="radio" name="odocThemaType" value="2"
+                checked={odocThemaType === "2"}
+                onChange={(e) => setOdocThemaType(e.target.value)}
+              />
+              <span className="odoc-item-span">립파이</span>
+            </label>
+            <label className={`radio-item odoc-item ${odocThemaType === "3" ? "odoc-active" : ""}`}>
+              <input
+                type="radio" name="odocThemaType" value="3"
+                checked={odocThemaType === "3"}
+                onChange={(e) => setOdocThemaType(e.target.value)}
+              />
+              <span className="odoc-item-span">초요잉</span>
+            </label>
+          </div>
         </div>
 
         <button className="btn primary"

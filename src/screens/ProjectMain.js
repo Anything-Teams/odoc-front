@@ -114,7 +114,7 @@ export default function ProjectMain() {
 
         <div className="image-box">
             <img
-                  src={`/images/${Math.floor(Number(data.progress/10) || 0)}.png`}
+                  src={`/images/${data.odocThemaType}/${Math.floor(Number(data.progress/10) || 0)}.png`}
                   alt="progress"
                   className="image-placeholder"
             />
