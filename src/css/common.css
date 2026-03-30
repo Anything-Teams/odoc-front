@@ -132,7 +132,7 @@ button:disabled {
 .project-container {
   display: flex;
   flex-direction: column;
-  height: 88dvh;
+  height: 90dvh;
 }
 
 .bottom-area {
@@ -362,7 +362,7 @@ button:disabled {
 .project-history-year {
   display: flex;
   flex-direction: column;
-  height: 88dvh;
+  height: 90dvh;
 }
 
 .year-title {
@@ -420,7 +420,7 @@ button:disabled {
 .project-history-month {
   display: flex;
   flex-direction: column;
-  height: 88dvh;
+  height: 90dvh;
 }
 
 .month-title {
@@ -504,7 +504,7 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 88dvh;
+  height: 90dvh;
 }
 
 .spinner {
