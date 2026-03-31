@@ -52,7 +52,7 @@ export default function ProjectList() {
             endYn: odocEndYn
         })
         .then((data) => {
-            setOdocs(data);
+            sortOdoc(sortType, data);
             setLoading(false);
 
             setIsMotivationAlert(user?.isMotivationAlert);
@@ -145,9 +145,7 @@ export default function ProjectList() {
     const updateOdocType = (data) => {
         setOdocType(data);
         setOdocEndYn("");
-
         setSortType("latest");
-        sortOdoc("latest");
     }
 
     const parseDate = (str) => {
@@ -155,8 +153,8 @@ export default function ProjectList() {
         return new Date(str.replace(/\.\s*/g, "-").replace(/-$/, ""));
     };
     
-    const sortOdoc = (sortType) => {
-        const sorted = [...odocs];
+    const sortOdoc = (sortType, list = odocs) => {
+        const sorted = [...list];;
         if (sortType === "latest") {
             sorted.sort((a, b) => parseDate(b.frstRegDt) - parseDate(a.frstRegDt));
         } else if (sortType === "oldest") {
@@ -168,6 +166,8 @@ export default function ProjectList() {
         }
     
         sorted.sort((a, b) => {
+            if (a.odocFavYn !== "Y" && b.odocFavYn === "Y") return 1;
+            if (a.odocFavYn === "Y" && b.odocFavYn !== "Y") return -1;
             if (a.endYn === "Y" && b.endYn !== "Y") return 1;
             if (a.endYn !== "Y" && b.endYn === "Y") return -1;
             return 0;
