@@ -69,7 +69,7 @@ export default function ProjectMain() {
     getProjectMain();
   }, [getProjectMain]);
 
-  const one_day_one_commit = async (odocSn) => {
+  const one_day_one_commit = async (odocSn, streamSn) => {
     try {
       await post("/commitProject", {
         userId: user?.userId,
@@ -83,7 +83,7 @@ export default function ProjectMain() {
   
       setData(newData);
   
-      if (odocType === "1") alert("오늘도 해냈다!");
+      if (odocType === "1") alert(getOdocTypeMessage(newData.streamSn));
       else alert("오늘의 기록을 남겼습니다!");
   
       const themaId = Math.floor(newData.maxStreamSn / 7);
@@ -153,6 +153,21 @@ export default function ProjectMain() {
     );
   }
 
+  const getOdocTypeMessage = (streak = 0) => {
+    const prefix = getStreakPrefix(streak);
+  
+    if (streak >= 120) return `${prefix} 장기 루틴이 유지되고 있습니다`;
+    if (streak >= 60) return `${prefix} 지속 흐름이 강화되고 있습니다`;
+    if (streak >= 30) return `${prefix} 안정적인 루틴이 유지되고 있습니다`;
+    if (streak >= 14) return `${prefix} 꾸준한 흐름이 유지되고 있습니다`;
+    if (streak >= 7) return `${prefix} 흐름이 안정적으로 이어지고 있습니다`;
+    if (streak >= 4) return `${prefix} 꾸준함이 유지되고 있습니다`;
+    if (streak >= 2) return `${prefix} 흐름이 이어지고 있습니다`;
+    if (streak >= 1) return `${prefix} 기록이 반영되었습니다`;
+  
+    return `기록이 반영되었습니다`;
+  };
+  
   const getStreakPrefix = (streak) => {
     if (streak >= 365) return "🌌";
     if (streak >= 300) return "🪐";
@@ -265,7 +280,7 @@ export default function ProjectMain() {
             <button
               className="btn secondary btn-8"
               disabled={data.odocYn === 1 || data.endYn === "Y"}
-              onClick={() => one_day_one_commit(data.odocSn)}
+              onClick={() => one_day_one_commit(data.odocSn, data.streamSn)}
             >
             {odocBtn}
             </button>
