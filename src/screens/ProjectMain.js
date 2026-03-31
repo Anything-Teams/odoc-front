@@ -28,10 +28,10 @@ export default function ProjectMain() {
       setData(data);
       if(data.odocType === "1") {
         setOdocBtn((data.endYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
-        setOdocType(1);
+        setOdocType("1");
       } else {
-        setOdocType(2);
         setOdocBtn((data.endYn === "Y")?"종료된 기록 입니다":(data.odocYn)?"남겨두기 완료!":"남겨두기!");
+        setOdocType("2");
       }
       setLoading(false);
       setTempName(data.odocNm);
