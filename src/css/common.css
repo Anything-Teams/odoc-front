@@ -893,6 +893,37 @@ main {
   font-weight: 700;
 }
 
+.unlocked-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.unlocked-content {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+}
+.unlocked-content p {
+  font-size: 16px;
+  color: #fb6e11;
+  font-weight: 700;
+}
+
+.unlocked-image {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
 * {
   box-sizing: border-box;
 }

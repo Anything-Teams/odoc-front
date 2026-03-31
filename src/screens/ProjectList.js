@@ -191,7 +191,7 @@ export default function ProjectList() {
     const getStreamStr = (streamSn, maxStreamSn) => {
         if (streamSn <= 0) {
             return maxStreamSn > 0
-                ? <>최대 {maxStreamSn}일 기록에 도전!</>
+                ? <>최대 {maxStreamSn}일 기록에 도전해보세요</>
                 : <></>;
         }
     

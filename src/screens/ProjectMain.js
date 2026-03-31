@@ -5,6 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
+import { TbSquareLetterR } from "react-icons/tb";
 
 export default function ProjectMain() {
   const { projectId } = useParams();
@@ -16,8 +17,30 @@ export default function ProjectMain() {
   const [loading, setLoading] = useState(true);
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [userThema, setUserThema] = useState([]);
+  const [unlockedThemaId, setUnlockedThemaId] = useState(null);
+  const [showUnlockedModal, setShowUnlockedModal] = useState(false); 
   const inputRef = useRef(null);
   const { user } = useAuth();
+  const insertedRef = useRef(new Set());
+  
+  useEffect(() => {
+    if (user?.userId) {
+      post("/selectUserThema", { 
+        userId: user?.userId
+      })
+      .then((data) => {
+        setUserThema(Array.isArray(data) ? data : (data?.themaId ? [data.themaId] : []));
+      })
+      .catch(console.error);
+    }
+  }, []);
+
+  const getUnlockedTheme = (maxStreamSn) => {
+    if (maxStreamSn >= 2) return "초요잉";
+    if (maxStreamSn >= 1) return "립파이";
+    return null;
+  };
 
   const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
@@ -26,6 +49,7 @@ export default function ProjectMain() {
     })  
     .then((data) => {
       setData(data);
+
       if(data.odocType === "1") {
         setOdocBtn((data.endYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
         setOdocType("1");
@@ -39,7 +63,7 @@ export default function ProjectMain() {
       if(data.endYn==="Y") setIsEnd(true);
     })
     .catch(console.error);
-  }, [projectId]);
+  }, [projectId, userThema]);
 
   useEffect(() => {
     getProjectMain();
@@ -49,13 +73,37 @@ export default function ProjectMain() {
     try {
       await post("/commitProject", {
         userId: user?.userId,
-        odocSn: odocSn
+        odocSn
       });
-
-      if(odocType === "1") alert("오늘도 해냈다!");
+  
+      const newData = await post("/getProjectMain", {
+        userId: user?.userId,
+        odocSn
+      });
+  
+      setData(newData);
+  
+      if (odocType === "1") alert("오늘도 해냈다!");
       else alert("오늘의 기록을 남겼습니다!");
-
-      getProjectMain();
+  
+      const themaId = Math.floor(newData.maxStreamSn / 7);
+      const currentTheme = getUnlockedTheme(themaId);
+      const isThemaUnlocked = userThema.includes(themaId);
+  
+      if (currentTheme && !isThemaUnlocked) {
+        await post("/insertUserThema", {
+          userId: user?.userId,
+          themaId
+        });
+  
+        setUnlockedThemaId(themaId);
+        setShowUnlockedModal(true);
+  
+        setTimeout(() => setShowUnlockedModal(false), 3000);
+  
+        setUserThema(prev => [...prev, themaId]);
+      }
+  
     } catch (err) {
       console.error(err);
     }
@@ -229,6 +277,18 @@ export default function ProjectMain() {
             내역
             </button>
         </div>
+        {showUnlockedModal && (
+          <div className="unlocked-modal">
+            <div className="unlocked-content">
+              <img
+                src={`/images/${unlockedThemaId}/0.png`}
+                alt="unlocked"
+                className="unlocked-image"
+              />
+              <p>🎉 {getUnlockedTheme(unlockedThemaId)} 테마가 잠금해제되었습니다!</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

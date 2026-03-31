@@ -15,10 +15,15 @@ export default function ProjectCreate() {
 
   useEffect(() => {
     if (user?.userId) {
-      setOdocThemaMax(Math.floor(Number(`${user.maxStreamSn}`/ 7) || 0));
+      post("/selectUserThema", { 
+        userId: user?.userId
+      })
+      .then((data) => {
+        setOdocThemaMax(Array.isArray(data) ? data : (data?.themaId ? data.themaId : 0));
+      })
+      .catch(console.error);
     }
-}, [user]);
-
+  }, []);
   
   const insertProject = () => {
     if(odocNm==="") {
