@@ -167,7 +167,7 @@ export default function ProjectMain() {
   
     return `기록이 반영되었습니다`;
   };
-  
+
   const getStreakPrefix = (streak) => {
     if (streak >= 365) return "🌌";
     if (streak >= 300) return "🪐";
