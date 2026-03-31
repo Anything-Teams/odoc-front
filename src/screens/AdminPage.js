@@ -13,11 +13,11 @@ export default function AdminPage() {
     const { user } = useAuth();
 
     useEffect(() => {
+        if (!user) return;
+
         selectNotice();
-
         userList();
-    }, []);
-
+    }, [user]);
     const selectNotice = () => {
         post("/selectNotice", {
             userId: user?.userId,
@@ -75,6 +75,7 @@ export default function AdminPage() {
         })
         .then((data) => {
             alert("설정이 변경되었습니다");
+            userList();
         })
         .catch(console.error);
     }
@@ -85,6 +86,7 @@ export default function AdminPage() {
         })
             .then((data) => {
                 alert("삭제되었습니다");
+                userList();
             })
             .catch(console.error);
     }
