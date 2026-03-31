@@ -188,6 +188,20 @@ export default function ProjectList() {
         return <Loading />;
     }
 
+    const getStreamStr = (streamSn, maxStreamSn) => {
+        if (streamSn <= 0) {
+            return maxStreamSn > 0
+                ? <>최대 {maxStreamSn}일 기록에 도전!</>
+                : <></>;
+        }
+    
+        if (streamSn < maxStreamSn) {
+            return <>🔥 {streamSn}일 연속 (최대 {maxStreamSn}일)</>;
+        }
+    
+        return <>🔥 현재 {streamSn}일 최대 기록 유지 중</>;
+    };
+
     return (
         <div className="project-container">
             <div className="project-detail">
@@ -326,7 +340,7 @@ export default function ProjectList() {
                                 }}
                                 onClick={() => navigate(`/projects/${item.odocSn}`)}
                             >
-                                <div>
+                                <div className="label-content">
                                     <span>
                                     {item.odocType === '2' ? 
                                         <>
@@ -342,6 +356,9 @@ export default function ProjectList() {
                                             {item.odocFavYn === 'Y'?<span className="card-label card-fav">집중⭐</span>:<></>}
                                         </>
                                     )}
+                                    </span>
+                                    <span className="odoc-stream">
+                                        { (item.odocType === "1"&&item.endYn === "N")?getStreamStr(`${item.streamSn}`, `${item.maxStreamSn}`):<></>}
                                     </span>
                                 </div>
                                 <div className="card-title">

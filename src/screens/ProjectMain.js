@@ -105,6 +105,78 @@ export default function ProjectMain() {
     );
   }
 
+  const getStreakPrefix = (streak) => {
+    if (streak >= 365) return "🌌";
+    if (streak >= 300) return "🪐";
+    if (streak >= 250) return "👑";
+    if (streak >= 200) return "🏆";
+    if (streak >= 150) return "💎";
+    if (streak >= 120) return "🔥🔥";
+    if (streak >= 90)  return "🏅"; 
+    if (streak >= 60)  return "🌿"; 
+    if (streak >= 30)  return "🔥";
+    if (streak >= 14)  return "🌱";
+    if (streak >= 7)   return "🌼";
+    if (streak >= 1)   return "👍";
+    return "";
+  };
+  
+  const MILESTONE = {
+    1: "첫 걸음을 시작했습니다",
+    2: "이틀째 흐름이 이어지고 있습니다",
+    3: "3일째, 연속성이 생기고 있습니다",
+    5: "5일 동안 흐름이 유지되고 있습니다",
+    7: "7일 동안 안정 구간에 들어섰습니다",
+  
+    10: "10일 동안 루틴이 자리잡아가고 있습니다",
+    14: "14일 동안 패턴이 유지되고 있습니다",
+    20: "20일 동안 일관성이 강화되고 있습니다",
+    30: "30일 동안 습관이 생활화되고 있습니다",
+  
+    35: "35일 동안 흐름이 안정적으로 이어지고 있습니다",
+    40: "40일 동안 중단 없이 유지되고 있습니다",
+    50: "50일 동안 꾸준함이 구조가 되고 있습니다",
+    60: "60일 동안 루틴이 안정 단계에 있습니다",
+    70: "70일 동안 지속력이 강화되고 있습니다",
+    80: "80일 동안 거의 자동화 단계에 접근하고 있습니다",
+    90: "90일 동안 강한 지속 패턴이 형성되고 있습니다",
+  
+    100: "100일 동안 장기 루틴이 정착되고 있습니다",
+    120: "120일 동안 자기관리 구조가 안정적으로 작동하고 있습니다",
+    150: "150일 동안 높은 수준의 지속 시스템이 유지되고 있습니다",
+  
+    200: "200일 동안 습관이 시스템으로 전환되고 있습니다",
+    250: "250일 동안 생활 구조가 루틴화되고 있습니다",
+    300: "300일 동안 엘리트 지속 구조가 형성되고 있습니다",
+    365: "365일 동안 1년 지속 구조가 완성되었습니다",
+  
+    MAX: "장기 지속 구조가 안정적으로 유지되고 있습니다"
+  };
+
+  const getStreamStr = (streak, maxStreak) => {
+    const prefix = getStreakPrefix(streak);
+
+    if (streak <= 0) {
+      return maxStreak > 0
+        ? `최대 ${maxStreak}일 기록에 도전!`
+        : "";
+    }
+
+    if (MILESTONE[streak]) {
+      return `${prefix} ${MILESTONE[streak]}`.trim();
+    }
+
+    if (streak < maxStreak) {
+      return `${prefix} ${streak}일 연속 (최대 ${maxStreak}일)`.trim();
+    }
+
+    if (streak <= 365) {
+      return `${prefix} 현재 ${streak}일 최대 기록 유지 중`.trim();
+    }
+
+    return `${prefix} ${MILESTONE.MAX}`.trim();
+  };
+
   return (
     <div className="project-container">
       <div className="project-detail">
@@ -135,6 +207,10 @@ export default function ProjectMain() {
         </div>
         <div className="progress">
             {Number(data.odocMonth)}월 {data.progress}%
+            <span className="odoc-main-stream">
+              {(data.odocType === "1"&&data.endYn === "N")?getStreamStr(data.streamSn, data.maxStreamSn):<></>}
+            </span>
+
         </div>
 
         <div className="button-group">

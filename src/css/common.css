@@ -365,8 +365,16 @@ button:disabled {
 .progress {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: #6d6d6d;
+  gap: 5px;
 }
-
+.odoc-main-stream{
+  font-size: 13px;
+  color: #ffab73;
+  font-weight: 700;
+}
 .button-group {
   display: flex;
   flex-direction: column;
@@ -871,6 +879,18 @@ main {
   display: flex;
   flex-direction: column;
   gap: 7px;
+}
+
+.label-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.odoc-stream {
+  font-size: 10px;
+  color: #ffab73;
+  font-weight: 700;
 }
 
 * {
