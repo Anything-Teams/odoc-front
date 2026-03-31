@@ -238,8 +238,13 @@ button:disabled {
 }
 
 .card-record {
-  background-color: #fff3e0;
-  color: #d17224;
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.card-fav {
+  background-color: #fff8e1;
+  color: #b8860b;
 }
 
 .card-btn {

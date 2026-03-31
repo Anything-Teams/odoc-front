@@ -330,14 +330,16 @@ export default function ProjectList() {
                                     <span>
                                     {item.odocType === '2' ? 
                                         <>
-                                            <span className="card-label card-record">기록</span>
-                                            <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : ''}`}>{item.endYn === "Y" ? "종료" : ""}</span>
+                                            <><span className="card-label card-record">기록</span></>
+                                            {item.endYn === 'Y'?<span className="card-label card-end">종료</span>:<></>}
+                                            {item.odocFavYn === 'Y'?<span className="card-label card-fav">집중⭐</span>:<></>}
                                         </>
                                     : 
                                     (
                                         <>
                                             <span className="card-label card-odoc">ODOC</span>
                                             <span className={`card-label ${item.endYn === 'Y' ? 'card-end' : 'card-ing'}`}>{item.endYn === "Y" ? "종료" : "도전 중"}</span>
+                                            {item.odocFavYn === 'Y'?<span className="card-label card-fav">집중⭐</span>:<></>}
                                         </>
                                     )}
                                     </span>
