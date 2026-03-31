@@ -64,6 +64,12 @@ export default function AdminPage() {
         })
         .then((data) => {
             alert("설정이 변경되었습니다");
+
+            setUsers(prevUsers =>
+                prevUsers.map(user =>
+                    user.userId === userId ? { ...user, userState: userState } : user
+                )
+            );
         })
         .catch(console.error);
     }
@@ -81,6 +87,7 @@ export default function AdminPage() {
     }
 
     const deleteUser = (userId) => {
+        if(window.confirm("삭제 하시겠습니까?"))
         post("/deleteUser", {
             userId: userId
         })
