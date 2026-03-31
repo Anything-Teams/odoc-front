@@ -36,9 +36,9 @@ export default function ProjectCreate() {
     <div className="login-container">
       <div></div>
       <div className="login-box">
-        <h1 className="logo">ODOC 명</h1>
+        <h1 className="logo">{odocType === "1" ? "ODOC 명" : "기록 명"}</h1>
 
-        <input type="text" placeholder="목표습관명(10자제한)" className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={10}/>
+        <input type="text" placeholder={`${odocType === "1" ? "목표습관명(10자제한)" : "기록명(10자제한)"}`} className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={10}/>
         
         <div className="odoc-type-setting">
           <label className={`radio-item odoc-item ${odocType === "1" ? "odoc-active" : ""}`}>

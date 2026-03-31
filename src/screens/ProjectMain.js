@@ -12,6 +12,7 @@ export default function ProjectMain() {
   const [data, setData] = useState({}); 
   const [tempName, setTempName] = useState("");
   const [odocBtn, setOdocBtn] = useState(""); 
+  const [odocType, setOdocType] = useState("1");
   const [loading, setLoading] = useState(true);
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -25,7 +26,13 @@ export default function ProjectMain() {
     })  
     .then((data) => {
       setData(data);
-      setOdocBtn((data.endYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
+      if(data.odocType === "1") {
+        setOdocBtn((data.endYn === "Y")?"종료된 ODOC 입니다":(data.odocYn)?"ODOC 완료!":"ODOC!");
+        setOdocType(1);
+      } else {
+        setOdocType(2);
+        setOdocBtn((data.endYn === "Y")?"종료된 기록 입니다":(data.odocYn)?"남겨두기 완료!":"남겨두기!");
+      }
       setLoading(false);
       setTempName(data.odocNm);
 
@@ -44,7 +51,10 @@ export default function ProjectMain() {
         userId: user?.userId,
         odocSn: odocSn
       });
-      alert("오늘도 해냈다!");
+
+      if(odocType === "1") alert("오늘도 해냈다!");
+      else alert("오늘의 기록을 남겼습니다!");
+
       getProjectMain();
     } catch (err) {
       console.error(err);
@@ -53,7 +63,11 @@ export default function ProjectMain() {
 
   const fn_odocNm_change = () => {
     if(tempName==="") {
-      alert("ODOC명을 입력해주세요");
+
+      if(odocType === "1") alert("ODOC명을 입력해주세요");
+      else alert("기록명을 입력해주세요");
+
+
       return;
     }
 
