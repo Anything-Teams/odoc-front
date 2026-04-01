@@ -43,7 +43,7 @@ export default function ProjectHistoryYear() {
     if (years.length === 0) {
         return (
             <div className="project-container">
-                <div className="list-container">
+                <div className="list-container empty_padding">
                     <div className="title">{title}</div>
 
                     <div className="empty-container">

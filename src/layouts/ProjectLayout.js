@@ -13,6 +13,7 @@ export default function ProjectLayout() {
     const [userOption, setUserOption] = useState(false);
     const isProjectList = location.pathname === "/projects";
     const [isMotivationAlert, setIsMotivationAlert] = useState("Y");
+    const [code, setCode] = useState("");
     const [noticeContent, setNoticeContent] = useState(null);
     const { user, logout } = useAuth();
 
@@ -36,7 +37,7 @@ export default function ProjectLayout() {
 
         fetchNotice();
 
-        window.addEventListener("noticeUpdated", fetchNotice); // ✅ 이벤트 수신
+        window.addEventListener("noticeUpdated", fetchNotice);
         return () => window.removeEventListener("noticeUpdated", fetchNotice);
     }, []);
 
@@ -53,6 +54,23 @@ export default function ProjectLayout() {
         })
         .then(() => {
             setIsMotivationAlert((isMotivationAlert==="Y")?"N":"Y");
+        })
+        .catch(console.error);
+    }
+
+    const codeSubmit = (data) => {
+        if(code==="") {
+            alert("코드를 입력해주세요");
+            return;
+          }
+
+        post("/codeRegist", { 
+            userId: user?.userId,
+            themaGetCd: code
+        })
+        .then((data) => {
+            alert(data.result);
+            setCode("");
         })
         .catch(console.error);
     }
@@ -107,6 +125,7 @@ export default function ProjectLayout() {
                             </div>
                         </div>
                         <div className="setting-content">
+                            <h3>데일리 메시지</h3>
                             <label className={`radio-item ${isMotivationAlert === "Y" ? "active" : ""}`}>
                               <input
                                 type="radio"
@@ -128,6 +147,16 @@ export default function ProjectLayout() {
                               />
                               <span>데일리 메시지 OFF</span>
                             </label>
+
+                            <div className="code-input">
+                                <h3>코드등록</h3> 
+                                <input type="text" placeholder="코드 입력란" className="input" value={code} onChange={(e) => setCode(e.target.value)}/>
+                                <button className="btn"
+                                    onClick={() => codeSubmit()}
+                                >
+                                    코드등록
+                                </button>
+                            </div>
                         </div>
                         <div className="setting-bottom">
                             <div className="setting-bottom-inner-top">

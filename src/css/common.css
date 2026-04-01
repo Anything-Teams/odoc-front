@@ -374,6 +374,7 @@ button:disabled {
   font-size: 13px;
   color: #ffab73;
   font-weight: 700;
+  margin-bottom: 15px;
 }
 .button-group {
   display: flex;
@@ -924,6 +925,40 @@ main {
   margin-bottom: 20px;
 }
 
+.thema-list {
+  display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.thema-item {
+  background-color: #ffc5a1;
+  padding: 10px;
+  width: 47%;
+  color: #ffffff;
+  border: 0;
+}
+
+.thema-item.thema-active {
+  background-color: #ff6600;
+  color: #ffffff;
+}
+
+.thema-item span {
+  font-size: 12px;
+  text-align: center;
+}
+
+.empty_padding { 
+  padding-top: 35px;
+}
+
+.code-input {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 * {
   box-sizing: border-box;
 }

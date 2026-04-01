@@ -46,7 +46,7 @@ export default function ProjectHistoryMonth() {
 
   if (!data) {
     return (
-      <div className="empty-container">
+      <div className="empty-container empty_padding">
         <div className="empty">데이터 없음</div>
       </div>
     );

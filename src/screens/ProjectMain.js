@@ -5,7 +5,6 @@ import { BiEditAlt } from "react-icons/bi";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
-import { TbSquareLetterR } from "react-icons/tb";
 
 export default function ProjectMain() {
   const { projectId } = useParams();
@@ -17,30 +16,34 @@ export default function ProjectMain() {
   const [loading, setLoading] = useState(true);
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const [userThema, setUserThema] = useState([]);
+  const [odocThemaList, setOdocThemaList] = useState([]); 
+  const [userThemaList, setUserThemaList] = useState([]);
   const [unlockedThemaId, setUnlockedThemaId] = useState(null);
   const [showUnlockedModal, setShowUnlockedModal] = useState(false); 
+  const [showUnlockedText, setShowUnlockedText] = useState(""); 
   const inputRef = useRef(null);
   const { user } = useAuth();
   const insertedRef = useRef(new Set());
-  
+
   useEffect(() => {
     if (user?.userId) {
-      post("/selectUserThema", { 
+      post("/selectThemaList", { 
         userId: user?.userId
       })
       .then((data) => {
-        setUserThema(Array.isArray(data) ? data : (data?.themaId ? [data.themaId] : []));
+        setOdocThemaList(data);
       })
       .catch(console.error);
     }
   }, []);
 
-  const getUnlockedTheme = (maxStreamSn) => {
-    if (maxStreamSn >= 2) return "초요잉";
-    if (maxStreamSn >= 1) return "립파이";
-    return null;
-  };
+  useEffect(() => {
+    post("/selectUserThemaList", {})
+    .then((data) => {
+      setUserThemaList(data);
+    })
+    .catch(console.error);
+  }, []);
 
   const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
@@ -63,13 +66,13 @@ export default function ProjectMain() {
       if(data.endYn==="Y") setIsEnd(true);
     })
     .catch(console.error);
-  }, [projectId, userThema]);
+  }, [projectId, userThemaList]);
 
   useEffect(() => {
     getProjectMain();
   }, [getProjectMain]);
 
-  const one_day_one_commit = async (odocSn, streamSn) => {
+  const one_day_one_commit = async (odocSn) => {
     try {
       await post("/commitProject", {
         userId: user?.userId,
@@ -85,24 +88,34 @@ export default function ProjectMain() {
   
       if (odocType === "1") alert(getOdocTypeMessage(newData.streamSn));
       else alert("오늘의 기록을 남겼습니다!");
-  
-      const themaId = Math.floor(newData.maxStreamSn / 7);
-      const currentTheme = getUnlockedTheme(themaId);
-      const isThemaUnlocked = userThema.includes(themaId);
-  
-      if (currentTheme && !isThemaUnlocked) {
+
+      for (const thema of odocThemaList) {
+        if (thema.themaGetMethod !== "day") continue;
+
+      const isUnlockDay = newData.streamSn === thema.themaGetDay;
+
+      if (!isUnlockDay) continue;
+
+      const alreadyHasThema = userThemaList.some(
+        (userGetThema) => userGetThema.themaId === thema.themaId
+      );
+
+      if (alreadyHasThema) continue;
+
         await post("/insertUserThema", {
           userId: user?.userId,
-          themaId
+          themaId: thema.themaId,
         });
   
-        setUnlockedThemaId(themaId);
+        setUnlockedThemaId(thema.themaId);
+        setShowUnlockedText(`🎉 ${thema.themaNm} 테마가 잠금해제되었습니다!`);
+
         setShowUnlockedModal(true);
-  
         setTimeout(() => setShowUnlockedModal(false), 3000);
   
-        setUserThema(prev => [...prev, themaId]);
-      }
+        setUserThemaList((prev) => [...prev, { themaId: thema.themaId }]);
+
+      };
   
     } catch (err) {
       console.error(err);
@@ -163,7 +176,7 @@ export default function ProjectMain() {
     if (streak >= 7) return `${prefix} 흐름이 안정적으로 이어지고 있습니다`;
     if (streak >= 4) return `${prefix} 꾸준함이 유지되고 있습니다`;
     if (streak >= 2) return `${prefix} 흐름이 이어지고 있습니다`;
-    if (streak >= 1) return `${prefix} 기록이 반영되었습니다`;
+    if (streak >= 1) return `${prefix} 습관의 첫걸음을 응원합니다!`;
   
     return `기록이 반영되었습니다`;
   };
@@ -280,7 +293,7 @@ export default function ProjectMain() {
             <button
               className="btn secondary btn-8"
               disabled={data.odocYn === 1 || data.endYn === "Y"}
-              onClick={() => one_day_one_commit(data.odocSn, data.streamSn)}
+              onClick={() => one_day_one_commit(data.odocSn)}
             >
             {odocBtn}
             </button>
@@ -300,7 +313,7 @@ export default function ProjectMain() {
                 alt="unlocked"
                 className="unlocked-image"
               />
-              <p>🎉 {getUnlockedTheme(unlockedThemaId)} 테마가 잠금해제되었습니다!</p>
+              <p>{showUnlockedText}</p>
             </div>
           </div>
         )}

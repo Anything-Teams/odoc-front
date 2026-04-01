@@ -8,18 +8,30 @@ export default function ProjectCreate() {
   const navigate = useNavigate();
   const [odocNm, setOdocNm] = useState(""); 
   const [odocType, setOdocType] = useState("1");  
-  const [odocThemaMax, setOdocThemaMax] = useState("0");  
+  const [odocThemaList, setOdocThemaList] = useState([]);  
+  const [userThemaList, setUserThemaList] = useState([]);  
   const [isInsertOdocThema, setIsInsertOdocThema] = useState(false);  
-  const [odocThemaType, setOdocThemaType] = useState("0");  
+  const [alertMessage, setAlertMessage] = useState("");  
+  const [odocThemaType, setOdocThemaType] = useState(0);  
   const { user } = useAuth();
 
   useEffect(() => {
+    post("/selectThemaList", {
+      userId: user?.userId
+    })
+    .then((data) => {
+      setOdocThemaList(data);
+    })
+    .catch(console.error);
+  }, []);
+
+  useEffect(() => {
     if (user?.userId) {
-      post("/selectUserThema", { 
+      post("/selectUserThemaList", { 
         userId: user?.userId
       })
       .then((data) => {
-        setOdocThemaMax(Array.isArray(data) ? data : (data?.themaId ? data.themaId : 0));
+        setUserThemaList(data);
       })
       .catch(console.error);
     }
@@ -47,8 +59,9 @@ export default function ProjectCreate() {
   }
 
   const setThema = (data) => {
-    setOdocThemaType(data); 
-    setIsInsertOdocThema(Number(data)>Number(odocThemaMax));
+    setOdocThemaType(data.themaId); 
+    setIsInsertOdocThema(!userThemaList.some((thema) => String(thema.themaId) === String(data.themaId)));
+    setAlertMessage(data.themaGetMethod === "day"?`${data.themaGetDay}일 연속 습관 완성 시 잠금해제 됩니다!`:'코드필요')
   }
 
   return (
@@ -87,40 +100,28 @@ export default function ProjectCreate() {
                     className="image-placeholder create"
               />
           </div>
-          <div className="odoc-type-setting">
-            <label className={`radio-item odoc-item ${odocThemaType === "0" ? "odoc-active" : ""}`}>
-              <input
-                type="radio" name="odocThemaType" value="0"
-                checked={odocThemaType === "0"}
-                onChange={(e) => setThema(e.target.value)}
-              />
-              <span className="odoc-item-span">사쿠라</span>
-            </label>
 
-            <label className={`radio-item odoc-item ${odocThemaType === "1" ? "odoc-active" : ""}`}>
-              <input
-                type="radio" name="odocThemaType" value="1"
-                checked={odocThemaType === "1"}
-                onChange={(e) => setThema(e.target.value)}
-              />
-              <span className="odoc-item-span">립파이</span>
-            </label>
-            <label className={`radio-item odoc-item ${odocThemaType === "2" ? "odoc-active" : ""}`}>
-              <input
-                type="radio" name="odocThemaType" value="2"
-                checked={odocThemaType === "2"}
-                onChange={(e) => setThema(e.target.value)}
-              />
-              <span className="odoc-item-span">초요잉</span>
-            </label>
+          {isInsertOdocThema && (
+            <div className="odoc-main-stream">
+              {alertMessage}
+            </div>
+          )}
+
+          <div className="odoc-type-setting">
+            <div className="thema-list">
+              {odocThemaList.map((item) => (
+                <label key={item.themaId} className={`radio-item thema-item ${odocThemaType === item.themaId? "thema-active" : ""}`}>
+                  <input
+                    type="radio" name="odocThemaType" value={item.themaId}
+                    checked={odocThemaType === item.themaId}
+                    onChange={() => setThema(item)}
+                  />
+                  <span className="thema-item-span">{item.themaNm}</span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
-
-        {isInsertOdocThema && (
-          <div className="odoc-main-stream">
-            {Number(odocThemaType) * 7}일 연속 습관 완성 시 잠금해제 됩니다!
-          </div>
-        )}
 
         <button className="btn primary" disabled={isInsertOdocThema}
           onClick={() => insertProject()}
