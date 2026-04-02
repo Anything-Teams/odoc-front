@@ -59,7 +59,7 @@ export default function ProjectHistoryMonth() {
   return (
     <div className="project-history-month">
       <div className="project-detail">
-        <div className="title">{title}</div>
+        <h2 className="title">{title}</h2>
 
         <div className="month-title">
           {year}년 {Number(month)}월
@@ -88,7 +88,7 @@ export default function ProjectHistoryMonth() {
             return (
               <div key={day} className="day-item" onClick={()=>{
                   if (isChecked && checkedTime) {
-                  alert("오독시간: " + checkedTime);
+                  alert(`${data.odocType === "1"?"오독시간":"기록시간"}: ${checkedTime}`);
               }}}>
                 <div className="day-number">{day}일</div>
 

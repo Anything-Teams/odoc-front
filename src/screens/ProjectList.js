@@ -154,7 +154,7 @@ export default function ProjectList() {
     };
     
     const sortOdoc = (sortType, list = odocs) => {
-        const sorted = [...list];;
+        const sorted = [...list];
         if (sortType === "latest") {
             sorted.sort((a, b) => parseDate(b.frstRegDt) - parseDate(a.frstRegDt));
         } else if (sortType === "oldest") {

@@ -151,7 +151,7 @@ export default function ProjectLayout() {
                             <div className="code-input">
                                 <h3>코드등록</h3> 
                                 <input type="text" placeholder="코드 입력란" className="input" value={code} onChange={(e) => setCode(e.target.value)}/>
-                                <button className="btn"
+                                <button className="btn tertiary"
                                     onClick={() => codeSubmit()}
                                 >
                                     코드등록
