@@ -196,10 +196,10 @@ export default function ProjectList() {
         }
     
         if (streamSn < maxStreamSn) {
-            return <>🔥 {streamSn}일 연속 (최대 {maxStreamSn}일)</>;
+            return <>{streamSn > 2 ? '🔥 ' : ''} {streamSn}일 연속 (최대 {maxStreamSn}일)</>;
         }
     
-        return <>🔥 현재 {streamSn}일 최대 기록 유지 중</>;
+        return <>{streamSn > 2 ? '🔥 ' : ''} 현재 {streamSn}일 최대 기록 유지 중</>;
     };
 
     return (
