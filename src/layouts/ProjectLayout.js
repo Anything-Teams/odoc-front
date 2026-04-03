@@ -5,7 +5,6 @@ import { TbArrowBackUp, TbSettings } from "react-icons/tb";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import { TbLock } from "react-icons/tb";
-import { bindForegroundMessageHandler } from "../common/push";
 
 export default function ProjectLayout() {
     
@@ -20,6 +19,7 @@ export default function ProjectLayout() {
 
     useEffect(() => {
         setIsMotivationAlert(user?.isMotivationAlert);
+        
     }, []);
 
     useEffect(() => {

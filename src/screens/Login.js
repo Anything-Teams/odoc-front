@@ -4,7 +4,7 @@ import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 import { Loading } from "../components/Loading";
-import { registerPush, bindForegroundMessageHandler } from "../common/push";
+import { registerPush } from "../common/push";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,7 +40,6 @@ export default function Login() {
       login({ userId: userId, ...data });
     
       await registerPush(userId);
-      await bindForegroundMessageHandler();
     
       navigate("/projects", { state: { showAlert: true } });
     })

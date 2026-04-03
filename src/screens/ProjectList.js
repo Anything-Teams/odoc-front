@@ -7,7 +7,7 @@ import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 import { MdOutlinePause, MdPlayArrow, MdDelete } from "react-icons/md";
 import { TbTargetOff, TbTarget } from "react-icons/tb";
-
+import { bindForegroundMessageHandler } from "../common/push";
 
 export default function ProjectList() {
     const location = useLocation();
@@ -59,6 +59,10 @@ export default function ProjectList() {
         })
         .catch(console.error);
     };
+
+    useEffect(() => {
+        bindForegroundMessageHandler();
+    }, []);
 
     useEffect(() => {
         if (user?.userId) {
