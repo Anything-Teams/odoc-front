@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AppRouter from "./routes/AppRouter";
 import { AuthProvider } from "./common/AuthContext";
 import { bindForegroundMessageHandler } from "./common/push";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./css/common.css";
 
 function InAppPushToast() {
@@ -55,9 +55,11 @@ function AppInner() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppInner />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppInner />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

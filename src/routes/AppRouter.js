@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import ProjectList from "../screens/ProjectList";
@@ -11,22 +11,20 @@ import AdminPage from "../screens/AdminPage";
 
 export default function AppRouter() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Navigate to="/login" replace />} />
-    
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+        <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
 
-                <Route path="/projects" element={<ProjectLayout />}>
-                    <Route index element={<ProjectList />} />
-                    <Route path="new" element={<ProjectCreate />} />
-                    <Route path=":projectId" element={<ProjectMain />} />
-                    <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
-                    <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
-                    <Route path="admin" element={<AdminPage />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+
+            <Route path="/projects" element={<ProjectLayout />}>
+                <Route index element={<ProjectList />} />
+                <Route path="new" element={<ProjectCreate />} />
+                <Route path=":projectId" element={<ProjectMain />} />
+                <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
+                <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
+                <Route path="admin" element={<AdminPage />} />
+            </Route>
+        </Routes>
     );
 }
