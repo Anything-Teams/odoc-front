@@ -67,11 +67,35 @@ export async function registerPush(userId) {
   }
 }
 
+let foregroundBound = false;
+
 export async function bindForegroundMessageHandler() {
-    const messaging = await getFirebaseMessaging();
-    if (!messaging) return;
-  
-    onMessage(messaging, (payload) => {
-      console.log("onMessage 수신", payload);
-    });
-  }
+  if (foregroundBound) return;
+  foregroundBound = true;
+
+  const messaging = await getFirebaseMessaging();
+  if (!messaging) return;
+
+  onMessage(messaging, (payload) => {
+    console.log("onMessage 수신", payload);
+
+    window.dispatchEvent(
+      new CustomEvent("odoc-push-message", {
+        detail: {
+          title:
+            payload.notification?.title ||
+            payload.data?.title ||
+            "ODOC",
+          body:
+            payload.notification?.body ||
+            payload.data?.body ||
+            "알림이 도착했습니다.",
+          link:
+            payload.fcmOptions?.link ||
+            payload.data?.link ||
+            "/projects",
+        },
+      })
+    );
+  });
+}

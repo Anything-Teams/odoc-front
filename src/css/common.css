@@ -1014,6 +1014,47 @@ main {
   flex-direction: column;
   align-items: center;
 }
+.inapp-push-toast {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 420px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  padding: 14px 16px;
+  z-index: 9999;
+  cursor: pointer;
+  animation: slideDownFade 0.25s ease;
+}
+
+.inapp-push-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: 4px;
+}
+
+.inapp-push-body {
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.4;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 
 * {
   box-sizing: border-box;
