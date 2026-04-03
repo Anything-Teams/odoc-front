@@ -90,10 +90,7 @@ export async function bindForegroundMessageHandler() {
             payload.notification?.body ||
             payload.data?.body ||
             "알림이 도착했습니다.",
-          link:
-            payload.fcmOptions?.link ||
-            payload.data?.link ||
-            "/projects",
+          link: "/projects",
         },
       })
     );
