@@ -4,7 +4,7 @@ import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 import { Loading } from "../components/Loading";
-import { registerPush } from "../common/push";
+import { registerPush, bindForegroundMessageHandler } from "../common/push";
 
 export default function Login() {
   const navigate = useNavigate();
