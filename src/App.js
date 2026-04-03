@@ -34,9 +34,6 @@ function InAppPushToast() {
   return (
     <div
       className="inapp-push-toast"
-      onClick={() => {
-        window.location.href = toast.link || "/projects";
-      }}
     >
       <div className="inapp-push-title">{toast.title}</div>
       <div className="inapp-push-body">{toast.body}</div>
