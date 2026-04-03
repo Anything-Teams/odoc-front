@@ -293,7 +293,7 @@ button:disabled {
 .odocNm-class {
   /* position: absolute; */
   left: 0;
-  /* width: 100%; */
+  width: 100%;
   font-size: 20px;
   margin-block-start: 0.85em;
   margin-block-end: 0.83em;
@@ -317,18 +317,18 @@ button:disabled {
   font-size: 1.5em;
   flex-shrink: 0;
   color: #7c7c7c;
-  position: absolute;
+  /* position: absolute;
   right: 20px;
-  top: 35px;
+  top: 35px; */
 }
 
 .alarm-icon {
   font-size: 1.5em;
   flex-shrink: 0;
   color: #7c7c7c;
-  position: absolute;
+  /* position: absolute;
   left: 20px;
-  top: 35px;
+  top: 35px; */
 }
 
 .alarm-time {
