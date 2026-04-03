@@ -12,8 +12,10 @@ export default function Signup() {
 
   const idRegex = /^[a-zA-Z0-9_-]+$/;
 
+
   const signUp = ()=> {
     if(userId && userPw && (userPw === userPwCheck)) {
+      const cleanNick = nickNm.trim();
 
       if (!idRegex.test(userId)) {
         alert("아이디는 영문, 숫자만 사용할 수 있습니다");
@@ -22,6 +24,12 @@ export default function Signup() {
 
       if (/^\d+$/.test(userId)) {
         alert("아이디는 숫자만으로 구성할 수 없습니다");
+        return;
+      }
+
+      if (!cleanNick) {
+        alert("닉네임을 입력해주세요");
+        setNickNm(cleanNick);
         return;
       }
 
@@ -53,7 +61,7 @@ export default function Signup() {
         return;
       }
 
-      if (!nickNm) {
+      if (!(nickNm.trim())) {
         alert("닉네임를 입력해주세요");
         return;
       }
@@ -80,7 +88,7 @@ export default function Signup() {
         <h1 className="logo">ODOC 가입</h1>
 
         <input type="text" placeholder="ID" className="input" onChange={(e) => setUserId(e.target.value)} maxLength={30}/>
-        <input type="text" placeholder="닉네임" className="input" onChange={(e) => setNickNm(e.target.value)} maxLength={30}/>
+        <input type="text" placeholder="닉네임" className="input" value={nickNm} onChange={(e) => setNickNm(e.target.value)} maxLength={30}/>
         <input type="password" placeholder="PW" className="input" onChange={(e) => setUserPw(e.target.value)}/>
         <input type="password" placeholder="PW확인" className="input" onChange={(e) => setUserPwCheck(e.target.value)} />
 
