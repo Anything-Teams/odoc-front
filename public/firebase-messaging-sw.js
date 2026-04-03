@@ -12,18 +12,8 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-
-  const title = payload.notification?.title || "ODOC";
-  const options = {
-    body: payload.notification?.body || "오늘 ODOC를 확인해보세요.",
-    icon: "/logo192.png",
-    data: {
-      url: payload.fcmOptions?.link || "/projects",
-    },
-  };
-
-  self.registration.showNotification(title, options);
-});
+    console.log("onBackgroundMessage 수신", payload);
+  });
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();

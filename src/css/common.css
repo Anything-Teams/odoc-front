@@ -316,7 +316,7 @@ button:disabled {
 .edit-icon {
   font-size: 1.5em;
   flex-shrink: 0;
-  color: #7c7c7c;
+  color: #c7c7c7;
   /* position: absolute;
   right: 20px;
   top: 35px; */
@@ -325,7 +325,9 @@ button:disabled {
 .alarm-icon {
   font-size: 1.5em;
   flex-shrink: 0;
-  color: #7c7c7c;
+  color: #c7c7c7;
+  display: flex;
+  align-items: center;
   /* position: absolute;
   left: 20px;
   top: 35px; */
@@ -708,7 +710,7 @@ button:disabled {
 }
 
 .odoc-item span {
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
 }
 
@@ -1006,8 +1008,11 @@ main {
   text-align: center;
 }
 
-.odoc-item-span {
-  font-size: 10px;
+.alarm-time-view {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 * {

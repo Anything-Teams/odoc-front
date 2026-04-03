@@ -285,9 +285,10 @@ export default function ProjectMain() {
     <div className="project-container">
       <div className="project-detail">
         <div className="detail-title">
+          
           <div className="input-wrapper">
             <span className="alarm-icon" onClick={() => fn_alarm_on()}>
-              {isEnd?"":onAlarm?<MdOutlineAccessAlarm />:<MdOutlineAlarmOff/>}
+              {isEnd?"":onAlarm?<span className="alarm-time-view"><MdOutlineAccessAlarm /><span>{odocAlarmTime}</span></span>:<MdOutlineAlarmOff/>}
             </span>
 
             <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}

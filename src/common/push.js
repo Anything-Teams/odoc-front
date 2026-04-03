@@ -68,19 +68,10 @@ export async function registerPush(userId) {
 }
 
 export async function bindForegroundMessageHandler() {
-  const messaging = await getFirebaseMessaging();
-  if (!messaging) return;
-
-  onMessage(messaging, (payload) => {
-
-    const title = payload.notification?.title || "ODOC";
-    const body = payload.notification?.body || "";
-
-    if (Notification.permission === "granted") {
-      new Notification(title, {
-        body,
-        icon: "/logo192.png",
-      });
-    }
-  });
-}
+    const messaging = await getFirebaseMessaging();
+    if (!messaging) return;
+  
+    onMessage(messaging, (payload) => {
+      console.log("onMessage 수신", payload);
+    });
+  }
