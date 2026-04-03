@@ -85,7 +85,7 @@ export default function Signup() {
         <input type="password" placeholder="PW확인" className="input" onChange={(e) => setUserPwCheck(e.target.value)} />
 
         <button className="btn tertiary" onClick={signUp}>
-          신청
+          가입
         </button>
         <button className="btn secondary" onClick={() => navigate("/login")}>
           취소
