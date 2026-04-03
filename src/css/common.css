@@ -266,16 +266,17 @@ button:disabled {
 
 
 .input-wrapper {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   align-items: center;
-  position: relative;
+  justify-content: center;
   gap: 5px;
 }
 
 .input-ghost {
   visibility: hidden;
   white-space: pre;
-  margin-block-start: 0.83em;
+  margin-block-start: 0.85em;
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
@@ -290,11 +291,11 @@ button:disabled {
 }
 
 .odocNm-class {
-  position: absolute;
+  /* position: absolute; */
   left: 0;
-  width: 100%;
+  /* width: 100%; */
   font-size: 20px;
-  margin-block-start: 0.83em;
+  margin-block-start: 0.85em;
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
@@ -305,6 +306,7 @@ button:disabled {
   padding: 0;
   outline: none;
   z-index: 3;
+  text-align: center;
 }
 
 .odocNm-class:read-only {
@@ -313,22 +315,45 @@ button:disabled {
 
 .edit-icon {
   font-size: 1.5em;
-  z-index: 5;
   flex-shrink: 0;
-  margin-top: 7px;
   color: #7c7c7c;
+  position: absolute;
+  right: 20px;
+  top: 35px;
+}
+
+.alarm-icon {
+  font-size: 1.5em;
+  flex-shrink: 0;
+  color: #7c7c7c;
+  position: absolute;
+  left: 20px;
+  top: 35px;
+}
+
+.alarm-time {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 7px 4px;
+  background: #fff;
 }
 
 .detail-title {
-  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .odoc-btn-container {
-  width: 59px; 
-  display: contents;
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .odoc-btn-container .btn {
@@ -548,6 +573,10 @@ button:disabled {
 
 .margin0 {
   margin-top: 0;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
 }
 
 .card-btn.delete {

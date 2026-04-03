@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Loading } from "../components/Loading";
 import { BiEditAlt } from "react-icons/bi";
+import { MdOutlineAccessAlarm, MdOutlineAlarmOff } from "react-icons/md";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
@@ -21,15 +22,14 @@ export default function ProjectMain() {
   const [unlockedThemaId, setUnlockedThemaId] = useState(null);
   const [showUnlockedModal, setShowUnlockedModal] = useState(false); 
   const [showUnlockedText, setShowUnlockedText] = useState(""); 
+  const [onAlarm, setOnAlarm] = useState(false);
+  const [odocAlarmTime, setOdocAlarmTime] = useState("");
   const inputRef = useRef(null);
   const { user } = useAuth();
-  const insertedRef = useRef(new Set());
 
   useEffect(() => {
     if (user?.userId) {
-      post("/selectThemaList", { 
-        userId: user?.userId
-      })
+      post("/selectThemaList", {})
       .then((data) => {
         setOdocThemaList(data);
       })
@@ -38,7 +38,9 @@ export default function ProjectMain() {
   }, []);
 
   useEffect(() => {
-    post("/selectUserThemaList", {})
+    post("/selectUserThemaList", {
+      userId: user?.userId
+    })
     .then((data) => {
       setUserThemaList(data);
     })
@@ -62,6 +64,8 @@ export default function ProjectMain() {
       }
       setLoading(false);
       setTempName(data.odocNm);
+      setOnAlarm(data.odocAlarmYn==="Y"?true:false);
+      setOdocAlarmTime(data.odocAlarmTime);
 
       if(data.endYn==="Y") setIsEnd(true);
     })
@@ -92,15 +96,15 @@ export default function ProjectMain() {
       for (const thema of odocThemaList) {
         if (thema.themaGetMethod !== "day") continue;
 
-      const isUnlockDay = newData.streamSn === thema.themaGetDay;
+        const isUnlockDay = newData.streamSn === thema.themaGetDay;
 
-      if (!isUnlockDay) continue;
+        if (!isUnlockDay) continue;
 
-      const alreadyHasThema = userThemaList.some(
-        (userGetThema) => userGetThema.themaId === thema.themaId
-      );
+        const alreadyHasThema = userThemaList.some(
+          (userGetThema) => userGetThema.themaId === thema.themaId
+        );
 
-      if (alreadyHasThema) continue;
+        if (alreadyHasThema) continue;
 
         await post("/insertUserThema", {
           userId: user?.userId,
@@ -128,14 +132,19 @@ export default function ProjectMain() {
       if(odocType === "1") alert("ODOC명을 입력해주세요");
       else alert("기록명을 입력해주세요");
 
+      return;
+    }
 
+    if (!odocAlarmTime) {
+      alert("알람시간을 입력해주세요");
       return;
     }
 
     post("/updateProject", {
         userId: user?.userId,
         odocNm: tempName,
-        odocSn: data.odocSn
+        odocSn: data.odocSn,
+        odocAlarmTime: odocAlarmTime
     })
     .then((data) => {
       alert("변경완료!");
@@ -152,6 +161,25 @@ export default function ProjectMain() {
   const handleEditEnd = () => {
     setIsReadOnly(true);
     setTempName(data.odocNm);
+  };
+
+  const fn_alarm_on = async () => {
+    const newAlarm = !onAlarm;
+    setOnAlarm(newAlarm);
+  
+    try {
+      await post("/updateProject", {
+        userId: user?.userId,
+        odocSn: data.odocSn,
+        odocAlarmYn: newAlarm ? "Y" : "N"
+      })
+      .then((data) => {
+        let message = newAlarm?"알람이 설정되었습니다":"알람이 해제되었습니다";
+        alert(message);
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (loading) {
@@ -258,22 +286,40 @@ export default function ProjectMain() {
       <div className="project-detail">
         <div className="detail-title">
           <div className="input-wrapper">
-            <span className="input-ghost">{tempName}</span>
+            <span className="alarm-icon" onClick={() => fn_alarm_on()}>
+              {isEnd?"":onAlarm?<MdOutlineAccessAlarm />:<MdOutlineAlarmOff/>}
+            </span>
+
             <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
             />
             {isEnd?"":(isReadOnly ? (
-              <span className="edit-icon" onClick={handleEditStart}>
-                <BiEditAlt />
-              </span>
+                <span className="edit-icon" onClick={handleEditStart}>
+                  <BiEditAlt />
+                </span>
             ) : (
-              <span className="odoc-btn-container">
-                <button className="btn tertiary margin0" onClick={fn_odocNm_change}>저장</button>
-                <button className="btn secondary margin0" onClick={handleEditEnd}>취소</button>
-              </span>
+              <></>
             ))}
-          </div>
+          </div>  
         </div>
 
+        {isEnd?"":(isReadOnly ? (
+          <></>
+        ) : (
+          <div>
+            <input
+              type="time"
+              className="alarm-time m-b-10"
+              value={odocAlarmTime}
+              step="300"
+              onChange={(e) => setOdocAlarmTime(e.target.value)}
+            />
+            <span className="odoc-btn-container">
+              <button className="btn primary margin0" onClick={() => fn_odocNm_change()}>저장</button>
+              <button className="btn tertiary margin0" onClick={() => handleEditEnd()}>취소</button>
+            </span>
+          </div>
+        ))}
+        
         <div className="image-box">
             <img
                   src={`/images/${data.odocThemaType}/${Math.floor(Number(data.progress/10) || 0)}.png`}

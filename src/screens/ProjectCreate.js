@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Loading } from "../components/Loading";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
@@ -12,18 +13,24 @@ export default function ProjectCreate() {
   const [userThemaList, setUserThemaList] = useState([]);  
   const [isInsertOdocThema, setIsInsertOdocThema] = useState(false);  
   const [alertMessage, setAlertMessage] = useState("");  
-  const [odocThemaType, setOdocThemaType] = useState(0);  
+  const [odocThemaType, setOdocThemaType] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [onAlarm, setOnAlarm] = useState("N");
+  const [odocAlarmTime, setOdocAlarmTime] = useState("09:00");
   const { user } = useAuth();
 
   useEffect(() => {
-    post("/selectThemaList", {
-      userId: user?.userId
-    })
-    .then((data) => {
-      setOdocThemaList(data);
-    })
-    .catch(console.error);
-  }, []);
+    if(user?.userId) {
+      post("/selectThemaList", {
+        userId: user?.userId
+      })
+      .then((data) => {
+        setOdocThemaList(data);
+        setIsLoading(false);
+      })
+      .catch(console.error);
+    }
+  }, [user?.userId]);
 
   useEffect(() => {
     if (user?.userId) {
@@ -42,11 +49,18 @@ export default function ProjectCreate() {
       alert("ODOC명을 입력해주세요");
       return;
     }
+    if (!odocAlarmTime) {
+      alert("알람시간을 입력해주세요");
+      return;
+    }
+    
     post("/insertProject", { 
         userId: user?.userId,
         odocNm: odocNm,
         odocType: odocType,
-        odocThemaType: odocThemaType
+        odocThemaType: odocThemaType,
+        odocAlarmYn: onAlarm?"Y":"N",
+        odocAlarmTime: odocAlarmTime
     })
     .then((data) => {
       navigate("/projects")
@@ -57,11 +71,18 @@ export default function ProjectCreate() {
   const updateOdocType = (data) => {
     setOdocType(data);
   }
+  const updateOnAlarm = (data) => {
+    setOnAlarm(data);
+  }
 
   const setThema = (data) => {
     setOdocThemaType(data.themaId); 
     setIsInsertOdocThema(!userThemaList.some((thema) => String(thema.themaId) === String(data.themaId)));
     setAlertMessage(data.themaGetMethod === "day"?`${data.themaGetDay}일 연속 습관 완성 시 잠금해제 됩니다!`:'코드필요')
+  }
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -93,6 +114,32 @@ export default function ProjectCreate() {
         </div>
 
         <div>
+          <div className="odoc-type-setting">
+            <label className={`radio-item odoc-item ${onAlarm === "Y" ? "odoc-active" : ""}`}>
+              <input
+                type="radio" name="onAlarm" value="Y"
+                checked={onAlarm === "Y"}
+                onChange={(e) => updateOnAlarm(e.target.value)}
+              />
+              <span className="odoc-item-span">알람 ON</span>
+            </label>
+
+            <label className={`radio-item odoc-item ${onAlarm === "N" ? "odoc-active" : ""}`}>
+              <input
+                type="radio" name="onAlarm" value="N"
+                checked={onAlarm === "N"}
+                onChange={(e) => updateOnAlarm(e.target.value)}
+              />
+              <span className="odoc-item-span">알람 OFF</span>
+            </label>
+            <input
+              type="time"
+              className="alarm-time"
+              value={odocAlarmTime}
+              onChange={(e) => setOdocAlarmTime(e.target.value)}
+            />
+          </div>
+
           <div className="image-box create">
               <img
                     src={isInsertOdocThema?`/images/empty/0.png`:`/images/${odocThemaType}/0.png`}

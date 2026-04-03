@@ -4,6 +4,7 @@ import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
 import "../css/common.css";
 import { Loading } from "../components/Loading";
+import { registerPush } from "../common/push";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,14 +36,17 @@ export default function Login() {
       userId: userId,
       userPw: userPw,
     })
-      .then((data) => {
-        login({ userId: userId, ...data });
-        navigate("/projects", { state: { showAlert: true } });
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("아이디 또는 비밀번호를 확인해주세요.");
-      });
+    .then(async (data) => {
+      login({ userId: userId, ...data });
+    
+      await registerPush(userId);
+    
+      navigate("/projects", { state: { showAlert: true } });
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("아이디 또는 비밀번호를 확인해주세요.");
+    });
   };
 
   return (
