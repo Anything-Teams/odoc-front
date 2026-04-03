@@ -40,6 +40,7 @@ export default function Login() {
       login({ userId: userId, ...data });
     
       await registerPush(userId);
+      await bindForegroundMessageHandler();
     
       navigate("/projects", { state: { showAlert: true } });
     })

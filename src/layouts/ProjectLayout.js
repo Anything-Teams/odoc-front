@@ -20,7 +20,6 @@ export default function ProjectLayout() {
 
     useEffect(() => {
         setIsMotivationAlert(user?.isMotivationAlert);
-        bindForegroundMessageHandler();
     }, []);
 
     useEffect(() => {

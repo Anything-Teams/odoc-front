@@ -1006,6 +1006,9 @@ main {
   text-align: center;
 }
 
+.odoc-item-span {
+  font-size: 10px;
+}
 
 * {
   box-sizing: border-box;
