@@ -357,7 +357,7 @@ button:disabled {
 }
 
 .image-box.create {
-  height: auto;
+  aspect-ratio: 1 / 0.5;
   border: 1px solid #efefef;
   border-radius: 0.5em;
 }
