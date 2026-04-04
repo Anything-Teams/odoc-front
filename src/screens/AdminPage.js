@@ -2,8 +2,6 @@ import "../css/common.css";
 import { useEffect, useState } from "react";
 import { post} from "../api/api";
 import { useAuth } from "../common/AuthContext";
-import {TbTarget, TbTargetOff} from "react-icons/tb";
-import {MdDelete, MdOutlinePause, MdPlayArrow} from "react-icons/md";
 
 export default function AdminPage() {
     const [noticeContent, setNoticeContent] = useState("");

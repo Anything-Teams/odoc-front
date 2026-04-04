@@ -4,6 +4,10 @@ import { post } from "../api/api";
 
 const VAPID_KEY = process.env.REACT_APP_FIREBASE_VAPID_KEY;
 
+const isLocalhost =
+window.location.hostname === "localhost" ||
+window.location.hostname === "127.0.0.1";
+
 function getDeviceInfo() {
   const ua = navigator.userAgent || "";
   const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
@@ -31,6 +35,8 @@ function getDeviceInfo() {
 
 export async function registerPush(userId) {
   try {
+    if (isLocalhost) return;
+    
     if (!("Notification" in window)) return null;
 
     const permission = await Notification.requestPermission();
