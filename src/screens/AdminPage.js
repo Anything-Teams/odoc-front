@@ -10,7 +10,7 @@ export default function AdminPage() {
     const [users, setUsers] = useState([]);
     const { user } = useAuth();
     const [page, setPage] = useState(1);
-    const [pageSize] = useState(2);
+    const [pageSize] = useState(10);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const observerRef = useRef(null);
