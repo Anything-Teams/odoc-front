@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { TbArrowBackUp, TbSettings } from "react-icons/tb";
+import { useState, useEffect, useRef } from "react";
+import { TbArrowBackUp, TbSettings, TbLock, TbInfoCircle } from "react-icons/tb";
 import { post } from "../api/api";
 import { useAuth } from "../common/AuthContext";
-import { TbLock } from "react-icons/tb";
 
 export default function ProjectLayout() {
     
@@ -15,7 +14,10 @@ export default function ProjectLayout() {
     const [isMotivationAlert, setIsMotivationAlert] = useState("Y");
     const [code, setCode] = useState("");
     const [noticeContent, setNoticeContent] = useState(null);
+    const [info, setInfo] = useState(false);
+    const [notice, setNotice] = useState(false);
     const { user, logout } = useAuth();
+    const infoRef = useRef(null);
 
     useEffect(() => {
         setIsMotivationAlert(user?.isMotivationAlert);
@@ -23,24 +25,25 @@ export default function ProjectLayout() {
     }, []);
 
     useEffect(() => {
-        const fetchNotice = () => {
-            post("/selectNotice", {
-                userId: user?.userId,
-                noticeYn: 'Y',
-                noticeSn: '1'
-            })
-            .then((data) => {
-                if (data?.noticeContent) setNoticeContent(data.noticeContent);
-                else setNoticeContent(null);
-            })
-            .catch(console.error);
-        };
-
-        fetchNotice();
+        fetchNotice('1');
 
         window.addEventListener("noticeUpdated", fetchNotice);
         return () => window.removeEventListener("noticeUpdated", fetchNotice);
     }, []);
+
+    const fetchNotice = (type) => {
+        post("/selectNotice", {
+            userId: user?.userId,
+            noticeType: type
+        })
+        .then((data) => {
+            if(type === '1') {
+                if (data?.noticeContent) setNoticeContent(data.noticeContent);
+                else setNoticeContent(null);
+            }
+        })
+        .catch(console.error);
+    };
 
     useEffect(() => {
       if (!user) {
@@ -76,6 +79,23 @@ export default function ProjectLayout() {
         .catch(console.error);
     }
 
+    useEffect(() => {
+        if (info && infoRef.current) {
+            infoRef.current.scrollTo({
+                top: 0,
+                behavior: "auto"
+            });
+        }
+    }, [info]);
+
+    const fn_layoutLeftEvent = () => {
+        if(isProjectList) {
+            setInfo(true);
+        } else {
+            navigate(-1);
+        }
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}>
             <header>
@@ -84,13 +104,11 @@ export default function ProjectLayout() {
                     className="header-left"
                 >
                     <span
-                        onClick={() => navigate(-1)}
-                        style={{ visibility: isProjectList ? "hidden" : "visible" }}
+                        onClick={() => fn_layoutLeftEvent()}
                     >
-                        <TbArrowBackUp />
+                        {isProjectList?<TbInfoCircle />:<TbArrowBackUp />}
                     </span>
                 </div>
-
 
                 <div className="header-center">
                     <div className="header-logo-top">
@@ -118,6 +136,19 @@ export default function ProjectLayout() {
             </div>
             </header>
             <main>
+                <div className={`layout-option z-index-99 ${info ? "open" : ""}`}>
+                    <div className="project-detail layout-option-inner" ref={infoRef}>
+                        <img
+                                src={"/images/info/infomation.png"}
+                                alt="progress"
+                        />
+                        <div className="setting-bottom-inner-bottom">
+                            <div onClick={() => {setInfo(!info)}}>
+                                닫기
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className={`layout-option z-index-99 ${userOption ? "open" : ""}`}>
                     <div className="project-detail layout-option-inner">
                         <div className="detail-title">
@@ -177,7 +208,10 @@ export default function ProjectLayout() {
                 </div>
                 {noticeContent != null ?
                     <div className="notice-bar">
-                        <span className="notice-text">{noticeContent}</span>
+                        <span 
+                            onClick={() => {setNotice(!notice)}}
+                            className="notice-text"
+                        >{noticeContent}</span>
                     </div>
                     :<></>
                 }
