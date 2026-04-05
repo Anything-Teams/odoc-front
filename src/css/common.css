@@ -967,7 +967,7 @@ main {
 .thema-item {
   background-color: #ffc5a1;
   padding: 10px;
-  width: 47%;
+  width: 30%;
   color: #ffffff;
   border: 0;
 }
@@ -1055,6 +1055,17 @@ main {
   }
 }
 
+.project-create-image {
+  display: flex;
+  flex-direction: column;
+}
+
+.thema-desc {
+  font-size: 10px;
+  font-style: italic;
+  color: #4e4e4e;
+  margin-bottom: 15px;
+}
 
 * {
   box-sizing: border-box;
