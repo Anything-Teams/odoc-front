@@ -16,6 +16,7 @@ export default function ProjectCreate() {
   const [odocThemaType, setOdocThemaType] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [onAlarm, setOnAlarm] = useState("N");
+  const [themaDesc, setThemaDesc] = useState("");
   const [odocAlarmTime, setOdocAlarmTime] = useState("09:00");
   const { user } = useAuth();
 
@@ -78,7 +79,8 @@ export default function ProjectCreate() {
   const setThema = (data) => {
     setOdocThemaType(data.themaId); 
     setIsInsertOdocThema(!userThemaList.some((thema) => String(thema.themaId) === String(data.themaId)));
-    setAlertMessage(data.themaGetMethod === "day"?`${data.themaGetDay}일 연속 습관 완성 시 잠금해제 됩니다!`:'코드필요')
+    setAlertMessage(data.themaGetMethod === "day"?`${data.themaGetDay}일 연속 습관 완성 시 잠금해제 됩니다!`:'코드필요');
+    setThemaDesc(data.themaDesc);
   }
 
   if (isLoading) {
@@ -113,7 +115,7 @@ export default function ProjectCreate() {
           </label>
         </div>
 
-        <div>
+        <div className="project-create-image">
           <div className="odoc-type-setting">
             <label className={`radio-item odoc-item ${onAlarm === "Y" ? "odoc-active" : ""}`}>
               <input
@@ -147,6 +149,7 @@ export default function ProjectCreate() {
                     className="image-placeholder create"
               />
           </div>
+          <span className="thema-desc">{themaDesc}</span>
 
           {isInsertOdocThema && (
             <div className="odoc-main-stream">

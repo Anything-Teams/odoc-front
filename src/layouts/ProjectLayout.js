@@ -24,26 +24,27 @@ export default function ProjectLayout() {
         
     }, []);
 
+
     useEffect(() => {
-        fetchNotice('1');
+        const fetchNotice = () => {
+            post("/selectNotice", {
+                userId: user?.userId,
+                noticeYn: 'Y',
+                noticeType: '1',
+                noticeSn: '1'
+            })
+            .then((data) => {
+                if (data?.noticeContent) setNoticeContent(data.noticeContent);
+                else setNoticeContent(null);
+            })
+            .catch(console.error);
+        };
+
+        fetchNotice();
 
         window.addEventListener("noticeUpdated", fetchNotice);
         return () => window.removeEventListener("noticeUpdated", fetchNotice);
     }, []);
-
-    const fetchNotice = (type) => {
-        post("/selectNotice", {
-            userId: user?.userId,
-            noticeType: type
-        })
-        .then((data) => {
-            if(type === '1') {
-                if (data?.noticeContent) setNoticeContent(data.noticeContent);
-                else setNoticeContent(null);
-            }
-        })
-        .catch(console.error);
-    };
 
     useEffect(() => {
       if (!user) {

@@ -46,6 +46,7 @@ export default function AdminPage() {
         post("/insertNotice", {
             userId: user?.userId,
             noticeSn: noticeSn,
+            noticeType: '1',
             noticeTitle: '공지사항',
             noticeContent: noticeContent,
             beforeNoticeYn: noticeYn
