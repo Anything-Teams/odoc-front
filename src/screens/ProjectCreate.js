@@ -28,6 +28,7 @@ export default function ProjectCreate() {
       .then((data) => {
         setOdocThemaList(data);
         setIsLoading(false);
+        setThemaDesc(data[0].themaDesc);
       })
       .catch(console.error);
     }
