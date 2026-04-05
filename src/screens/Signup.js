@@ -44,10 +44,11 @@ export default function Signup() {
         } else {
           post("/userRegister", { 
               userId: userId,
-              userPw: userPw
+              userPw: userPw,
+              nickNm: nickNm
           })
           .then((data) => {
-            alert("가입완료!\n즐거운 오독생활 되세요!");
+            alert("가입완료!\n꾸준한 오독생활 되세요!");
             navigate("/login");
           })
           .catch(console.error);
