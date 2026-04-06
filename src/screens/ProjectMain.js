@@ -23,7 +23,9 @@ export default function ProjectMain() {
   const [showUnlockedModal, setShowUnlockedModal] = useState(false); 
   const [showUnlockedText, setShowUnlockedText] = useState(""); 
   const [onAlarm, setOnAlarm] = useState(false);
+  const [odocMemo, setOdocMemo] = useState("");
   const [odocAlarmTime, setOdocAlarmTime] = useState("");
+  const [odocDaySn, setOdocDaySn] = useState(0);
   const inputRef = useRef(null);
   const { user } = useAuth();
 
@@ -66,6 +68,8 @@ export default function ProjectMain() {
       setTempName(data.odocNm);
       setOnAlarm(data.odocAlarmYn==="Y"?true:false);
       setOdocAlarmTime(data.odocAlarmTime);
+      setOdocMemo(data.odocMemo);
+      setOdocDaySn(data.odocDaySn);
 
       if(data.endYn==="Y") setIsEnd(true);
     })
@@ -76,10 +80,24 @@ export default function ProjectMain() {
     getProjectMain();
   }, [getProjectMain]);
 
+  const updateMemo = (odocSn) => {
+    post("/updateMemo", {
+      userId: user?.userId,
+      odocMemo: odocMemo,
+      odocDaySn: odocDaySn,
+      odocSn
+    })
+    .then((data) => {
+      alert("기록을 다시 남겼습니다");
+    })
+    .catch(console.error);
+  }
+
   const one_day_one_commit = async (odocSn) => {
     try {
       await post("/commitProject", {
         userId: user?.userId,
+        odocMemo: odocMemo,
         odocSn
       });
   
@@ -309,7 +327,7 @@ export default function ProjectMain() {
           <div>
             <input
               type="time"
-              className="alarm-time m-b-10 font-15"
+              className="alarm-time m-b-10"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
@@ -335,7 +353,22 @@ export default function ProjectMain() {
             </span>
 
         </div>
-
+        
+        {data.odocType === "2" && data.endYn === "N"
+          ?
+          <div className="memo-container">
+              <input className="odocMemo-input" id="odocMemo" placeholder="짧은 기록 작성(6자제한) 생략가능" value={odocMemo} onChange={(e) => setOdocMemo(e.target.value)} maxLength={6} />
+              {data.odocYn === 1
+                ?            
+                  <button className="secondary btn-memo" onClick={() => updateMemo(data.odocSn)}>수정</button>
+                :
+                <></>
+              }
+          </div>
+          :
+          <></>
+        }
+        
         <div className="button-group">
             <button
               className="btn secondary btn-8"
