@@ -112,7 +112,7 @@ export default function ProjectHistoryMonth() {
                   :
                     <>
                       <div className="day-box">
-                        <div className="check-mark font-13">
+                        <div className="check-mark font-12">
                           {isChecked ? (memo === "" ? "✔" : memo) : "\u00A0"}
                         </div>
                       </div>

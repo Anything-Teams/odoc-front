@@ -531,9 +531,10 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   border: 1px solid #6b6969;
-  padding: 7px;
+  padding: 6px 4px;
   border-radius: 10px;
   gap: 2px;
+  /* height: 69px; */
 }
 
 .day-number {
@@ -1083,8 +1084,8 @@ main {
   font-size: 15px;
 }
 
-.font-13 {
-  font-size: 13px;
+.font-12 {
+  font-size: 12px;
 }
 
 .memo-container {
