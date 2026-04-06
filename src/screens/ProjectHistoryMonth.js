@@ -85,18 +85,43 @@ export default function ProjectHistoryMonth() {
             const dayIndex = checkedDays.indexOf(String(day).padStart(2, "0"));
             const checkedTime = dayIndex !== -1 ? data.dateTime.checkedTimestamps[dayIndex] : null;
 
+            const memo =
+            isChecked && dayIndex > -1
+              ? data.memos?.[dayIndex] ?? ""
+              : "";
+
             return (
               <div key={day} className="day-item" onClick={()=>{
                   if (isChecked && checkedTime) {
-                  alert(`${data.odocType === "1"?"오독시간":"기록시간"}: ${checkedTime}`);
+                  alert(`${data.odocType === "1"?"오독시간":"기록 남긴 시간"}: ${checkedTime}`);
               }}}>
                 <div className="day-number">{day}일</div>
 
-                <div className="day-box">
-                  {isChecked && <div className="check-mark">✔</div>}
-                </div>
+                {
+                  data.odocType==="1"
+                  ?
+                    <>
+                      <div className="day-box">
+                        {isChecked && <div className="check-mark">✔</div>}
+                      </div>
 
-                <div className="odoc-created">{isCreated?"ODOC!":"\u00A0"}</div>
+                      <div className="odoc-created">
+                        {isCreated?"ODOC!":"\u00A0"}
+                      </div>
+                    </>
+                  :
+                    <>
+                      <div className="day-box">
+                        <div className="check-mark font-13">
+                          {isChecked ? (memo === "" ? "✔" : memo) : "\u00A0"}
+                        </div>
+                      </div>
+
+                      <div className="odoc-created">
+                        {isCreated?"첫 기록!":"\u00A0"}
+                      </div>
+                    </>
+                }
               </div>
             );
           })}
