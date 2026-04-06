@@ -102,7 +102,10 @@ export default function ProjectHistoryMonth() {
                   ?
                     <>
                       <div className="day-box">
-                        {isChecked && <div className="check-mark">✔</div>}
+                        {/* {isChecked && <div className="check-mark">✔</div>} */}
+                        <div className="check-mark">
+                          {isChecked ? "✔" : "\u00A0"}
+                        </div>
                       </div>
 
                       <div className="odoc-created">
