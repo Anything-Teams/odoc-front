@@ -130,7 +130,7 @@ button:disabled {
 }
 
 .btn-memo {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   width: 30%;
   padding: 9px;
@@ -1101,7 +1101,7 @@ main {
   border-radius: 0.5em;
   border: 1px solid #dcdada;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 * {
