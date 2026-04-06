@@ -291,14 +291,12 @@ button:disabled {
 }
 
 .odocNm-class {
-  /* position: absolute; */
-  left: 0;
   width: 100%;
   font-size: 20px;
-  margin-block-start: 0.85em;
-  margin-block-end: 0.83em;
+  margin-block-start: 20px;
+  margin-block-end: 17px;
   margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  margin-inline-end: 16px;
   font-weight: 600;
   border: 0;
   background: transparent;
@@ -335,12 +333,15 @@ button:disabled {
 
 .alarm-time {
   width: 100%;
-  font-size: 14px;
+  font-size: 11px;
   text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 7px 4px;
+  border: 1px solid #dcdada;
+  border-radius: 0.5em;
+  padding: 8px;
   background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .detail-title {
@@ -1002,8 +1003,6 @@ main {
 }
 
 .create-inner {
-  width: 90%;
-  padding: 24px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -1014,6 +1013,7 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
 .inapp-push-toast {
   position: fixed;
   top: 16px;
@@ -1065,6 +1065,10 @@ main {
   font-style: italic;
   color: #4e4e4e;
   margin-bottom: 15px;
+}
+
+.font-15 {
+  font-size: 15px;
 }
 
 * {

@@ -209,7 +209,10 @@ export default function ProjectList() {
     return (
         <div className="project-container">
             <div className="project-detail">
-            <div className="title">나의 ODOC</div>
+                <div className="input-wrapper">
+                    <div className="odocNm-class">나의 ODOC</div>
+                </div>  
+            {/* <div className="title">나의 ODOC</div> */}
             <div className="odoc-list-sort">
                 <span className="odoc-type-sort">
                     <label className={`radio-item odoc-sort-item ${(odocType === "0" || odocType === "") ? "odoc-active" : ""}`}>
