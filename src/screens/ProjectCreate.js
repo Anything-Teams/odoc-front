@@ -61,7 +61,7 @@ export default function ProjectCreate() {
         odocNm: odocNm,
         odocType: odocType,
         odocThemaType: odocThemaType,
-        odocAlarmYn: onAlarm?"Y":"N",
+        odocAlarmYn: onAlarm,
         odocAlarmTime: odocAlarmTime
     })
     .then((data) => {

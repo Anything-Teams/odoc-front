@@ -533,7 +533,6 @@ button:disabled {
   border: 1px solid #6b6969;
   padding: 7px;
   border-radius: 10px;
-  aspect-ratio: 1 / 1;
   gap: 2px;
 }
 
