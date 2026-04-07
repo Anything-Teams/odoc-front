@@ -1115,6 +1115,14 @@ main {
   gap: 10px;
 }
 
+.width40 {
+  width: 40%;
+}
+
+.width50 {
+  width: 50%;
+}
+
 * {
   box-sizing: border-box;
 }
