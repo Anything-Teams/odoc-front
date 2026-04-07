@@ -305,7 +305,7 @@ export default function ProjectMain() {
         <div className="detail-title">
           
           <div className="input-wrapper">
-            <span className="alarm-icon" onClick={() => fn_alarm_on()}>
+            <span className="alarm-icon " onClick={() => fn_alarm_on()}>
               {isEnd?"":onAlarm?<span className="alarm-time-view"><MdOutlineAccessAlarm /><span>{odocAlarmTime}</span></span>:<MdOutlineAlarmOff/>}
             </span>
 
