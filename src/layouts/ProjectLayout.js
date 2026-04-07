@@ -40,7 +40,6 @@ export default function ProjectLayout() {
         const touch = e.touches?.[0];
         if (!touch) return;
 
-        // 왼쪽 가장자리 24px 이내에서 시작한 경우만 추적
         if (touch.clientX <= 24) {
           touchTrackingRef.current = {
             startX: touch.clientX,
@@ -63,7 +62,7 @@ export default function ProjectLayout() {
         const deltaX = touch.clientX - touchTrackingRef.current.startX;
         const deltaY = Math.abs(touch.clientY - touchTrackingRef.current.startY);
 
-        if (deltaX > 20 && deltaY < 30) {
+        if (deltaX > 15 && deltaY < 30) {
           swipeBackCandidateRef.current = true;
         }
       };
