@@ -319,7 +319,7 @@ export default function ProjectMain() {
                     <BiEditAlt />
                   </span>
               ) : (
-                  <></>
+                  <span className="edit-icon"></span>
               ))}
             </span>
           </div>
@@ -331,7 +331,7 @@ export default function ProjectMain() {
           <div className="width-100">
             <input
               type="time"
-              className="alarm-time m-b-10 font-12"
+              className="alarm-time m-b-10 font-15"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
