@@ -342,8 +342,8 @@ export default function ProjectMain() {
               onChange={(e) => setOdocAlarmTime(e.target.value)}
             />
             <span className="odoc-btn-container">
-              <button className="btn primary margin0 btn-small" onClick={() => fn_odocNm_change()}>저장</button>
-              <button className="btn tertiary margin0 btn-small" onClick={() => handleEditEnd()}>취소</button>
+              <button className="btn primary margin0 btn-small border-primary" onClick={() => fn_odocNm_change()}>저장</button>
+              <button className="btn tertiary margin0 btn-small border-tertiary" onClick={() => handleEditEnd()}>취소</button>
             </span>
           </div>
         ))}
@@ -369,7 +369,7 @@ export default function ProjectMain() {
               <input className="odocMemo-input" id="odocMemo" placeholder="짧은 기록 작성(6자제한) 생략가능" value={odocMemo} onChange={(e) => setOdocMemo(e.target.value)} maxLength={6} />
               {data.odocYn === 1
                 ?            
-                  <button className="secondary btn-memo" onClick={() => updateMemo(data.odocSn)}>수정</button>
+                  <button className="secondary btn-memo border-secondary" onClick={() => updateMemo(data.odocSn)}>수정</button>
                 :
                 <></>
               }
