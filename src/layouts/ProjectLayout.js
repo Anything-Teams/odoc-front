@@ -234,6 +234,10 @@ export default function ProjectLayout() {
                                 src={"/images/info/infomation5.png"}
                                 alt="progress"
                         />
+                        <img
+                                src={"/images/info/infomation6.png"}
+                                alt="progress"
+                        />
                         <div className="setting-bottom-inner-bottom">
                             <div onClick={() => {setInfo(!info)}}>
                                 닫기
