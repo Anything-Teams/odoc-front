@@ -334,7 +334,6 @@ button:disabled {
 }
 
 .alarm-time {
-  width: 100%;
   font-size: 11px;
   text-align: center;
   border: 1px solid #dcdada;
@@ -342,6 +341,7 @@ button:disabled {
   padding: 8px;
   background: #fff;
   display: block;
+  height: 50.8px;
 }
 
 .detail-title {
@@ -1108,8 +1108,12 @@ main {
   line-height: 1;
 }
 
-.width-100 {
-  width: 100%;
+.edit-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 * {

@@ -328,7 +328,7 @@ export default function ProjectMain() {
         {isEnd?"":(isReadOnly ? (
           <></>
         ) : (
-          <div className="width-100">
+          <div className="edit-wrapper">
             <input
               type="time"
               className="alarm-time m-b-10 font-15"
