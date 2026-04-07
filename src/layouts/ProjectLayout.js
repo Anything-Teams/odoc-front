@@ -52,6 +52,68 @@ export default function ProjectLayout() {
       }
     }, [user]);
 
+    useEffect(() => {
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (!isIOS) return;
+
+        let startX = 0;
+        let startY = 0;
+        let tracking = false;
+        let paused = false;
+
+        const clearGesture = () => {
+            tracking = false;
+            paused = false;
+            document.body.classList.remove("back-gesture-active");
+        };
+
+        const onTouchStart = (e) => {
+            const touch = e.touches?.[0];
+            if (!touch) return;
+
+            // 왼쪽 가장자리에서 시작한 터치만 추적
+            if (touch.clientX <= 24) {
+                startX = touch.clientX;
+                startY = touch.clientY;
+                tracking = true;
+            }
+        };
+
+        const onTouchMove = (e) => {
+            if (!tracking) return;
+
+            const touch = e.touches?.[0];
+            if (!touch) return;
+
+            const deltaX = touch.clientX - startX;
+            const deltaY = Math.abs(touch.clientY - startY);
+
+            // 세로 스크롤보다 가로 스와이프가 분명할 때만 활성화
+            if (deltaX > 18 && deltaY < 30) {
+                if (!paused) {
+                    paused = true;
+                    document.body.classList.add("back-gesture-active");
+                }
+            }
+        };
+
+        window.addEventListener("touchstart", onTouchStart, { passive: true });
+        window.addEventListener("touchmove", onTouchMove, { passive: true });
+        window.addEventListener("touchend", clearGesture, { passive: true });
+        window.addEventListener("touchcancel", clearGesture, { passive: true });
+        window.addEventListener("pageshow", clearGesture);
+        window.addEventListener("pagehide", clearGesture);
+
+        return () => {
+            window.removeEventListener("touchstart", onTouchStart);
+            window.removeEventListener("touchmove", onTouchMove);
+            window.removeEventListener("touchend", clearGesture);
+            window.removeEventListener("touchcancel", clearGesture);
+            window.removeEventListener("pageshow", clearGesture);
+            window.removeEventListener("pagehide", clearGesture);
+        };
+    }, []);
+
     const updateOption = (data) => {
         post("/updateAlert", { 
             userId: user?.userId,

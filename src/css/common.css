@@ -851,13 +851,15 @@ button:disabled {
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
-
   padding-left: 100%;
   animation: marquee 12s linear infinite;
-
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+body.back-gesture-active .notice-text {
+  animation-play-state: paused;
 }
 
 @keyframes marquee {
