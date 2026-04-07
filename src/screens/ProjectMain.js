@@ -327,7 +327,7 @@ export default function ProjectMain() {
           <div>
             <input
               type="time"
-              className="alarm-time m-b-10 font-15"
+              className="alarm-time m-b-10 font-15 width-100"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
