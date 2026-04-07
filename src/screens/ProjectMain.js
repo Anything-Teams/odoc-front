@@ -305,20 +305,24 @@ export default function ProjectMain() {
         <div className="detail-title">
           
           <div className="input-wrapper">
-            <span className="alarm-icon " onClick={() => fn_alarm_on()}>
-              {isEnd?"":onAlarm?<span className="alarm-time-view"><MdOutlineAccessAlarm /><span>{odocAlarmTime}</span></span>:<MdOutlineAlarmOff/>}
+            <span className="icon-wrapper">
+              <span className="alarm-icon " onClick={() => fn_alarm_on()}>
+                {isEnd?"":onAlarm?<span className="alarm-time-view"><MdOutlineAccessAlarm /><span>{odocAlarmTime}</span></span>:<MdOutlineAlarmOff/>}
+              </span>
             </span>
 
             <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
             />
-            {isEnd?"":(isReadOnly ? (
-                <span className="edit-icon" onClick={handleEditStart}>
-                  <BiEditAlt />
-                </span>
-            ) : (
-              <></>
-            ))}
-          </div>  
+            <span className="icon-wrapper">
+              {isEnd?"":(isReadOnly ? (
+                  <span className="edit-icon" onClick={handleEditStart}>
+                    <BiEditAlt />
+                  </span>
+              ) : (
+                  <></>
+              ))}
+            </span>
+          </div>
         </div>
 
         {isEnd?"":(isReadOnly ? (
