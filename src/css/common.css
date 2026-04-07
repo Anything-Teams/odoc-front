@@ -838,25 +838,31 @@ button:disabled {
 }
 
 .notice-bar {
-    width: 100%;
-    overflow: hidden;
-    background-color: #52aeff;
-    padding: 8px 0;
-    white-space: nowrap;
-    flex-shrink: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: #52aeff;
+  padding: 8px 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .notice-text {
-    display: inline-block;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
-    animation: marquee 12s linear infinite;
+  display: inline-block;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+
+  padding-left: 100%;
+  animation: marquee 12s linear infinite;
+
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes marquee {
-    0%   { transform: translateX(100vw); }
-    100% { transform: translateX(-100%); }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
 .admin-content {
