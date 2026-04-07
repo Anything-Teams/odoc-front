@@ -215,7 +215,23 @@ export default function ProjectLayout() {
                 <div className={`layout-option z-index-99 ${info ? "open" : ""}`}>
                     <div className="project-detail layout-option-inner" ref={infoRef}>
                         <img
-                                src={"/images/info/infomation.png"}
+                                src={"/images/info/infomation1.png"}
+                                alt="progress"
+                        />
+                        <img
+                                src={"/images/info/infomation2.png"}
+                                alt="progress"
+                        />
+                        <img
+                                src={"/images/info/infomation3.png"}
+                                alt="progress"
+                        />
+                        <img
+                                src={"/images/info/infomation4.png"}
+                                alt="progress"
+                        />
+                        <img
+                                src={"/images/info/infomation5.png"}
                                 alt="progress"
                         />
                         <div className="setting-bottom-inner-bottom">
