@@ -1115,12 +1115,18 @@ main {
   gap: 10px;
 }
 
-.width60 {
-  width: 60%;
+.width70 {
+  width: 70%;
 }
 
-.width50 {
-  width: 50%;
+.width40 {
+  width: 40%;
+}
+
+.btn-small {
+  font-size: 15px;
+  padding: 7px;
+  min-height: 0;
 }
 
 * {

@@ -336,14 +336,14 @@ export default function ProjectMain() {
           <div className="edit-wrapper">
             <input
               type="time"
-              className="alarm-time m-b-10 font-15 width60"
+              className="alarm-time m-b-10 font-15 width70"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
             />
             <span className="odoc-btn-container">
-              <button className="btn primary margin0 width50" onClick={() => fn_odocNm_change()}>저장</button>
-              <button className="btn tertiary margin0 width50" onClick={() => handleEditEnd()}>취소</button>
+              <button className="btn primary margin0 width40 btn-small" onClick={() => fn_odocNm_change()}>저장</button>
+              <button className="btn tertiary margin0 width40 btn-small" onClick={() => handleEditEnd()}>취소</button>
             </span>
           </div>
         ))}
