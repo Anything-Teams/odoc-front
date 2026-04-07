@@ -324,10 +324,10 @@ export default function ProjectMain() {
         {isEnd?"":(isReadOnly ? (
           <></>
         ) : (
-          <div>
+          <div className="width-100">
             <input
               type="time"
-              className="alarm-time m-b-10 font-15 width-100"
+              className="alarm-time m-b-10 font-15"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
