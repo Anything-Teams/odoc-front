@@ -1116,6 +1116,10 @@ main {
   gap: 10px;
 }
 
+.h35 {
+  height: 35.6px;
+}
+
 * {
   box-sizing: border-box;
 }
