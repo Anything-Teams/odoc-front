@@ -49,6 +49,12 @@ export default function ProjectMain() {
     .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (!isReadOnly) {
+      inputRef.current?.focus();
+    }
+  }, [isReadOnly]);
+
   const getProjectMain = useCallback(() => {
     post("/getProjectMain", { 
       userId: user?.userId,
@@ -173,7 +179,6 @@ export default function ProjectMain() {
 
   const handleEditStart = () => {
     setIsReadOnly(false);
-    setTimeout(() => inputRef.current?.focus(), 50);
   };
 
   const handleEditEnd = () => {
@@ -331,7 +336,7 @@ export default function ProjectMain() {
           <div className="edit-wrapper">
             <input
               type="time"
-              className="alarm-time m-b-10 font-15 width40"
+              className="alarm-time m-b-10 font-15 width60"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
