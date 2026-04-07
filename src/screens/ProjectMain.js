@@ -333,17 +333,17 @@ export default function ProjectMain() {
         {isEnd?"":(isReadOnly ? (
           <></>
         ) : (
-          <div className="edit-wrapper">
+          <div className="edit-wrapper m-b-10">
             <input
               type="time"
-              className="alarm-time m-b-10 font-15 width70"
+              className="alarm-time font-15 width100"
               value={odocAlarmTime}
               step="300"
               onChange={(e) => setOdocAlarmTime(e.target.value)}
             />
             <span className="odoc-btn-container">
-              <button className="btn primary margin0 width40 btn-small" onClick={() => fn_odocNm_change()}>저장</button>
-              <button className="btn tertiary margin0 width40 btn-small" onClick={() => handleEditEnd()}>취소</button>
+              <button className="btn primary margin0 btn-small" onClick={() => fn_odocNm_change()}>저장</button>
+              <button className="btn tertiary margin0 btn-small" onClick={() => handleEditEnd()}>취소</button>
             </span>
           </div>
         ))}

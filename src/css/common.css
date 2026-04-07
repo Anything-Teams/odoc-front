@@ -355,7 +355,6 @@ button:disabled {
   gap: 10px;
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
 }
 
 .odoc-btn-container .btn {
@@ -1111,21 +1110,17 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
-.width70 {
-  width: 70%;
-}
-
-.width40 {
-  width: 40%;
+.width100 {
+  width: 100%;
 }
 
 .btn-small {
   font-size: 15px;
-  padding: 7px;
+  padding: 9px;
   min-height: 0;
 }
 
