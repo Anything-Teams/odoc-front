@@ -351,7 +351,7 @@ button:disabled {
 }
 
 .odoc-btn-container {
-  width: 45%;
+  width: 55%;
   gap: 10px;
   display: flex;
   flex-direction: row;
@@ -1123,6 +1123,18 @@ main {
   padding: 10px;
   min-height: 0;
   text-align: center;
+}
+
+.border-primary {
+  border: 1px solid #52aeff
+}
+
+.border-secondary {
+  border: 1px solid #FF5B5B
+}
+
+.border-tertiary {
+  border: 1px solid #858585
 }
 
 * {
