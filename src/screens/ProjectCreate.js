@@ -145,7 +145,7 @@ export default function ProjectCreate() {
               </label>
               <input
                 type="time"
-                className="alarm-time width70"
+                className="alarm-time"
                 value={odocAlarmTime}
                 onChange={(e) => setOdocAlarmTime(e.target.value)}
               />

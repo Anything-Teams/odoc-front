@@ -340,7 +340,7 @@ button:disabled {
   border-radius: 0.5em;
   padding: 8px;
   background: #fff;
-  display: block;
+  width: 100%;
 }
 
 .detail-title {
