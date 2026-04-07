@@ -341,7 +341,6 @@ button:disabled {
   padding: 8px;
   background: #fff;
   display: block;
-  height: 50.8px;
 }
 
 .detail-title {
@@ -1114,10 +1113,6 @@ main {
   align-items: center;
   justify-content: center;
   gap: 10px;
-}
-
-.h35 {
-  height: 35.6px;
 }
 
 * {
