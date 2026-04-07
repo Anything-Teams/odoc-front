@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useNavigationType } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { TbArrowBackUp, TbSettings, TbLock, TbInfoCircle } from "react-icons/tb";
 import { post } from "../api/api";
@@ -16,13 +16,82 @@ export default function ProjectLayout() {
     const [noticeContent, setNoticeContent] = useState(null);
     const [info, setInfo] = useState(false);
     const [notice, setNotice] = useState(false);
-    const [noticeAnimKey, setNoticeAnimKey] = useState(0);
     const { user, logout } = useAuth();
+    const navigationType = useNavigationType();
+    const [noticeAnimKey, setNoticeAnimKey] = useState(0);
     const infoRef = useRef(null);
+    const swipeBackCandidateRef = useRef(false);
+    const touchTrackingRef = useRef({
+      startX: 0,
+      startY: 0,
+      active: false,
+    });
 
     useEffect(() => {
         setIsMotivationAlert(user?.isMotivationAlert);
         
+    }, []);
+
+    useEffect(() => {
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (!isIOS) return;
+
+      const onTouchStart = (e) => {
+        const touch = e.touches?.[0];
+        if (!touch) return;
+
+        // 왼쪽 가장자리 24px 이내에서 시작한 경우만 추적
+        if (touch.clientX <= 24) {
+          touchTrackingRef.current = {
+            startX: touch.clientX,
+            startY: touch.clientY,
+            active: true,
+          };
+          swipeBackCandidateRef.current = false;
+        } else {
+          touchTrackingRef.current.active = false;
+          swipeBackCandidateRef.current = false;
+        }
+      };
+
+      const onTouchMove = (e) => {
+        if (!touchTrackingRef.current.active) return;
+
+        const touch = e.touches?.[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - touchTrackingRef.current.startX;
+        const deltaY = Math.abs(touch.clientY - touchTrackingRef.current.startY);
+
+        if (deltaX > 20 && deltaY < 30) {
+          swipeBackCandidateRef.current = true;
+        }
+      };
+
+      const onTouchEnd = () => {
+        touchTrackingRef.current.active = false;
+
+        setTimeout(() => {
+          swipeBackCandidateRef.current = false;
+        }, 150);
+      };
+
+      const onTouchCancel = () => {
+        touchTrackingRef.current.active = false;
+        swipeBackCandidateRef.current = false;
+      };
+
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+      window.addEventListener("touchend", onTouchEnd, { passive: true });
+      window.addEventListener("touchcancel", onTouchCancel, { passive: true });
+
+      return () => {
+        window.removeEventListener("touchstart", onTouchStart);
+        window.removeEventListener("touchmove", onTouchMove);
+        window.removeEventListener("touchend", onTouchEnd);
+        window.removeEventListener("touchcancel", onTouchCancel);
+      };
     }, []);
 
     useEffect(() => {
@@ -53,8 +122,11 @@ export default function ProjectLayout() {
     }, [user]);
 
     useEffect(() => {
+      if (navigationType === "POP" && swipeBackCandidateRef.current) {
         setNoticeAnimKey((prev) => prev + 1);
-    }, [location.key]);
+        swipeBackCandidateRef.current = false;
+      }
+    }, [location.key, navigationType]);
 
     const updateOption = (data) => {
         post("/updateAlert", { 
