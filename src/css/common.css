@@ -1188,6 +1188,10 @@ main {
   border-color: #52aeff;
 }
 
+.today-box {
+  border: 1px solid #52aeff;
+}
+
 * {
   box-sizing: border-box;
 }

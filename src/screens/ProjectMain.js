@@ -171,7 +171,7 @@ export default function ProjectMain() {
         odocAlarmTime: odocAlarmTime
     })
     .then((data) => {
-      alert("변경완료!");
+      alert("변경 되었습니다");
       setIsReadOnly(true);
     })
     .catch(console.error);

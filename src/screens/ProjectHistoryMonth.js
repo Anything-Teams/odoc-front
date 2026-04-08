@@ -16,6 +16,11 @@ export default function ProjectHistoryMonth() {
   const year = searchParams.get("year");
   const month = searchParams.get("month");
 
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const currentDay = today.getDate();
+
   useEffect(() => {
     post("/getProjectName", { 
         userId: user?.userId,
@@ -90,8 +95,13 @@ export default function ProjectHistoryMonth() {
               ? data.memos?.[dayIndex] ?? ""
               : "";
 
+            const isToday =
+              Number(year) === currentYear &&
+              Number(month) === currentMonth &&
+              day === currentDay;
+
             return (
-              <div key={day} className="day-item" onClick={()=>{
+              <div key={day} className={`day-item ${isToday ? "today-box" : ""}`} onClick={()=>{
                   if (isChecked && checkedTime) {
                   alert(`${data.odocType === "1"?"오독시간":"기록 남긴 시간"}: ${checkedTime}`);
               }}}>
