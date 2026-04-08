@@ -168,7 +168,11 @@ export default function ProjectLayout() {
         if(isProjectList) {
             setInfo(true);
         } else {
-            navigate(-1);
+            if (window.history.length > 1) {
+                navigate(-1);
+            } else {
+                navigate("/projects", { replace: true });
+            }
         }
     }
 
