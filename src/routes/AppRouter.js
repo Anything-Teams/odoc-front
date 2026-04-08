@@ -9,11 +9,12 @@ import ProjectHistoryYear from "../screens/ProjectHistoryYear";
 import ProjectHistoryMonth from "../screens/ProjectHistoryMonth";
 import AdminPage from "../screens/AdminPage";
 import PrivateRoute from "./PrivateRoute";
+import RootRedirect from "./RootRedirect";
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<RootRedirect />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
