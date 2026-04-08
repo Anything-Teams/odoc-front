@@ -20,9 +20,6 @@ export default function Login() {
     }
   }, [loading, user, navigate]);
 
-
-  if (loading) return <Loading />;
-
   const doLogin = () => {
     if (!userId) {
       alert("아이디를 입력해주세요");

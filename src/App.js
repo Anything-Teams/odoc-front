@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import AppRouter from "./routes/AppRouter";
-import { AuthProvider } from "./common/AuthContext";
+import { AuthProvider, useAuth } from "./common/AuthContext";
 import { bindForegroundMessageHandler } from "./common/push";
 import { BrowserRouter } from "react-router-dom";
+import { Loading } from "./components/Loading"
 import "./css/common.css";
 
 function InAppPushToast() {
@@ -42,6 +43,12 @@ function InAppPushToast() {
 }
 
 function AppInner() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <InAppPushToast />
