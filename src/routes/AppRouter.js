@@ -9,7 +9,7 @@ import ProjectHistoryYear from "../screens/ProjectHistoryYear";
 import ProjectHistoryMonth from "../screens/ProjectHistoryMonth";
 import AdminPage from "../screens/AdminPage";
 import PrivateRoute from "./PrivateRoute";
-import RootRedirect from "./RootRedirect";
+import RootRedirect from "../common/RootRedirect";
 
 export default function AppRouter() {
   return (
