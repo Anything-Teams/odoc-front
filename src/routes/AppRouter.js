@@ -8,23 +8,31 @@ import ProjectLayout from "../layouts/ProjectLayout";
 import ProjectHistoryYear from "../screens/ProjectHistoryYear";
 import ProjectHistoryMonth from "../screens/ProjectHistoryMonth";
 import AdminPage from "../screens/AdminPage";
+import PrivateRoute from "./PrivateRoute";
 
 export default function AppRouter() {
-    return (
-        <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
 
-            <Route path="/projects" element={<ProjectLayout />}>
-                <Route index element={<ProjectList />} />
-                <Route path="new" element={<ProjectCreate />} />
-                <Route path=":projectId" element={<ProjectMain />} />
-                <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
-                <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
-                <Route path="admin" element={<AdminPage />} />
-            </Route>
-        </Routes>
-    );
+      <Route
+        path="/projects"
+        element={
+          <PrivateRoute>
+            <ProjectLayout />
+          </PrivateRoute>
+        }
+      >
+        <Route index element={<ProjectList />} />
+        <Route path="new" element={<ProjectCreate />} />
+        <Route path=":projectId" element={<ProjectMain />} />
+        <Route path=":projectId/history-year" element={<ProjectHistoryYear />} />
+        <Route path=":projectId/history-month" element={<ProjectHistoryMonth />} />
+        <Route path="admin" element={<AdminPage />} />
+      </Route>
+    </Routes>
+  );
 }

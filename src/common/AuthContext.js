@@ -7,19 +7,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-  
-    if (!savedUser) {
-      setUser(null);
-      setLoading(false);
-      return;
-    }
-  
-    get("/sessionUser")
-      .then(() => {
-        setUser(JSON.parse(savedUser));
+    get("/sessionUser", null, { skipUnauthorizedEvent: true })
+      .then((data) => {
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
       })
       .catch(() => {
         localStorage.removeItem("user");
@@ -32,15 +24,12 @@ export const AuthProvider = ({ children }) => {
     const handler = () => {
       localStorage.removeItem("user");
       setUser(null);
-
       window.location.href = "/login";
     };
-  
+
     window.addEventListener("unauthorized", handler);
     return () => window.removeEventListener("unauthorized", handler);
   }, []);
-
-
 
   const login = (userData) => {
     setUser(userData);

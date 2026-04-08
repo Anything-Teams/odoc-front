@@ -11,13 +11,15 @@ export default function Login() {
 
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const { login, user, loading  } = useAuth();
-
+  
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       navigate("/projects", { replace: true });
     }
-  }, []);
+  }, [loading, user, navigate]);
+
 
   if (loading) return <Loading />;
 
@@ -35,6 +37,7 @@ export default function Login() {
     post("/userLogin", {
       userId: userId,
       userPw: userPw,
+      rememberMe: rememberMe ? "Y" : "N",
     })
     .then(async (data) => {
       login({ userId: userId, ...data });
@@ -58,7 +61,16 @@ export default function Login() {
 
         <input type="text" placeholder="ID" className="input" value={userId} onChange={(e) => setUserId(e.target.value)} />
         <input type="password" placeholder="PW" className="input" value={userPw} onChange={(e) => setUserPw(e.target.value)} />
-
+        <label className="remember-me-wrap">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="remember-me-input"
+          />
+          <span className="remember-me-box"></span>
+          <span className="remember-me-text">자동로그인</span>
+        </label>
         <button className="btn primary" onClick={doLogin}>
             로그인
         </button>

@@ -1137,6 +1137,57 @@ main {
   border: 1px solid #858585
 }
 
+.remember-me-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  margin: 8px 0 14px 0;
+}
+
+.remember-me-input {
+  display: none;
+}
+
+.remember-me-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #cfcfcf;
+  border-radius: 4px;
+  background-color: #fff;
+  position: relative;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.remember-me-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1;
+}
+
+.remember-me-input:checked + .remember-me-box {
+  background-color: #52aeff;
+  border-color: #52aeff;
+}
+
+.remember-me-input:checked + .remember-me-box::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.remember-me-wrap:hover .remember-me-box {
+  border-color: #52aeff;
+}
+
 * {
   box-sizing: border-box;
 }

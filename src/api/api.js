@@ -1,44 +1,59 @@
-const BASE_URL = process.env.REACT_APP_API_URL; //로컬
+const BASE_URL = process.env.REACT_APP_API_URL || "";
 
 export async function apiFetch(url, options = {}) {
-  const fullUrl = url.startsWith('/') ? `${BASE_URL}${url}` : `${BASE_URL}/${url}`;
+  const fullUrl = url.startsWith("/")
+    ? `${BASE_URL}${url}`
+    : `${BASE_URL}/${url}`;
 
-  const response = await fetch(`${BASE_URL}${url}`, {
-  // const response = await fetch(fullUrl, {
+  const {
+    skipUnauthorizedEvent = false,
+    ...fetchOptions
+  } = options;
+
+  const response = await fetch(fullUrl, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      ...options.headers,
+      ...fetchOptions.headers,
     },
-    ...options,
+    ...fetchOptions,
   });
 
   if (!response.ok) {
-    if (response.status === 401 || response.status === 403) {
+    if (
+      !skipUnauthorizedEvent &&
+      (response.status === 401 || response.status === 403)
+    ) {
       window.dispatchEvent(new Event("unauthorized"));
     }
+
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || "API Error");
+    throw new Error(errorData.message || `API Error (${response.status})`);
   }
-  
+
   return response;
 }
 
-export async function get(url, params) {
-    let query = "";
-    if (params) {
-      query = "?" + new URLSearchParams(params).toString();
-    }
-    const res = await apiFetch(url + query, {
-      method: "GET",
-    });
-    return res.json();
+export async function get(url, params, options = {}) {
+  let query = "";
+  if (params) {
+    query = "?" + new URLSearchParams(params).toString();
   }
-  
-export async function post(url, data) {
-    const res = await apiFetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-    });
-    return res.json();
+
+  const res = await apiFetch(url + query, {
+    method: "GET",
+    ...options,
+  });
+
+  return res.json();
+}
+
+export async function post(url, data, options = {}) {
+  const res = await apiFetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    ...options,
+  });
+
+  return res.json();
 }
