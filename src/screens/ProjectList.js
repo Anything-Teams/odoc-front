@@ -22,8 +22,11 @@ export default function ProjectList() {
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
     const [isMotivationAlert, setIsMotivationAlert] = useState("N");
-    const { user } = useAuth();
+    const { user, isAutoLogin } = useAuth();
     const [sortType, setSortType] = useState("latest");
+
+    const autoLoginQuoteShown = sessionStorage.getItem("autoLoginQuoteShown") === "Y";
+    const shouldShowAlert = showAlert || (isAutoLogin && !autoLoginQuoteShown);
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -69,23 +72,25 @@ export default function ProjectList() {
             fetchList();
         }
     }, [user]);
-
+    
     useEffect(() => {
-        if (showAlert && !loading && isFirstAlert.current) {
+        if (!loading && isFirstAlert.current && shouldShowAlert && isMotivationAlert === "Y") {
             isFirstAlert.current = false;
-            
-            if(isMotivationAlert === "Y") {
+    
+            requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-                        alert(randomQuote);
-        
-                        window.history.replaceState({}, document.title);
-                    });
+                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                    alert(randomQuote);
+    
+                    if (isAutoLogin) {
+                        sessionStorage.setItem("autoLoginQuoteShown", "Y");
+                    }
+    
+                    window.history.replaceState({}, document.title);
                 });
-            }
+            });
         }
-    }, [loading, showAlert, isMotivationAlert]);
+    }, [loading, shouldShowAlert, isMotivationAlert, isAutoLogin]);
 
     useEffect(() => {
         if (user?.userId) {

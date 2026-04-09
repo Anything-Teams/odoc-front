@@ -6,16 +6,19 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAutoLogin, setIsAutoLogin] = useState(false);
 
   useEffect(() => {
     get("/sessionUser", null, { skipUnauthorizedEvent: true })
       .then((data) => {
         setUser(data);
+        setIsAutoLogin(true);
         localStorage.setItem("user", JSON.stringify(data));
       })
       .catch(() => {
         localStorage.removeItem("user");
         setUser(null);
+        setIsAutoLogin(false);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -33,6 +36,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
+    setIsAutoLogin(false);
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
@@ -46,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, isAutoLogin }}>
       {children}
     </AuthContext.Provider>
   );
