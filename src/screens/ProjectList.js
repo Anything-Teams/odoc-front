@@ -86,7 +86,10 @@ export default function ProjectList() {
                         sessionStorage.setItem("autoLoginQuoteShown", "Y");
                     }
     
-                    window.history.replaceState({}, document.title);
+                    navigate(
+                        `${location.pathname}${location.search}${location.hash}`,
+                        { replace: true, state: null }
+                    );
                 });
             });
         }
