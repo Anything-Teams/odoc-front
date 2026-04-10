@@ -65,31 +65,25 @@ export default function ProjectList() {
 
     useEffect(() => {
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
-        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    
-        if (isIOS && isStandalone) {
-            if (window.history.state?.guard !== 'active') {
-                window.history.pushState({ guard: 'active' }, '', window.location.pathname);
-            }
-    
-            const handlePopState = () => {
-                setTimeout(() => {
-                    if (window.history.state?.guard !== 'active') {
-                        window.history.pushState({ guard: 'active' }, '');
-                    }
-                }, 0);
-            };
-    
-            window.addEventListener('popstate', handlePopState);
-            return () => window.removeEventListener('popstate', handlePopState);
+        if (!isStandalone) return;
+
+        if (window.history.state?.guard !== 'active') {
+            window.history.pushState({ guard: 'active' }, '', window.location.pathname);
         }
-    }, []);
+
+        const handlePopState = (e) => {
+            window.history.pushState({ guard: 'active' }, '', window.location.pathname);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []); 
 
     useEffect(() => {
         if (!loading) {
             const params = new URLSearchParams(location.search);
             const pushTarget = params.get("pushTarget");
-    
+
             if (pushTarget) {
                 window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
                 
