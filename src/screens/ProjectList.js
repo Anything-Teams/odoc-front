@@ -237,7 +237,7 @@ export default function ProjectList() {
     };
 
     return (
-        <div className="project-container">
+        <div className="project-container x-defend">
             <div className="project-detail">
                 <div className="input-wrapper">
                     <div className="odocNm-class">나의 ODOC</div>

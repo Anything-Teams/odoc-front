@@ -139,6 +139,11 @@ button:disabled {
   border: 0;
 }
 
+.x-defend {
+  touch-action: pan-y; 
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+}
 
 .project-container {
   display: flex;
@@ -179,6 +184,7 @@ button:disabled {
 }
 
 .card {
+  touch-action: pan-x pan-y;
   position: relative;
   overflow: hidden;
 }
