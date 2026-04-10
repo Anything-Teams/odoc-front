@@ -68,16 +68,6 @@ export default function ProjectList() {
         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     
         if (isIOS && isStandalone) {
-            const params = new URLSearchParams(window.location.search);
-            const pushTarget = params.get("pushTarget");
-    
-            if (pushTarget) {
-                window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
-                
-                navigate(`/projects/${pushTarget}`);
-                return; 
-            }
-    
             if (window.history.state?.guard !== 'active') {
                 window.history.pushState({ guard: 'active' }, '', window.location.pathname);
             }
@@ -93,7 +83,20 @@ export default function ProjectList() {
             window.addEventListener('popstate', handlePopState);
             return () => window.removeEventListener('popstate', handlePopState);
         }
-    }, [location.search, navigate]); 
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            const params = new URLSearchParams(location.search);
+            const pushTarget = params.get("pushTarget");
+    
+            if (pushTarget) {
+                window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
+                
+                navigate(`/projects/${pushTarget}`);
+            }
+        }
+    }, [loading, location.search, navigate]);
 
     useEffect(() => {
         bindForegroundMessageHandler();

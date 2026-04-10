@@ -16,13 +16,16 @@ export default function Login() {
 
   useEffect(() => {
     if (!loading && user) {
-      window.history.pushState(null, "", window.location.href);
+      const params = new URLSearchParams(window.location.search);
+      const pushTarget = params.get("pushTarget");
   
-      const timer = setTimeout(() => {
-        navigate("/projects", { replace: true });
+      window.history.pushState({ guard: 'login' }, '');
+  
+      const nextUrl = pushTarget ? `/projects?pushTarget=${pushTarget}` : "/projects";
+  
+      setTimeout(() => {
+        navigate(nextUrl); 
       }, 100);
-  
-      return () => clearTimeout(timer);
     }
   }, [loading, user]);
 
