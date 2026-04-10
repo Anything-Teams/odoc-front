@@ -18,7 +18,7 @@ export default function Login() {
     if (!loading && user) {
       const timer = setTimeout(() => {
         navigate("/projects", { replace: true });
-      }, 100);
+      }, 500);
   
       return () => clearTimeout(timer);
     }
