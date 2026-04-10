@@ -16,7 +16,11 @@ export default function Login() {
   
   useEffect(() => {
     if (!loading && user) {
-      navigate("/projects", { replace: true });
+      const timer = setTimeout(() => {
+        navigate("/projects", { replace: true });
+      }, 100);
+  
+      return () => clearTimeout(timer);
     }
   }, [loading, user, navigate]);
 
