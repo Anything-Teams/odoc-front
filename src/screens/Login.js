@@ -19,16 +19,19 @@ export default function Login() {
       const params = new URLSearchParams(window.location.search);
       const pushTarget = params.get("pushTarget");
   
+      if (pushTarget) {
+        sessionStorage.setItem("pendingPushTarget", pushTarget);
+        
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+  
       window.history.pushState({ guard: 'login' }, '');
-  
-      const nextUrl = pushTarget ? `/projects?pushTarget=${pushTarget}` : "/projects";
-  
+      
       setTimeout(() => {
-        navigate(nextUrl); 
+        navigate("/projects"); 
       }, 100);
     }
   }, [loading, user]);
-
   const doLogin = () => {
     if (!userId) {
       alert("아이디를 입력해주세요");

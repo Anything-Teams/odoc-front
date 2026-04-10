@@ -81,13 +81,14 @@ export default function ProjectList() {
 
     useEffect(() => {
         if (!loading) {
-            const params = new URLSearchParams(location.search);
-            const pushTarget = params.get("pushTarget");
+            const pendingTarget = sessionStorage.getItem("pendingPushTarget");
 
-            if (pushTarget) {
+            if (pendingTarget) {
+                sessionStorage.removeItem("pendingPushTarget");
+
                 window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
                 
-                navigate(`/projects/${pushTarget}`);
+                navigate(`/projects/${pendingTarget}`);
             }
         }
     }, [loading, location.search, navigate]);
