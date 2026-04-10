@@ -64,6 +64,26 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
+        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    
+        if (isIOS && isStandalone) {
+            window.history.pushState(null, null, window.location.pathname);
+    
+            const handlePopState = () => {
+                window.history.pushState(null, null, window.location.pathname);
+                console.log("스와이프 백 방어 성공: 목록 화면 유지");
+            };
+    
+            window.addEventListener('popstate', handlePopState);
+    
+            return () => {
+                window.removeEventListener('popstate', handlePopState);
+            };
+        }
+    }, []);
+
+    useEffect(() => {
         bindForegroundMessageHandler();
     }, []);
 
