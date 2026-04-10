@@ -16,13 +16,17 @@ export default function Login() {
   
   useEffect(() => {
     if (!loading && user) {
+      // 1. 현재 주소를 히스토리에 한 번 더 밀어 넣습니다. (스택을 2개로 만듦)
+      window.history.pushState(null, "", window.location.href);
+  
+      // 2. 그 후 0.5초 뒤에 목록으로 보냅니다.
       const timer = setTimeout(() => {
         navigate("/projects", { replace: true });
-      }, 1000);
+      }, 500);
   
       return () => clearTimeout(timer);
     }
-  }, [loading, user, navigate]);
+  }, [loading, user]);
 
   const doLogin = () => {
     if (!userId) {
