@@ -64,6 +64,10 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
+        const pendingTarget = sessionStorage.getItem("pendingPushTarget");
+
+        if (pendingTarget) shouldShowAlert = false;
+
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
         if (!isStandalone) return;
 
@@ -85,8 +89,6 @@ export default function ProjectList() {
 
             if (pendingTarget) {
                 sessionStorage.removeItem("pendingPushTarget");
-
-                shouldShowAlert = false;
 
                 window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
                 
