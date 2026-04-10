@@ -15,7 +15,9 @@ export default function Login() {
   const { login, user, loading  } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) {
+    const isLogged = localStorage.getItem("isLoggedIn");
+
+    if (user || isLogged === "Y") {
       const params = new URLSearchParams(window.location.search);
       const pushTarget = params.get("pushTarget");
   
@@ -52,6 +54,8 @@ export default function Login() {
     .then(async (data) => {
       login({ userId: userId, ...data });
     
+      localStorage.setItem("isLoggedIn", "Y");
+
       await registerPush(userId);
     
       navigate("/projects", { state: { showAlert: true } });
