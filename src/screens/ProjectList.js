@@ -64,6 +64,8 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
+        shouldShowAlert = false;
+
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
         if (!isStandalone) return;
 
