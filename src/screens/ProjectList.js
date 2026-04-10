@@ -64,9 +64,6 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
-        const pendingTarget = sessionStorage.getItem("pendingPushTarget");
-
-        if (pendingTarget) shouldShowAlert = false;
 
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
         if (!isStandalone) return;
@@ -109,23 +106,27 @@ export default function ProjectList() {
     
     useEffect(() => {
         if (!loading && isFirstAlert.current && shouldShowAlert && isMotivationAlert === "Y") {
+            const pendingTarget = sessionStorage.getItem("pendingPushTarget");
+    
             isFirstAlert.current = false;
     
-            requestAnimationFrame(() => {
+            if (!pendingTarget) {
                 requestAnimationFrame(() => {
-                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-                    alert(randomQuote);
-    
-                    if (isAutoLogin) {
-                        sessionStorage.setItem("autoLoginQuoteShown", "Y");
-                    }
-    
-                    navigate(
-                        `${location.pathname}${location.search}${location.hash}`,
-                        { replace: true, state: null }
-                    );
+                    requestAnimationFrame(() => {
+                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                        alert(randomQuote);
+        
+                        if (isAutoLogin) {
+                            sessionStorage.setItem("autoLoginQuoteShown", "Y");
+                        }
+        
+                        navigate(
+                            `${location.pathname}${location.search}${location.hash}`,
+                            { replace: true, state: null }
+                        );
+                    });
                 });
-            });
+            }
         }
     }, [loading, shouldShowAlert, isMotivationAlert, isAutoLogin]);
 
