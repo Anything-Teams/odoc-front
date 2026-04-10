@@ -1,11 +1,19 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../common/AuthContext";
+import { Loading } from "../components/Loading";
 
 export default function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
 
-  if (loading) return null; // 또는 로딩 컴포넌트
-  if (!user) return <Navigate to="/login" replace />;
+  const isLoggedHint = localStorage.getItem("isLoggedIn") === "Y";
 
+  if (loading && !isLoggedHint) {
+    return <Loading />;
+  }
+
+  if (!loading && !user && !isLoggedHint) {
+    return <Navigate to="/login" replace />;
+  }
+  
   return children;
 }
