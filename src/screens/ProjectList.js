@@ -27,6 +27,7 @@ export default function ProjectList() {
 
     const autoLoginQuoteShown = sessionStorage.getItem("autoLoginQuoteShown") === "Y";
     const shouldShowAlert = showAlert || (isAutoLogin && !autoLoginQuoteShown);
+    const isPushEntry = !!sessionStorage.getItem("pendingPushTarget");
 
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
@@ -82,9 +83,7 @@ export default function ProjectList() {
 
     useEffect(() => {
         if (!loading) {
-            const pendingTarget = sessionStorage.getItem("pendingPushTarget");
-
-            if (pendingTarget) {
+            if (!isPushEntry) {
                 sessionStorage.removeItem("pendingPushTarget");
 
                 window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
