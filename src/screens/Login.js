@@ -26,12 +26,13 @@ export default function Login() {
       }
   
       window.history.pushState({ guard: 'login' }, '');
-      
+
       setTimeout(() => {
         navigate("/projects"); 
-      }, 100);
+      }, 0);
     }
   }, [loading, user]);
+
   const doLogin = () => {
     if (!userId) {
       alert("아이디를 입력해주세요");
