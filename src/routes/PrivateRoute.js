@@ -5,15 +5,8 @@ import { Loading } from "../components/Loading";
 export default function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
 
-  const isLoggedHint = localStorage.getItem("isLoggedIn") === "Y";
+  if (loading) return <Loading />;
+  if (!user) return <Navigate to="/login" replace />;
 
-  if (loading && !isLoggedHint) {
-    return <Loading />;
-  }
-
-  if (!loading && !user && !isLoggedHint) {
-    return <Navigate to="/login" replace />;
-  }
-  
   return children;
 }
