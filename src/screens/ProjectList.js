@@ -19,6 +19,7 @@ export default function ProjectList() {
     const [loading, setLoading] = useState(true);
     const [odocType, setOdocType] = useState("0");
     const [odocEndYn, setOdocEndYn] = useState("");
+    const [toast, setToast] = useState(null);
     const isFirstAlert = useRef(true);
     const showAlert = location.state?.showAlert;
     const [isMotivationAlert, setIsMotivationAlert] = useState("N");
@@ -100,6 +101,24 @@ export default function ProjectList() {
             fetchList();
         }
     }, [odocType, odocEndYn]);
+
+
+    useEffect(() => {
+      const params = new URLSearchParams(location.search);
+      const odocSn = params.get("pushTarget");
+      const odocNm = params.get("odocNm");
+
+      if (!odocSn) return;
+
+      setToast({
+        odocSn,
+        message: odocNm
+          ? `[${odocNm}]으로 이동하시겠습니까?`
+          : "이동하시겠습니까?"
+      });
+
+      navigate("/projects", { replace: true });
+    }, [location.search, navigate]);
 
 
     const fn_btn_event = async (odocSn, endYn) => {
@@ -435,6 +454,62 @@ export default function ProjectList() {
                     ODOC 추가
                 </button>
             </div>
+
+            {toast && (
+              <div className="push-toast">
+                <div className="push-toast-text">
+                  <div className="push-toast-title">알림</div>
+                  <div className="push-toast-message">{toast.message}</div>
+                </div>
+
+                <div className="push-toast-actions">
+                  <button
+                    className="push-toast-btn close"
+                    onClick={() => setToast(null)}
+                  >
+                    닫기
+                  </button>
+
+                  <button
+                    className="push-toast-btn"
+                    onClick={() => {
+                      navigate(`/projects/${toast.odocSn}`);
+                      setToast(null);
+                    }}
+                  >
+                    이동
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {toast && (
+              <div className="push-toast">
+                <div className="push-toast-text">
+                  <div className="push-toast-title">알림</div>
+                  <div className="push-toast-message">{toast.message}</div>
+                </div>
+
+                <div className="push-toast-actions">
+                  <button
+                    className="push-toast-btn close"
+                    onClick={() => setToast(null)}
+                  >
+                    닫기
+                  </button>
+
+                  <button
+                    className="push-toast-btn"
+                    onClick={() => {
+                      navigate(`/projects/${toast.odocSn}`);
+                      setToast(null);
+                    }}
+                  >
+                    이동
+                  </button>
+                </div>
+              </div>
+            )}
         </div>
     );
 }
