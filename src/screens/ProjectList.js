@@ -68,18 +68,20 @@ export default function ProjectList() {
         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     
         if (isIOS && isStandalone) {
-            window.history.pushState(null, null, window.location.pathname);
+            if (window.history.state?.guard !== 'active') {
+                window.history.pushState({ guard: 'active' }, '');
+            }
     
-            const handlePopState = () => {
-                window.history.pushState(null, null, window.location.pathname);
-                console.log("스와이프 백 방어 성공: 목록 화면 유지");
+            const handlePopState = (e) => {
+                setTimeout(() => {
+                    if (window.history.state?.guard !== 'active') {
+                        window.history.pushState({ guard: 'active' }, '');
+                    }
+                }, 0);
             };
     
             window.addEventListener('popstate', handlePopState);
-    
-            return () => {
-                window.removeEventListener('popstate', handlePopState);
-            };
+            return () => window.removeEventListener('popstate', handlePopState);
         }
     }, []);
 
