@@ -28,7 +28,8 @@ export default function ProjectList() {
 
     const autoLoginQuoteShown = sessionStorage.getItem("autoLoginQuoteShown") === "Y";
     const shouldShowAlert = showAlert || (isAutoLogin && !autoLoginQuoteShown);
-
+    const isPushEntry = !!sessionStorage.getItem("pendingPushTarget");
+    
     const handleTouchStart = (e) => {
         startX.current = e.touches[0].clientX;
     };
@@ -65,6 +66,37 @@ export default function ProjectList() {
     };
 
     useEffect(() => {
+
+        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        if (!isStandalone) return;
+
+        if (window.history.state?.guard !== 'active') {
+            window.history.pushState({ guard: 'active' }, '', window.location.pathname);
+        }
+
+        const handlePopState = (e) => {
+            window.history.pushState({ guard: 'active' }, '', window.location.pathname);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []); 
+
+    useEffect(() => {
+        if (!loading) {
+            const pendingTarget = sessionStorage.getItem("pendingPushTarget");
+
+            if (pendingTarget) {
+                sessionStorage.removeItem("pendingPushTarget");
+
+                window.history.replaceState({ guard: 'active' }, '', window.location.pathname);
+                
+                navigate(`/projects/${pendingTarget}`);
+            }
+        }
+    }, [loading, location.search, navigate]);
+
+    useEffect(() => {
         bindForegroundMessageHandler();
     }, []);
 
@@ -76,23 +108,26 @@ export default function ProjectList() {
     
     useEffect(() => {
         if (!loading && isFirstAlert.current && shouldShowAlert && isMotivationAlert === "Y") {
+    
             isFirstAlert.current = false;
     
-            requestAnimationFrame(() => {
+            if (!isPushEntry) {
                 requestAnimationFrame(() => {
-                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-                    alert(randomQuote);
-    
-                    if (isAutoLogin) {
-                        sessionStorage.setItem("autoLoginQuoteShown", "Y");
-                    }
-    
-                    navigate(
-                        `${location.pathname}${location.search}${location.hash}`,
-                        { replace: true, state: null }
-                    );
+                    requestAnimationFrame(() => {
+                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                        alert(randomQuote);
+        
+                        if (isAutoLogin) {
+                            sessionStorage.setItem("autoLoginQuoteShown", "Y");
+                        }
+        
+                        navigate(
+                            `${location.pathname}${location.search}${location.hash}`,
+                            { replace: true, state: null }
+                        );
+                    });
                 });
-            });
+            }
         }
     }, [loading, shouldShowAlert, isMotivationAlert, isAutoLogin]);
 
@@ -234,7 +269,7 @@ export default function ProjectList() {
     };
 
     return (
-        <div className="project-container">
+        <div className="project-container x-defend">
             <div className="project-detail">
                 <div className="input-wrapper">
                     <div className="odocNm-class">나의 ODOC</div>

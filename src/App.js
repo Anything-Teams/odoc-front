@@ -45,7 +45,9 @@ function InAppPushToast() {
 function AppInner() {
   const { loading } = useAuth();
 
-  if (loading) {
+  const isLoggedHint = localStorage.getItem("isLoggedIn") === "Y";
+
+  if (loading && !isLoggedHint) {
     return <Loading />;
   }
 

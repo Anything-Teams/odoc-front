@@ -13,12 +13,27 @@ export default function Login() {
   const [userPw, setUserPw] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const { login, user, loading  } = useAuth();
-  
+
   useEffect(() => {
-    if (!loading && user) {
-      navigate("/projects", { replace: true });
+    const isLogged = localStorage.getItem("isLoggedIn");
+
+    if (user || isLogged === "Y") {
+      const params = new URLSearchParams(window.location.search);
+      const pushTarget = params.get("pushTarget");
+  
+      if (pushTarget) {
+        sessionStorage.setItem("pendingPushTarget", pushTarget);
+        
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+  
+      window.history.pushState({ guard: 'login' }, '');
+
+      setTimeout(() => {
+        navigate("/projects"); 
+      }, 0);
     }
-  }, [loading, user, navigate]);
+  }, [loading, user]);
 
   const doLogin = () => {
     if (!userId) {
@@ -39,6 +54,8 @@ export default function Login() {
     .then(async (data) => {
       login({ userId: userId, ...data });
     
+      localStorage.setItem("isLoggedIn", "Y");
+
       await registerPush(userId);
     
       navigate("/projects", { state: { showAlert: true } });
