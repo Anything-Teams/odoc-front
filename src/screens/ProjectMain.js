@@ -316,7 +316,7 @@ export default function ProjectMain() {
               </span>
             </span>
 
-            <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={10}
+            <input ref={inputRef} type="text" className="odocNm-class" id="odocNm" value={tempName} readOnly={isReadOnly} onChange={(e) => setTempName(e.target.value)} maxLength={15}
             />
             <span className="icon-wrapper">
               {isEnd?"":(isReadOnly ? (

@@ -102,7 +102,7 @@ export default function ProjectCreate() {
 
         <div className="create-inner">
 
-          <input type="text" placeholder={`${odocType === "1" ? "목표 습관명(10자제한)" : "기록명(10자제한)"}`} className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={10}/>
+          <input type="text" placeholder={`${odocType === "1" ? "목표 습관명(15자제한)" : "기록명(15자제한)"}`} className="input" value={odocNm} onChange={(e) => setOdocNm(e.target.value)} maxLength={15}/>
           
           <div className="odoc-type-setting">
             <label className={`radio-item odoc-item ${odocType === "1" ? "odoc-active" : ""}`}>
