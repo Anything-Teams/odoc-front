@@ -1198,84 +1198,41 @@ main {
   border: 1px solid #52aeff;
 }
 
-
-.push-toast {
+.time-modal-backdrop {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 
-  width: calc(100% - 32px);
-  max-width: 420px;
-
-  background: rgba(20, 20, 20, 0.9);
-  backdrop-filter: blur(12px);
-
-  color: #fff;
-  border-radius: 14px;
-
-  padding: 14px 16px;
+  background: rgba(0,0,0,0.4);
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  justify-content: center;
 
   z-index: 9999;
-
-  animation: pushToastSlideDown 0.35s ease;
 }
 
-.push-toast-text {
+.time-modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  margin-left: 19px;
+  margin-right: 19px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-}
-
-.push-toast-title {
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-.push-toast-message {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.push-toast-btn {
-  background: #2a8a54;
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  font-size: 12px;
-
-  padding: 6px 10px;
-  border-radius: 8px;
-
-  cursor: pointer;
-}
-
-/* 애니메이션 */
-@keyframes pushToastSlideDown {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-.push-toast-actions {
-  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-around;
+  gap: 10px;
 }
 
-.push-toast-btn.close {
-  background: #4e4e4e;
+.btn-modal {
+  width: 100px;
+  font-size: 15px;
+  padding: 6px;
+  min-height: 35px;
 }
 
 * {

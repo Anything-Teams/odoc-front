@@ -11,6 +11,7 @@ export default function ProjectHistoryMonth() {
   const [title, setTitle] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [openedDay, setOpenedDay] = useState(null);
   const { user } = useAuth();
 
   const year = searchParams.get("year");
@@ -21,33 +22,45 @@ export default function ProjectHistoryMonth() {
   const currentMonth = today.getMonth() + 1;
   const currentDay = today.getDate();
 
-  useEffect(() => {
-    post("/getProjectName", { 
-        userId: user?.userId,
-        odocSn: projectId
-    })
-    .then((data) => {
-        setTitle(data.odocNm);
-    })
-    .catch(console.error);
-  }, [projectId]);
+  const [modal, setModal] = useState({
+    open: false,
+    text: ""
+  });
 
   useEffect(() => {
+    if (!user?.userId) return;
+
+    post("/getProjectName", {
+      userId: user.userId,
+      odocSn: projectId,
+    })
+      .then((data) => {
+        setTitle(data.odocNm);
+      })
+      .catch(console.error);
+  }, [projectId, user]);
+
+  useEffect(() => {
+    if (!user?.userId || !year || !month) return;
+
+    setLoading(true);
+
     post("/getHistMonth", {
-      userId: user?.userId,
+      userId: user.userId,
       odocSn: projectId,
       year,
-      month
-    }).then((data) => {
-      setData(data);
-      setLoading(false);
-      
-    });
-  }, [projectId, year, month]);
+      month,
+    })
+      .then((data) => {
+        setData(data);
+      })
+      .catch(console.error)
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [projectId, year, month, user]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   if (!data) {
     return (
@@ -57,9 +70,9 @@ export default function ProjectHistoryMonth() {
     );
   }
 
-  const daysInMonth = new Date(year, month, 0).getDate();
+  const daysInMonth = new Date(Number(year), Number(month), 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  const checkedDays = data.dateTime.checkedDays || [];
+  const checkedDays = data.dateTime?.checkedDays || [];
 
   return (
     <div className="project-history-month">
@@ -72,7 +85,7 @@ export default function ProjectHistoryMonth() {
 
         <div className="month-image-box">
           <img
-            src={`/images/${data.odocThemaType}/${Math.floor(Number(data.odocRate/10) || 0)}.png`}
+            src={`/images/${data.odocThemaType}/${Math.floor(Number(data.odocRate / 10) || 0)}.png`}
             alt="progress"
             className="image-placeholder"
           />
@@ -84,62 +97,84 @@ export default function ProjectHistoryMonth() {
 
         <div className="day-grid">
           {days.map((day) => {
-            const isChecked = checkedDays.includes(String(day).padStart(2, "0"));
+            const dayStr = String(day).padStart(2, "0");
+            const isChecked = checkedDays.includes(dayStr);
             const isCreated = day === data.createdDay;
 
-            const dayIndex = checkedDays.indexOf(String(day).padStart(2, "0"));
-            const checkedTime = dayIndex !== -1 ? data.dateTime.checkedTimestamps[dayIndex] : null;
+            const dayIndex = checkedDays.indexOf(dayStr);
+            const checkedTime =
+              dayIndex !== -1 ? data.dateTime?.checkedTimestamps?.[dayIndex] : null;
 
             const memo =
-            isChecked && dayIndex > -1
-              ? data.memos?.[dayIndex] ?? ""
-              : "";
+              isChecked && dayIndex > -1 ? data.memos?.[dayIndex] ?? "" : "";
 
             const isToday =
               Number(year) === currentYear &&
               Number(month) === currentMonth &&
               day === currentDay;
 
+            const isOpened = openedDay === day;
+
             return (
-              <div key={day} className={`day-item ${isToday ? "today-box" : ""}`} onClick={()=>{
-                  if (isChecked && checkedTime) {
-                  alert(`${data.odocType === "1"?"오독시간":"기록 남긴 시간"}: ${checkedTime}`);
-              }}}>
+              <div
+                key={day}
+                className={`day-item ${isToday ? "today-box" : ""} ${isOpened ? "opened" : ""}`}
+                onClick={() => {
+                  if (!isChecked || !checkedTime) return;
+                
+                  setModal({
+                    open: true,
+                    text: `${data.odocType === "1" ? "오독시간" : "기록시간"}: ${checkedTime}`
+                  });
+                }}
+                title={
+                  isChecked && checkedTime
+                    ? `${data.odocType === "1" ? "오독시간" : "기록 남긴 시간"}: ${checkedTime}`
+                    : ""
+                }
+              >
                 <div className="day-number">{day}일</div>
 
-                {
-                  data.odocType==="1"
-                  ?
-                    <>
-                      <div className="day-box">
-                        {/* {isChecked && <div className="check-mark">✔</div>} */}
-                        <div className="check-mark">
-                          {isChecked ? "✔" : "\u00A0"}
-                        </div>
+                {data.odocType === "1" ? (
+                  <>
+                    <div className="day-box">
+                      <div className="check-mark">
+                        {isChecked ? "✔" : "\u00A0"}
                       </div>
+                    </div>
 
-                      <div className="odoc-created">
-                        {isCreated?"ODOC!":"\u00A0"}
+                    <div className="odoc-created">
+                      {isCreated ? "ODOC!" : "\u00A0"}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="day-box">
+                      <div className="check-mark font-12">
+                        {isChecked ? (memo === "" ? "✔" : memo) : "\u00A0"}
                       </div>
-                    </>
-                  :
-                    <>
-                      <div className="day-box">
-                        <div className="check-mark font-12">
-                          {isChecked ? (memo === "" ? "✔" : memo) : "\u00A0"}
-                        </div>
-                      </div>
+                    </div>
 
-                      <div className="odoc-created">
-                        {isCreated?"첫 기록!":"\u00A0"}
-                      </div>
-                    </>
-                }
+                    <div className="odoc-created">
+                      {isCreated ? "첫 기록!" : "\u00A0"}
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
         </div>
       </div>
+      {modal.open && (
+        <div className="time-modal-backdrop" onClick={() => setModal({ open: false, text: "" })}>
+          <div className="time-modal" onClick={(e) => e.stopPropagation()}>
+            <div>{modal.text}</div>
+            <button className="btn tertiary btn-modal"onClick={() => setModal({ open: false, text: "" })}>
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
