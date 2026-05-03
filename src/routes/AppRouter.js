@@ -10,6 +10,7 @@ import ProjectHistoryMonth from "../screens/ProjectHistoryMonth";
 import AdminPage from "../screens/AdminPage";
 import PrivateRoute from "./PrivateRoute";
 import RootRedirect from "../common/RootRedirect";
+import RutifyPrivacy from "../screens/privacy/RutifyPrivacy";
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
 
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/rutify/privacy" element={<RutifyPrivacy />} />
 
       <Route
         path="/projects"
