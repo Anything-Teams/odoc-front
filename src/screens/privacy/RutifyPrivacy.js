@@ -73,7 +73,7 @@ export default function RutifyPrivacy() {
                     개인정보처리방침 또는 개인정보 관련 문의는 아래 이메일로 연락해
                     주세요.
                 </p>
-                <p style={styles.paragraph}>이메일: 실제_문의_이메일@example.com</p>
+                <p style={styles.paragraph}>이메일: hcd1228@gmail.com</p>
 
                 <h2 style={styles.subTitle}>9. 변경 사항</h2>
                 <p style={styles.paragraph}>
