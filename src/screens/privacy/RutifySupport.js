@@ -2,6 +2,46 @@ export default function RutifySupport() {
     return (
         <main style={styles.page}>
             <section style={styles.container}>
+                <h1 style={styles.title}>RUTIFY Support</h1>
+                <p style={styles.date}>Customer Support</p>
+
+                <p style={styles.paragraph}>
+                    Thank you for using RUTIFY. If you experience any issues while using
+                    the app or need help with Pro purchases, ads, routine creation, workout
+                    records, or sharing features, please contact us by email.
+                </p>
+
+                <h2 style={styles.subTitle}>Contact Email</h2>
+                <p style={styles.paragraph}>
+                    Email: <a style={styles.link} href="mailto:hcd1228@gmail.com">hcd1228@gmail.com</a>
+                </p>
+
+                <h2 style={styles.subTitle}>Support Topics</h2>
+                <ul style={styles.list}>
+                    <li>App errors or unexpected behavior</li>
+                    <li>Issues with creating, editing, or deleting workout routines</li>
+                    <li>Workout records and statistics issues</li>
+                    <li>Routine share code creation or import issues</li>
+                    <li>Pro purchase or restore questions</li>
+                    <li>Ad display or ad removal status questions</li>
+                    <li>General feedback and feature requests</li>
+                </ul>
+
+                <h2 style={styles.subTitle}>Helpful Information to Include</h2>
+                <ul style={styles.list}>
+                    <li>Your device model</li>
+                    <li>Your operating system version</li>
+                    <li>The screen or feature where the issue occurred</li>
+                    <li>Screenshots that show the issue</li>
+                    <li>Steps to reproduce the issue</li>
+                </ul>
+
+                <p style={styles.paragraph}>
+                    We will review your inquiry and respond as soon as possible.
+                </p>
+
+                <hr style={styles.divider} />
+
                 <h1 style={styles.title}>Rutify 고객지원</h1>
                 <p style={styles.date}>RUTIFY Support</p>
 
@@ -40,45 +80,6 @@ export default function RutifySupport() {
                     보내주신 문의는 확인 후 가능한 빠르게 답변드리겠습니다.
                 </p>
 
-                <hr style={styles.divider} />
-
-                <h1 style={styles.title}>RUTIFY Support</h1>
-                <p style={styles.date}>Customer Support</p>
-
-                <p style={styles.paragraph}>
-                    Thank you for using RUTIFY. If you experience any issues while using
-                    the app or need help with Pro purchases, ads, routine creation, workout
-                    records, or sharing features, please contact us by email.
-                </p>
-
-                <h2 style={styles.subTitle}>Contact Email</h2>
-                <p style={styles.paragraph}>
-                    Email: <a style={styles.link} href="mailto:hcd1228@gmail.com">hcd1228@gmail.com</a>
-                </p>
-
-                <h2 style={styles.subTitle}>Support Topics</h2>
-                <ul style={styles.list}>
-                    <li>App errors or unexpected behavior</li>
-                    <li>Issues with creating, editing, or deleting workout routines</li>
-                    <li>Workout records and statistics issues</li>
-                    <li>Routine share code creation or import issues</li>
-                    <li>Pro purchase or restore questions</li>
-                    <li>Ad display or ad removal status questions</li>
-                    <li>General feedback and feature requests</li>
-                </ul>
-
-                <h2 style={styles.subTitle}>Helpful Information to Include</h2>
-                <ul style={styles.list}>
-                    <li>Your device model</li>
-                    <li>Your operating system version</li>
-                    <li>The screen or feature where the issue occurred</li>
-                    <li>Screenshots that show the issue</li>
-                    <li>Steps to reproduce the issue</li>
-                </ul>
-
-                <p style={styles.paragraph}>
-                    We will review your inquiry and respond as soon as possible.
-                </p>
             </section>
         </main>
     );

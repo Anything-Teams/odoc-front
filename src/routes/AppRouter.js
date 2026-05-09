@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import RootRedirect from "../common/RootRedirect";
 import RutifyPrivacy from "../screens/privacy/RutifyPrivacy";
 import RutifySupport from "../screens/privacy/RutifySupport";
+import RutifyAppPrivacy from "../screens/privacy/RutifyAppPrivacy";
 
 export default function AppRouter() {
   return (
@@ -22,6 +23,7 @@ export default function AppRouter() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/rutify/privacy" element={<RutifyPrivacy />} />
       <Route path="/rutify/support" element={<RutifySupport />} />
+      <Route path="/rutify/appPrivacy" element={<RutifyAppPrivacy />} />
 
       <Route
         path="/projects"
